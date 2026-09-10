@@ -1,0 +1,53 @@
+---
+import '../styles/global.css';
+import { SITE } from '../consts';
+
+interface Props {
+  /** <title> 에 들어갈 페이지 제목. 생략하면 사이트 이름만 표시 */
+  title?: string;
+  /** <meta name="description"> — 생략하면 사이트 기본 설명 */
+  description?: string;
+}
+
+const { title, description = SITE.description } = Astro.props;
+const pageTitle = title ? `${title} · ${SITE.name}` : `${SITE.name} — ${SITE.role}`;
+---
+
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+  </head>
+  <body class="min-h-screen bg-white text-slate-800 antialiased flex flex-col">
+    <header class="border-b border-slate-200">
+      <nav
+        class="mx-auto flex max-w-4xl items-center justify-between px-6 py-4"
+        aria-label="주요 내비게이션"
+      >
+        <a href="/" class="font-semibold tracking-tight hover:text-slate-600">
+          {SITE.name}
+        </a>
+        <ul class="flex gap-6 text-sm">
+          <li><a href="/#games" class="hover:text-slate-600">게임</a></li>
+          <li><a href="/#work" class="hover:text-slate-600">작업</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main class="mx-auto w-full max-w-4xl flex-1 px-6 py-12">
+      <slot />
+    </main>
+
+    <footer class="border-t border-slate-200">
+      <div class="mx-auto max-w-4xl px-6 py-6 text-sm text-slate-500">
+        © {new Date().getFullYear()} {SITE.name}. Built with Astro.
+      </div>
+    </footer>
+  </body>
+</html>

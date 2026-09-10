@@ -1,0 +1,19 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  work: CollectionEntry<'work'>;
+}
+
+const { work } = Astro.props;
+const { title, period, description, slug } = work.data;
+---
+
+<a
+  href={`/work/${slug}`}
+  class="group flex flex-col rounded-lg border border-slate-200 p-5 transition-colors hover:border-slate-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-600"
+>
+  <p class="text-xs font-medium uppercase tracking-wide text-slate-400">{period}</p>
+  <h3 class="mt-1 font-semibold group-hover:text-slate-600">{title}</h3>
+  <p class="mt-1 text-sm text-slate-600">{description}</p>
+</a>
