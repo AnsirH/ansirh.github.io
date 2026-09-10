@@ -60,6 +60,13 @@ order: 6
 ---
 ```
 
+## 방문자 통계
+
+[GoatCounter](https://www.goatcounter.com) 를 사용한다. `src/consts.ts` 의
+`ANALYTICS.goatCounterCode` 에 code 를 넣으면 프로덕션 빌드의 모든 페이지
+`<head>` 에 집계 스크립트가 삽입된다 (`npm run dev` 로컬 실행은 집계 제외).
+대시보드: `https://ansirh.goatcounter.com`
+
 ## 명령어
 
 | 명령 | 동작 |
