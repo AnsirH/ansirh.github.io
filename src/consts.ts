@@ -5,6 +5,8 @@
 export const SITE = {
   /** 이름 (placeholder) */
   name: 'Ansir H',
+  /** 히어로에 크게 표시되는 이름 (placeholder) */
+  displayName: 'ansirH',
   /** 직군 한 줄 소개 (placeholder) */
   role: 'Unity Game Client Developer',
   /** 히어로 한 줄 소개 (placeholder) */
@@ -18,6 +20,24 @@ export const LINKS: ReadonlyArray<{ label: string; href: string }> = [
   { label: 'GitHub', href: '#' },
   { label: 'Email', href: '#' },
   { label: 'Resume', href: '#' },
+];
+
+/**
+ * 히어로 다음에 스크롤하면 순차로 드러나는 "스펙" 항목 — 지금은 placeholder.
+ * 실제 이력/기술은 나중에 이 배열만 교체하면 된다 (SpecPanel.astro 코드 변경 불필요).
+ */
+export interface SpecGroup {
+  /** 그룹 제목 (예: "역할", "핵심 기술") */
+  label: string;
+  /** 그룹에 속한 항목들 */
+  items: readonly string[];
+}
+
+export const SPEC: readonly SpecGroup[] = [
+  { label: '역할', items: ['Unity 게임 클라이언트 개발', 'UI · 게임플레이 · 툴 프로그래밍'] },
+  { label: '경력', items: ['최근 9개월 · 작업 5건 / 게임 3종', '경력 요약 자리 (placeholder)'] },
+  { label: '핵심 기술', items: ['C#', 'Unity Engine', 'Gameplay Systems', 'Editor Tooling'] },
+  { label: '툴', items: ['Git', 'Addressables', 'DOTween', 'Rider'] },
 ];
 
 /**

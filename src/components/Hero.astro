@@ -1,0 +1,62 @@
+---
+import { SITE } from '../consts';
+---
+
+<section class="hero" aria-label="소개">
+  <div class="hero__inner" data-sda="hero">
+    <h1 class="hero__name">{SITE.displayName}</h1>
+    <p class="hero__role">{SITE.role}</p>
+  </div>
+  <span class="hero__hint" aria-hidden="true">Scroll</span>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    display: grid;
+    place-items: center;
+    padding-inline: 1.5rem;
+    text-align: center;
+  }
+
+  .hero__name {
+    font-weight: 900;
+    font-size: clamp(3.5rem, 20vw, 13rem);
+    line-height: 0.85;
+    letter-spacing: -0.05em;
+  }
+
+  .hero__role {
+    margin-top: 1.75rem;
+    font-weight: 300;
+    font-size: clamp(0.9rem, 2.6vw, 1.25rem);
+    letter-spacing: 0.04em;
+    color: #71717a;
+  }
+
+  .hero__hint {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: #a1a1aa;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .hero__hint {
+      animation: hero-hint 1.6s ease-in-out infinite alternate;
+    }
+
+    @keyframes hero-hint {
+      to {
+        transform: translate(-50%, 0.4rem);
+        opacity: 0.35;
+      }
+    }
+  }
+</style>

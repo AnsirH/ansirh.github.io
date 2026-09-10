@@ -40,28 +40,26 @@ const goatCounterUrl =
       )
     }
   </head>
-  <body class="min-h-screen bg-white text-slate-800 antialiased flex flex-col">
-    <header class="border-b border-slate-200">
+  <body class="flex min-h-screen flex-col bg-white text-zinc-950 antialiased">
+    <header class="sticky top-0 z-20 border-b border-zinc-200 bg-white/80 backdrop-blur">
       <nav
-        class="mx-auto flex max-w-4xl items-center justify-between px-6 py-4"
+        class="mx-auto flex max-w-5xl items-center justify-between px-6 py-4"
         aria-label="주요 내비게이션"
       >
-        <a href="/" class="font-semibold tracking-tight hover:text-slate-600">
-          {SITE.name}
-        </a>
+        <a href="/" class="font-black tracking-tight hover:text-zinc-500">{SITE.name}</a>
         <ul class="flex gap-6 text-sm">
-          <li><a href="/#games" class="hover:text-slate-600">게임</a></li>
-          <li><a href="/#work" class="hover:text-slate-600">작업</a></li>
+          <li><a href="/#games" class="hover:text-zinc-500">게임</a></li>
+          <li><a href="/#work" class="hover:text-zinc-500">작업</a></li>
         </ul>
       </nav>
     </header>
 
-    <main class="mx-auto w-full max-w-4xl flex-1 px-6 py-12">
+    <main class="flex-1">
       <slot />
     </main>
 
-    <footer class="border-t border-slate-200">
-      <div class="mx-auto max-w-4xl px-6 py-6 text-sm text-slate-500">
+    <footer class="border-t border-zinc-200">
+      <div class="mx-auto max-w-5xl px-6 py-6 text-sm text-zinc-500">
         © {new Date().getFullYear()} {SITE.name}. Built with Astro.
       </div>
     </footer>

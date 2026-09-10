@@ -1,0 +1,85 @@
+---
+import { SPEC } from '../consts';
+
+// 그룹 → 평평한 줄 목록으로. 각 줄이 스크롤 진행도에 맞춰 순서대로 드러난다.
+type SpecLine = { kind: 'label' | 'item'; text: string };
+
+const lines: SpecLine[] = SPEC.flatMap((group) => [
+  { kind: 'label', text: group.label } as SpecLine,
+  ...group.items.map((text) => ({ kind: 'item', text }) as SpecLine),
+]);
+---
+
+<section class="spec" aria-label="스펙">
+  <div class="spec__scene" style={`--n:${lines.length}`}>
+    <div class="spec__panel">
+      <ol class="spec__list">
+        {
+          lines.map((line, i) => (
+            <li class={`spec__line spec__line--${line.kind}`} style={`--i:${i}`}>
+              {line.text}
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </div>
+</section>
+
+<style>
+  .spec__scene {
+    view-timeline-name: --spec;
+    view-timeline-axis: block;
+    /* 미지원/reduced-motion 시: 일반 섹션 높이 */
+    min-height: 100svh;
+  }
+
+  .spec__panel {
+    position: sticky;
+    top: 0;
+    min-height: 100svh;
+    display: grid;
+    align-content: center;
+    max-width: 64rem;
+    margin-inline: auto;
+    padding: 6rem 1.5rem;
+  }
+
+  .spec__list {
+    display: grid;
+    gap: 0.9rem;
+  }
+
+  .spec__line {
+    font-weight: 800;
+    font-size: clamp(1.75rem, 6vw, 3.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+  }
+
+  .spec__line--item {
+    font-weight: 300;
+    font-size: clamp(1rem, 3vw, 1.6rem);
+    letter-spacing: 0;
+    color: #3f3f46;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      /* 고정된 채 스크롤할 거리 확보 */
+      .spec__scene {
+        min-height: 300vh;
+      }
+
+      .spec__line {
+        opacity: 0.12;
+        transform: translateY(0.5rem);
+        animation: sda-rise linear both;
+        animation-timeline: --spec;
+        /* i번째 줄은 전체 진행도의 i/n ~ (i+1)/n 구간에서 등장 */
+        animation-range: cover calc(var(--i) / var(--n) * 100%) cover
+          calc((var(--i) + 1) / var(--n) * 100%);
+      }
+    }
+  }
+</style>

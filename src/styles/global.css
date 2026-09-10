@@ -1,1 +1,85 @@
 @import "tailwindcss";
+
+/* ============================================================
+   Base
+   ============================================================ */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}
+
+/* ============================================================
+   스크롤 연동 애니메이션 레이어 (점진적 향상)
+
+   - 기본 상태: 모든 요소가 그대로 보인다.
+   - `prefers-reduced-motion` 미설정 + `animation-timeline` 지원
+     브라우저(Chrome/Edge 115+, Safari 26+)에서만 애니메이션이 붙는다.
+   - 미지원(현재 Firefox 안정판 등)에서는 정적 페이지로 그대로 동작.
+
+   참고:
+   - https://developer.chrome.com/docs/css-ui/scroll-driven-animations
+   - https://scroll-driven-animations.style (image-reveal / stacking-cards 데모)
+   ============================================================ */
+
+@keyframes sda-rise {
+  from {
+    opacity: 0;
+    transform: translateY(2rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes sda-reveal {
+  from {
+    opacity: 0;
+    clip-path: inset(44% 20% 44% 20%);
+    transform: scale(0.94);
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(0% 0% 0% 0%);
+    transform: scale(1);
+  }
+}
+
+@keyframes sda-hero-out {
+  to {
+    opacity: 0;
+    transform: translateY(-6vh) scale(0.8);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    /* 요소가 뷰포트로 들어오는 동안 아래에서 떠오름 */
+    [data-sda="rise"] {
+      animation: sda-rise linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 35%;
+    }
+
+    /* 이미지/썸네일이 가운데에서 펼쳐지며 나타남 */
+    [data-sda="reveal"] {
+      animation: sda-reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 5% cover 40%;
+    }
+
+    /* 히어로: 첫 화면을 지나 스크롤하는 동안 축소·페이드 */
+    [data-sda="hero"] {
+      animation: sda-hero-out linear both;
+      animation-timeline: scroll(root block);
+      animation-range: 0 90vh;
+    }
+  }
+}
