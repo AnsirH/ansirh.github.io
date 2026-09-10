@@ -19,3 +19,13 @@ export const LINKS: ReadonlyArray<{ label: string; href: string }> = [
   { label: 'Email', href: '#' },
   { label: 'Resume', href: '#' },
 ];
+
+/**
+ * 방문자 통계 (GoatCounter).
+ * goatCounterCode = goatcounter.com 가입 시 정한 code (예: 'ansirh').
+ * 값이 비어 있으면 분석 스크립트를 렌더링하지 않는다.
+ * 스크립트는 프로덕션 빌드에서만 로드된다 (Layout.astro 참고).
+ */
+export const ANALYTICS = {
+  goatCounterCode: 'ansirh',
+} as const;
