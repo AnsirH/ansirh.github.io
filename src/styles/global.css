@@ -24,18 +24,28 @@
    - reveal.ts 는 IO 미지원·모션 비선호 시 즉시 .is-visible 부여 + 4초 failsafe.
    - --reveal-i 로 그룹별 stagger.
    ============================================================ */
-@media (prefers-reduced-motion: no-preference) {
-  html.js [data-reveal] {
-    transition:
-      opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-      transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-    transition-delay: calc(var(--reveal-i, 0) * 70ms);
+/* 아직 안 나타난 요소만 숨김 — 그 외에는 항상 보임(JS 없음/실패 시 안전) */
+html.js [data-reveal]:not(.is-visible) {
+  opacity: 0;
+  transform: translateY(1.5rem);
+}
+
+html.js [data-reveal] {
+  transition:
+    opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: calc(var(--reveal-i, 0) * 70ms);
+}
+
+/* 모션 최소화 설정: 이동은 빼고 짧은 페이드만 (스크롤 시 변화는 유지) */
+@media (prefers-reduced-motion: reduce) {
+  html.js [data-reveal]:not(.is-visible) {
+    transform: none;
   }
 
-  /* 아직 안 나타난 요소만 숨김 — 그 외에는 항상 보임 */
-  html.js [data-reveal]:not(.is-visible) {
-    opacity: 0;
-    transform: translateY(1.5rem);
+  html.js [data-reveal] {
+    transition: opacity 0.3s linear;
+    transition-delay: 0s;
   }
 }
 
