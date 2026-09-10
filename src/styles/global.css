@@ -16,42 +16,33 @@
 }
 
 /* ============================================================
-   스크롤 연동 애니메이션 레이어 (점진적 향상)
+   스크롤 리빌 (IntersectionObserver 기반 — src/scripts/reveal.ts)
 
-   - 기본 상태: 모든 요소가 그대로 보인다.
-   - `prefers-reduced-motion` 미설정 + `animation-timeline` 지원
-     브라우저(Chrome/Edge 115+, Safari 26+)에서만 애니메이션이 붙는다.
-   - 미지원(현재 Firefox 안정판 등)에서는 정적 페이지로 그대로 동작.
-
-   참고:
-   - https://developer.chrome.com/docs/css-ui/scroll-driven-animations
-   - https://scroll-driven-animations.style (image-reveal / stacking-cards 데모)
+   안전 원칙: 콘텐츠는 기본적으로 보인다.
+   - 숨김 상태는 (JS 실행 확인 = html.js) + (모션 허용) + (아직 안 나타남) 일 때만.
+   - JS 미실행 / prefers-reduced-motion : 아무것도 숨기지 않음 → 항상 보임.
+   - reveal.ts 는 IO 미지원·모션 비선호 시 즉시 .is-visible 부여 + 4초 failsafe.
+   - --reveal-i 로 그룹별 stagger.
    ============================================================ */
-
-@keyframes sda-rise {
-  from {
-    opacity: 0;
-    transform: translateY(2rem);
+@media (prefers-reduced-motion: no-preference) {
+  html.js [data-reveal] {
+    transition:
+      opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: calc(var(--reveal-i, 0) * 70ms);
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+
+  /* 아직 안 나타난 요소만 숨김 — 그 외에는 항상 보임 */
+  html.js [data-reveal]:not(.is-visible) {
+    opacity: 0;
+    transform: translateY(1.5rem);
   }
 }
 
-@keyframes sda-reveal {
-  from {
-    opacity: 0;
-    clip-path: inset(44% 20% 44% 20%);
-    transform: scale(0.94);
-  }
-  to {
-    opacity: 1;
-    clip-path: inset(0% 0% 0% 0%);
-    transform: scale(1);
-  }
-}
-
+/* ============================================================
+   히어로 축소 — 스크롤 연동(네이티브 CSS). 미지원 시 그냥 고정.
+   ref: https://developer.chrome.com/docs/css-ui/scroll-driven-animations
+   ============================================================ */
 @keyframes sda-hero-out {
   to {
     opacity: 0;
@@ -60,22 +51,7 @@
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  @supports (animation-timeline: view()) {
-    /* 요소가 뷰포트로 들어오는 동안 아래에서 떠오름 */
-    [data-sda="rise"] {
-      animation: sda-rise linear both;
-      animation-timeline: view();
-      animation-range: entry 0% cover 35%;
-    }
-
-    /* 이미지/썸네일이 가운데에서 펼쳐지며 나타남 */
-    [data-sda="reveal"] {
-      animation: sda-reveal linear both;
-      animation-timeline: view();
-      animation-range: entry 5% cover 40%;
-    }
-
-    /* 히어로: 첫 화면을 지나 스크롤하는 동안 축소·페이드 */
+  @supports (animation-timeline: scroll()) {
     [data-sda="hero"] {
       animation: sda-hero-out linear both;
       animation-timeline: scroll(root block);

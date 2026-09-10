@@ -23,6 +23,10 @@ const goatCounterUrl =
 <html lang="ko">
   <head>
     <meta charset="utf-8" />
+    <!-- JS 사용 가능 표시 — reveal 요소는 이 클래스가 있을 때만 숨겨진다 -->
+    <script is:inline>
+      document.documentElement.classList.add('js');
+    </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
@@ -63,5 +67,9 @@ const goatCounterUrl =
         © {new Date().getFullYear()} {SITE.name}. Built with Astro.
       </div>
     </footer>
+
+    <script>
+      import '../scripts/reveal.ts';
+    </script>
   </body>
 </html>
