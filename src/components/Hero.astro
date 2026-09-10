@@ -2,7 +2,7 @@
 import { SITE } from '../consts';
 ---
 
-<section class="hero" aria-label="소개">
+<section class="hero" aria-label="소개" style={`--hero-bg: url('${SITE.heroImage}')`}>
   <div class="hero__inner" data-sda="hero">
     <h1 class="hero__name">{SITE.displayName}</h1>
     <p class="hero__role">{SITE.role}</p>
@@ -18,6 +18,25 @@ import { SITE } from '../consts';
     place-items: center;
     padding-inline: 1.5rem;
     text-align: center;
+    isolation: isolate;
+    /* 화면 좌우를 꽉 채우는 배경 이미지 */
+    background: var(--hero-bg) center / cover no-repeat;
+    background-color: #fff;
+  }
+
+  /* 텍스트 가독성용 오버레이 + 하단은 흰색으로 페이드(다음 섹션과 자연스럽게 연결) */
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.55) 0%,
+      rgba(255, 255, 255, 0.12) 42%,
+      rgba(255, 255, 255, 0.7) 82%,
+      rgba(255, 255, 255, 1) 100%
+    );
   }
 
   .hero__name {
@@ -32,7 +51,7 @@ import { SITE } from '../consts';
     font-weight: 300;
     font-size: clamp(0.9rem, 2.6vw, 1.25rem);
     letter-spacing: 0.04em;
-    color: #71717a;
+    color: #52525b;
   }
 
   .hero__hint {
@@ -44,7 +63,7 @@ import { SITE } from '../consts';
     font-weight: 600;
     letter-spacing: 0.35em;
     text-transform: uppercase;
-    color: #a1a1aa;
+    color: #71717a;
   }
 
   @media (prefers-reduced-motion: no-preference) {
