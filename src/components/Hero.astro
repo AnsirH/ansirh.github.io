@@ -2,79 +2,133 @@
 import { SITE } from '../consts';
 ---
 
-<section class="hero" aria-label="소개" style={`--hero-bg: url('${SITE.heroImage}')`}>
-  <div class="hero__inner" data-sda="hero">
-    <h1 class="hero__name">{SITE.displayName}</h1>
-    <p class="hero__role">{SITE.role}</p>
+<section class="hero-hud" aria-label="소개">
+  <canvas class="fx-canvas" aria-hidden="true"></canvas>
+
+  <span class="hero-hud__coord" data-hud="coord" aria-hidden="true">x:0.500  y:0.500</span>
+  <span class="hero-hud__fps" data-hud="fps" aria-hidden="true">60 fps</span>
+  <span class="hero-hud__corner hero-hud__corner--tl" aria-hidden="true"></span>
+  <span class="hero-hud__corner hero-hud__corner--br" aria-hidden="true"></span>
+
+  <div class="hero-hud__inner" data-sda="hero">
+    <p class="hero-hud__tag">// Unity Game Client Developer</p>
+    <h1 class="hero-hud__name">{SITE.displayName}</h1>
   </div>
-  <span class="hero__hint" aria-hidden="true">Scroll</span>
+
+  <span class="hero-hud__hint" aria-hidden="true">Scroll ▼</span>
 </section>
 
+<script>
+  import '../scripts/fx-hud-constellation.ts';
+</script>
+
 <style>
-  .hero {
+  .hero-hud {
     position: relative;
     min-height: 100svh;
     display: grid;
     place-items: center;
     padding-inline: 1.5rem;
     text-align: center;
+    overflow: hidden;
     isolation: isolate;
-    /* 화면 좌우를 꽉 채우는 배경 이미지 */
-    background: var(--hero-bg) center / cover no-repeat;
-    background-color: #fff;
+    background: #fafafa;
+    color: #09090b;
   }
 
-  /* 텍스트 가독성용 오버레이 + 하단은 흰색으로 페이드(다음 섹션과 자연스럽게 연결) */
-  .hero::before {
-    content: "";
+  .fx-canvas {
     position: absolute;
     inset: 0;
-    z-index: -1;
-    background: linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.55) 0%,
-      rgba(255, 255, 255, 0.12) 42%,
-      rgba(255, 255, 255, 0.7) 82%,
-      rgba(255, 255, 255, 1) 100%
-    );
+    z-index: 0;
+    display: block;
   }
 
-  .hero__name {
+  .hero-hud__inner {
+    position: relative;
+    z-index: 2;
+    /* 텍스트는 배경보다 조금 더 크게 움직여 깊이감 */
+    transform: translate3d(
+      calc(var(--mx, 0) * 18px),
+      calc(var(--my, 0) * 18px),
+      0
+    );
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .hero-hud__tag {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: clamp(0.72rem, 1.8vw, 0.95rem);
+    letter-spacing: 0.08em;
+    color: #2563eb;
+  }
+
+  .hero-hud__name {
+    margin-top: 0.9rem;
     font-weight: 900;
-    font-size: clamp(3.5rem, 20vw, 13rem);
+    font-size: clamp(3rem, 18vw, 12rem);
     line-height: 0.85;
     letter-spacing: -0.05em;
   }
 
-  .hero__role {
-    margin-top: 1.75rem;
-    font-weight: 300;
-    font-size: clamp(0.9rem, 2.6vw, 1.25rem);
-    letter-spacing: 0.04em;
-    color: #52525b;
+  .hero-hud__coord,
+  .hero-hud__fps {
+    position: absolute;
+    z-index: 2;
+    font-family: ui-monospace, Menlo, Consolas, monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    color: #a1a1aa;
+  }
+  .hero-hud__coord {
+    top: 5.5rem;
+    left: 1.5rem;
+  }
+  .hero-hud__fps {
+    bottom: 1.6rem;
+    left: 1.5rem;
   }
 
-  .hero__hint {
+  .hero-hud__corner {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    z-index: 2;
+    border: 1.5px solid #d4d4d8;
+  }
+  .hero-hud__corner--tl {
+    top: 4.75rem;
+    left: 1.5rem;
+    border-right: 0;
+    border-bottom: 0;
+  }
+  .hero-hud__corner--br {
+    right: 1.5rem;
+    bottom: 1.5rem;
+    border-left: 0;
+    border-top: 0;
+  }
+
+  .hero-hud__hint {
     position: absolute;
     bottom: 2rem;
     left: 50%;
     transform: translateX(-50%);
+    z-index: 2;
+    font-family: ui-monospace, Menlo, Consolas, monospace;
     font-size: 0.7rem;
-    font-weight: 600;
-    letter-spacing: 0.35em;
+    letter-spacing: 0.3em;
     text-transform: uppercase;
-    color: #71717a;
+    color: #a1a1aa;
   }
 
   @media (prefers-reduced-motion: no-preference) {
-    .hero__hint {
-      animation: hero-hint 1.6s ease-in-out infinite alternate;
+    .hero-hud__hint {
+      animation: hh-hint 1.6s ease-in-out infinite alternate;
     }
-
-    @keyframes hero-hint {
+    @keyframes hh-hint {
       to {
         transform: translate(-50%, 0.4rem);
-        opacity: 0.35;
+        opacity: 0.4;
       }
     }
   }

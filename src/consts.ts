@@ -13,12 +13,6 @@ export const SITE = {
   tagline: '플레이 가능한 게임과 최근 작업으로 정리한 포트폴리오입니다.',
   /** 사이트 설명 — <meta name="description"> 기본값 (placeholder) */
   description: 'Unity 게임 클라이언트 개발자 포트폴리오. 플레이 가능한 게임 빌드와 최근 작업 모음.',
-  /**
-   * 히어로 섹션 배경 이미지 (public/ 기준 경로).
-   * 교체하려면 public/images/ 에 파일을 넣고 이 경로만 바꾸면 된다.
-   * 현재 이미지: Unsplash — photo by Ikhlas (photo-1707130868349-3ed75fc7fe8f), Unsplash License.
-   */
-  heroImage: '/images/hero-bg.jpg',
 } as const;
 
 /** 연락처 / 외부 링크 자리 — 실제 URL은 다음 작업에서 (placeholder) */
