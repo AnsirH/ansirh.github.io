@@ -2,57 +2,109 @@
 import { SPEC } from '../consts';
 ---
 
-<section class="spec" aria-label="스펙">
-  <div class="spec__inner">
-    {
-      SPEC.map((group, i) => (
-        <div class="spec__group" data-reveal style={`--reveal-i:${i}`}>
-          <h2 class="spec__label">{group.label}</h2>
-          <ul class="spec__items">
-            {group.items.map((item) => (
-              <li>{item}</li>
-            ))}
-          </ul>
-        </div>
-      ))
-    }
-  </div>
-</section>
+{
+  SPEC.map((group, i) => (
+    <section
+      class="spec-band"
+      aria-label={group.label}
+      style={group.image ? `--bg: url('${group.image}')` : undefined}
+    >
+      <div class="spec-band__bg" aria-hidden="true" />
+      <div class="spec-band__scrim" aria-hidden="true" />
+
+      <div class="spec-band__inner" data-reveal>
+        <span class="spec-band__idx" aria-hidden="true">
+          {String(i + 1).padStart(2, '0')}
+        </span>
+        <h2 class="spec-band__label">{group.label}</h2>
+        <ul class="spec-band__items">
+          {group.items.map((item) => (
+            <li>{item}</li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  ))
+}
 
 <style>
-  .spec {
-    padding-block: 16svh;
+  .spec-band {
+    /* 화면 좌우를 꽉 채우고, 섹션마다 높이를 크게 */
+    position: relative;
+    min-height: 92svh;
+    display: grid;
+    place-items: center;
+    padding: 8svh 1.5rem;
+    overflow: hidden;
+    isolation: isolate;
+    color: #fafafa;
   }
 
-  .spec__inner {
-    display: grid;
-    gap: 5rem;
+  .spec-band__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background:
+      var(--bg, none) center / cover no-repeat,
+      radial-gradient(120% 90% at 50% 0%, #14141c 0%, #0a0a0c 70%);
+    background-color: #0a0a0c;
+  }
+
+  .spec-band__scrim {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    /* 텍스트 뒤를 강하게 어둡게 + 전체 톤 */
+    background:
+      radial-gradient(
+        58% 42% at 50% 48%,
+        rgba(6, 6, 10, 0.8) 0%,
+        rgba(6, 6, 10, 0) 78%
+      ),
+      linear-gradient(
+        180deg,
+        rgba(8, 8, 12, 0.55) 0%,
+        rgba(8, 8, 12, 0.28) 45%,
+        rgba(8, 8, 12, 0.7) 100%
+      );
+  }
+
+  .spec-band__inner {
+    position: relative;
+    z-index: 2;
     max-width: 64rem;
     margin-inline: auto;
-    padding-inline: 1.5rem;
+    text-align: center;
   }
 
-  .spec__group {
-    display: grid;
-    gap: 0.9rem;
+  .spec-band__idx {
+    display: block;
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: clamp(0.8rem, 2vw, 1rem);
+    letter-spacing: 0.35em;
+    color: rgba(250, 250, 250, 0.45);
   }
 
-  .spec__label {
-    font-weight: 800;
-    font-size: clamp(1.75rem, 6vw, 3.25rem);
-    line-height: 1.05;
+  .spec-band__label {
+    margin-top: 1rem;
+    font-weight: 900;
+    font-size: clamp(2.25rem, 8vw, 5rem);
+    line-height: 1;
     letter-spacing: -0.03em;
+    text-shadow: 0 2px 40px rgba(0, 0, 0, 0.5);
   }
 
-  .spec__items {
+  .spec-band__items {
+    margin-top: 1.75rem;
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: 0.5rem 1.75rem;
   }
 
-  .spec__items li {
+  .spec-band__items li {
     font-weight: 300;
     font-size: clamp(1rem, 3vw, 1.6rem);
-    color: #3f3f46;
+    color: rgba(250, 250, 250, 0.82);
   }
 </style>

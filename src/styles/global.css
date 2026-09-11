@@ -60,6 +60,64 @@ html.js [data-reveal]:not(.is-visible) {
 }
 
 /* ============================================================
+   포트폴리오 풀스크린 크로스페이드 갤러리 (.pg, src/scripts/portfolio-gallery.ts)
+   vs 일반 목록 폴백 (.pg-fallback, PortfolioRow 나열)
+
+   기본(JS 없음): 갤러리 숨김, 폴백 목록만 보임 → 콘텐츠는 항상 접근 가능.
+   html.js(JS 실행 확인) + 모션 허용: 갤러리를 보이고 폴백은 숨김.
+   prefers-reduced-motion: reduce 면 JS 여부와 무관하게 폴백 목록으로.
+   (스크롤에 화면이 고정된 채 크로스페이드되는 연출은 모션 민감 사용자에게
+   불편할 수 있는 유형이라, 그 경우는 항상 정적 목록으로 대체한다.)
+   ============================================================ */
+.pg {
+  display: none;
+}
+.pg-fallback {
+  display: block;
+}
+
+html.js .pg {
+  display: block;
+}
+html.js .pg-fallback {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.js .pg {
+    display: none;
+  }
+  html.js .pg-fallback {
+    display: block;
+  }
+}
+
+/* ============================================================
+   섹션 구분 슬라이드 훅 (PortfolioGallery 의 `divider` prop, .pg__panel--divider
+   안에서 src/scripts/portfolio-gallery.ts 가 조작)
+
+   갤러리 자체가 하나의 pin 고정 장면이라 별도 표시/폴백 규칙이 필요 없다
+   (.pg/.pg-fallback 규칙을 그대로 따른다) — 여기 남은 건 좌우 슬라이드와
+   타이틀 리빌에 쓰이는 공용 트랜지션 훅뿐.
+   ============================================================ */
+.sd__slide-left,
+.sd__slide-right {
+  will-change: transform;
+}
+
+.sd__reveal {
+  opacity: 0;
+  transform: translateY(1.5rem);
+  transition:
+    opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.sd__reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================================
    히어로 축소 — 스크롤 연동(네이티브 CSS). 미지원 시 그냥 고정.
    ref: https://developer.chrome.com/docs/css-ui/scroll-driven-animations
    ============================================================ */

@@ -3,10 +3,9 @@ import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
 import SpecPanel from '../components/SpecPanel.astro';
-import ThumbnailReel from '../components/ThumbnailReel.astro';
-import type { ReelItem } from '../components/ThumbnailReel.astro';
-import GameCard from '../components/GameCard.astro';
-import WorkCard from '../components/WorkCard.astro';
+import PortfolioGallery from '../components/PortfolioGallery.astro';
+import PortfolioRow from '../components/PortfolioRow.astro';
+import type { PortfolioItem } from '../components/PortfolioRow.astro';
 
 const byOrder = (a: { data: { order: number } }, b: { data: { order: number } }) =>
   a.data.order - b.data.order;
@@ -14,30 +13,74 @@ const byOrder = (a: { data: { order: number } }, b: { data: { order: number } })
 const games = (await getCollection('games')).sort(byOrder);
 const work = (await getCollection('work')).sort(byOrder);
 
-const reelItems: ReelItem[] = [
-  ...games.map((game) => ({ kind: 'GAME', title: game.data.title })),
-  ...work.map((item) => ({ kind: 'WORK', title: item.data.title })),
-];
+const gameItems: PortfolioItem[] = games.map((game) => ({
+  href: `/games/${game.data.slug}`,
+  kind: 'GAME',
+  title: game.data.title,
+  description: game.data.description,
+  image: game.data.images[0],
+  tags: game.data.techStack,
+}));
+
+const workItems: PortfolioItem[] = work.map((item) => ({
+  href: `/work/${item.data.slug}`,
+  kind: 'WORK',
+  title: item.data.title,
+  description: item.data.description,
+  image: item.data.images[0],
+  tags: item.data.period ? [item.data.period] : [],
+}));
 ---
 
 <Layout>
   <Hero />
   <SpecPanel />
-  <ThumbnailReel items={reelItems} />
 
-  <section id="games" class="mx-auto max-w-5xl scroll-mt-24 px-6 py-24">
-    <h2 class="text-3xl font-black tracking-tight sm:text-4xl">게임</h2>
-    <p class="mt-2 text-sm text-zinc-500">플레이 가능한 Unity WebGL 빌드</p>
-    <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      {games.map((game) => <GameCard game={game} />)}
+  <section id="games" class="scroll-mt-24">
+    <PortfolioGallery
+      items={gameItems}
+      divider={{
+        label: '게임',
+        sublabel: '플레이 가능한 Unity WebGL 빌드',
+        index: '01',
+        tag: '// GAMES',
+        leftImage: games[0]?.data.images[0],
+        rightImage: games[1]?.data.images[0],
+      }}
+    />
+
+    <div class="pg-fallback mx-auto max-w-5xl px-6 pb-24">
+      <div class="pt-24">
+        <h2 class="text-3xl font-black tracking-tight sm:text-4xl">게임</h2>
+        <p class="mt-2 text-sm text-zinc-500">플레이 가능한 Unity WebGL 빌드</p>
+      </div>
+      <div class="mt-10 space-y-6">
+        {gameItems.map((item) => <PortfolioRow {...item} />)}
+      </div>
     </div>
   </section>
 
-  <section id="work" class="mx-auto max-w-5xl scroll-mt-24 border-t border-zinc-200 px-6 py-24">
-    <h2 class="text-3xl font-black tracking-tight sm:text-4xl">작업</h2>
-    <p class="mt-2 text-sm text-zinc-500">최근 9개월간의 주요 작업</p>
-    <div class="mt-10 grid gap-6 sm:grid-cols-2">
-      {work.map((item) => <WorkCard work={item} />)}
+  <section id="work" class="scroll-mt-24">
+    <PortfolioGallery
+      items={workItems}
+      divider={{
+        label: '작업',
+        sublabel: '최근 9개월간의 주요 작업',
+        index: '02',
+        tag: '// WORK',
+        leftImage: work[0]?.data.images[0],
+        rightImage: work[1]?.data.images[0],
+      }}
+    />
+
+    <div class="pg-fallback mx-auto max-w-5xl border-t border-zinc-200 px-6 pb-24">
+      <div class="pt-24">
+        <h2 class="text-3xl font-black tracking-tight sm:text-4xl">작업</h2>
+        <p class="mt-2 text-sm text-zinc-500">최근 9개월간의 주요 작업</p>
+      </div>
+      <div class="mt-10 space-y-6">
+        {workItems.map((item) => <PortfolioRow {...item} />)}
+      </div>
     </div>
   </section>
 </Layout>

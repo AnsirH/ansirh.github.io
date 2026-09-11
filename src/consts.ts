@@ -31,13 +31,31 @@ export interface SpecGroup {
   label: string;
   /** 그룹에 속한 항목들 */
   items: readonly string[];
+  /** 섹션 배경 이미지 (public/ 기준 경로). 없으면 어두운 그라데이션 */
+  image?: string;
 }
 
 export const SPEC: readonly SpecGroup[] = [
-  { label: '역할', items: ['Unity 게임 클라이언트 개발', 'UI · 게임플레이 · 툴 프로그래밍'] },
-  { label: '경력', items: ['최근 9개월 · 작업 5건 / 게임 3종', '경력 요약 자리 (placeholder)'] },
-  { label: '핵심 기술', items: ['C#', 'Unity Engine', 'Gameplay Systems', 'Editor Tooling'] },
-  { label: '툴', items: ['Git', 'Addressables', 'DOTween', 'Rider'] },
+  {
+    label: '역할',
+    items: ['Unity 게임 클라이언트 개발', 'UI · 게임플레이 · 툴 프로그래밍'],
+    image: '/images/spec-role.jpg',
+  },
+  {
+    label: '경력',
+    items: ['최근 9개월 · 작업 5건 / 게임 3종', '경력 요약 자리 (placeholder)'],
+    image: '/images/spec-career.jpg',
+  },
+  {
+    label: '핵심 기술',
+    items: ['C#', 'Unity Engine', 'Gameplay Systems', 'Editor Tooling'],
+    image: '/images/spec-skills.jpg',
+  },
+  {
+    label: '툴',
+    items: ['Git', 'Addressables', 'DOTween', 'Rider'],
+    image: '/images/spec-tools.jpg',
+  },
 ];
 
 /**
