@@ -67,7 +67,7 @@ export const TIMELINE: readonly TimelineEntry[] = [
   { date: '2026.04', title: 'Carefor RPA 툴' },
   { date: '2026.04', title: '업무일지 에이전트' },
   { date: '2026.05', title: 'KCC 이동 패키지' },
-  { date: '2026.05', title: '스팀 타워 조립 게임' },
+  { date: '2026.05', title: '스팀 타워 조립 게임', links: [game('TinkerTower', 'tinkertower')] },
   { date: '2026.06', title: 'AWS Summit / AI League' },
   {
     date: '2026.07', title: 'AI 캐릭터 제작 워크벤치',

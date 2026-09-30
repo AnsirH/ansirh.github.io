@@ -73,8 +73,8 @@ const pending = CONTACT.links.filter((l) => !l.href);
                   </span>
                   <a class="scene__go" href={href}>{d.playUrl ? '들어가서 플레이하기' : '들어가서 보기'} <span aria-hidden="true">→</span></a>
                 </div>
-                <figure class="scene__pic" data-href={href}>
-                  {thumb && <img src={thumb} alt={`${d.title} 스크린샷`} loading={i === 0 ? 'eager' : 'lazy'} />}
+                <figure class:list={['scene__pic', { empty: !thumb }]} data-href={href}>
+                  {thumb ? <img src={thumb} alt={`${d.title} 스크린샷`} loading={i === 0 ? 'eager' : 'lazy'} /> : <figcaption class="cap">스크린샷 준비 중</figcaption>}
                   {
                     d.video && (
                       <Fragment>
