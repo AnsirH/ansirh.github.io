@@ -1,58 +1,75 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
+import '../../styles/detail.css';
 
 export async function getStaticPaths() {
-  const work = await getCollection('work');
-  return work.map((item) => ({
+  const work = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
+  return work.map((item, i) => ({
     params: { slug: item.data.slug },
-    props: { work: item },
+    props: { item, next: work[(i + 1) % work.length] },
   }));
 }
 
-const { work } = Astro.props;
-const { title, period, description, images } = work.data;
-const { Content } = await render(work);
+const { item, next } = Astro.props;
+const d = item.data;
+const { Content } = await render(item);
+const hasBody = (item.body ?? '').replace(/<!--[\s\S]*?-->/g, '').trim().length > 0;
+
+const esc = (s: string) => s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c] as string);
+// 결과 문장의 **강조** → 등불색 <em>
+const resultHtml = esc(d.result).replace(/\*\*(.+?)\*\*/g, '<em>$1</em>');
+const resultPlain = d.result.replace(/\*\*/g, '');
+const titleWords = d.title.split(/\s+/);
+const pac = [
+  ['문제', d.problem],
+  ['접근', d.approach],
+  ['결과', resultPlain],
+].filter(([, v]) => v);
 ---
 
-<Layout title={title} description={description}>
-  <div class="mx-auto max-w-3xl px-6 py-12">
-    <nav class="mb-8 text-sm">
-      <a href="/#work" class="text-zinc-500 hover:text-zinc-900">← 메인으로 돌아가기</a>
-    </nav>
-
-    <article>
-      <header class="border-b border-zinc-200 pb-6">
-        <p class="text-xs font-medium uppercase tracking-wide text-zinc-400">{period}</p>
-        <h1 class="mt-2 text-3xl font-black tracking-tight sm:text-4xl">{title}</h1>
-        <p class="mt-3 text-zinc-600">{description}</p>
+<Layout title={d.title} description={d.description}>
+  <main class="stage">
+    <div class="wd pad">
+      <a class="back" href="/#notes">← 작업 노트로</a>
+      <header>
+        <span class="cap">작업 노트 · {d.period}</span>
+        <h1 class="words" id="wdTitle">
+          {titleWords.map((w, i) => <Fragment><span class="w">{w}</span>{i < titleWords.length - 1 ? ' ' : ''}</Fragment>)}
+        </h1>
+        <p class="wd__lead">{d.description}</p>
+        <div class="wd__meta">
+          <span>기간 {d.period}</span>
+          {d.techStack.length > 0 && <span>{d.techStack.join(' · ')}</span>}
+        </div>
       </header>
-
-      <!-- 이미지 자리 — 다음 작업에서 실제 스크린샷 연결 -->
-      <section class="py-8">
-        <h2 class="text-lg font-bold">이미지</h2>
-        {
-          images.length > 0 ? (
-            <div class="mt-4 grid gap-4 sm:grid-cols-2">
-              {images.map((src) => (
-                <img
-                  src={src}
-                  alt={`${title} 스크린샷`}
-                  class="w-full rounded-lg border border-zinc-200"
-                />
-              ))}
-            </div>
-          ) : (
-            <div class="mt-4 flex aspect-video w-full items-center justify-center rounded-lg border border-dashed border-zinc-300 bg-zinc-50 text-sm text-zinc-400">
-              이미지 준비 중
-            </div>
-          )
-        }
-      </section>
-
-      <section class="space-y-3 border-t border-zinc-200 py-8 text-zinc-600">
-        <Content />
-      </section>
-    </article>
-  </div>
+      <div class="wd__pic">
+        {d.images[0] ? <img src={d.images[0]} alt={`${d.title} 스크린샷`} /> : <i style={`background:${d.art}`}></i>}
+      </div>
+      {
+        pac.length > 0 && (
+          <div class="pac">
+            {pac.map(([k, v]) => (
+              <div>
+                <span>{k}</span>
+                <p>{v}</p>
+              </div>
+            ))}
+          </div>
+        )
+      }
+      {d.result && <p class="wd__result" set:html={resultHtml} />}
+      {hasBody && <div class="wd__body"><Content /></div>}
+      <a class="next" href={`/work/${next.data.slug}`}>
+        <span><span class="cap">다음 작업</span><br /><b>{next.data.title}</b></span>
+        <span aria-hidden="true">→</span>
+      </a>
+    </div>
+  </main>
+  <script>
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.querySelectorAll('#wdTitle .w').forEach((w, k) => {
+      setTimeout(() => w.classList.add('on'), reduce ? 0 : 100 + k * 120);
+    });
+  </script>
 </Layout>

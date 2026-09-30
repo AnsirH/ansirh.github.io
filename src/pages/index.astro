@@ -1,86 +1,194 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
-import Hero from '../components/Hero.astro';
-import SpecPanel from '../components/SpecPanel.astro';
-import PortfolioGallery from '../components/PortfolioGallery.astro';
-import PortfolioRow from '../components/PortfolioRow.astro';
-import type { PortfolioItem } from '../components/PortfolioRow.astro';
+import { SITE, INTRO, ABOUT, CHAPTERS, TOOLS, CONTACT } from '../consts';
+import '../styles/home.css';
 
 const byOrder = (a: { data: { order: number } }, b: { data: { order: number } }) =>
   a.data.order - b.data.order;
-
 const games = (await getCollection('games')).sort(byOrder);
 const work = (await getCollection('work')).sort(byOrder);
 
-const gameItems: PortfolioItem[] = games.map((game) => ({
-  href: `/games/${game.data.slug}`,
-  kind: 'GAME',
-  title: game.data.title,
-  description: game.data.description,
-  image: game.data.images[0],
-  tags: game.data.techStack,
-}));
-
-const workItems: PortfolioItem[] = work.map((item) => ({
-  href: `/work/${item.data.slug}`,
-  kind: 'WORK',
-  title: item.data.title,
-  description: item.data.description,
-  image: item.data.images[0],
-  tags: item.data.period ? [item.data.period] : [],
-}));
+const ORDINAL = ['첫', '두', '세', '네', '다섯', '여섯', '일곱', '여덟', '아홉'];
+const COUNT = ['한', '두', '세', '네', '다섯', '여섯', '일곱', '여덟', '아홉'];
+const gameCount = COUNT[games.length - 1] ?? String(games.length);
+const pad2 = (n: number) => String(n).padStart(2, '0');
+const aboutWords = ABOUT.split(/\s+/);
+const introLabel = INTRO.words.map((w) => w.text).join('').trim();
+const links = CONTACT.links.filter((l) => l.href);
+const pending = CONTACT.links.filter((l) => !l.href);
 ---
 
-<Layout>
-  <Hero />
-  <SpecPanel />
+<Layout home>
+  <canvas id="light" aria-hidden="true"></canvas>
+  <div class="veil" id="veil" aria-hidden="true"></div>
+  <div class="veil-g" id="veilG" aria-hidden="true"></div>
+  <div class="glow-fallback" id="glowFallback" aria-hidden="true"></div>
+  <div class="iris" id="iris" aria-hidden="true"></div>
 
-  <section id="games" class="scroll-mt-24">
-    <PortfolioGallery
-      items={gameItems}
-      divider={{
-        label: '게임',
-        sublabel: '플레이 가능한 Unity WebGL 빌드',
-        index: '01',
-        tag: '// GAMES',
-        leftImage: games[0]?.data.images[0],
-        rightImage: games[1]?.data.images[0],
-      }}
-    />
+  <main class="stage" id="top">
+    <section class="intro" id="intro" aria-label="첫 화면">
+      <div class="intro__stage">
+        <h1 class="line" id="line" aria-label={introLabel}>
+          {INTRO.words.map((w) => <span class:list={['w', { 'hot-target': 'hot' in w && w.hot }]} aria-hidden="true">{w.text}</span>)}
+        </h1>
+        <div class="intro__foot">
+          <p class="sub" id="sub" set:html={INTRO.sub} />
+          <span class="hint" id="hint" aria-hidden="true"><i></i>아래로</span>
+        </div>
+      </div>
+    </section>
 
-    <div class="pg-fallback mx-auto max-w-5xl px-6 pb-24">
-      <div class="pt-24">
-        <h2 class="text-3xl font-black tracking-tight sm:text-4xl">게임</h2>
-        <p class="mt-2 text-sm text-zinc-500">플레이 가능한 Unity WebGL 빌드</p>
-      </div>
-      <div class="mt-10 space-y-6">
-        {gameItems.map((item) => <PortfolioRow {...item} />)}
-      </div>
-    </div>
-  </section>
+    <section class="about pad" id="about" aria-label="소개">
+      <span class="cap">소개</span>
+      <p class="big words" id="aboutText">
+        {aboutWords.map((w, i) => <Fragment><span class="w">{w}</span>{i < aboutWords.length - 1 ? ' ' : ''}</Fragment>)}
+      </p>
+    </section>
 
-  <section id="work" class="scroll-mt-24">
-    <PortfolioGallery
-      items={workItems}
-      divider={{
-        label: '작업',
-        sublabel: '최근 9개월간의 주요 작업',
-        index: '02',
-        tag: '// WORK',
-        leftImage: work[0]?.data.images[0],
-        rightImage: work[1]?.data.images[0],
-      }}
-    />
+    <section id="works" aria-label="작품">
+      <div class="works-intro pad">
+        <span class="cap">작품 · {gameCount} 개의 장면</span>
+        <h2>직접 플레이할 수 있는<br />{gameCount} 개의 게임.</h2>
+      </div>
+      {
+        games.map((g, i) => {
+          const d = g.data;
+          const thumb = d.images[0] ?? d.demoImages[0] ?? '';
+          const isDemoThumb = !d.images[0];
+          const href = `/games/${d.slug}`;
+          return (
+            <article class="scene" data-light={d.light}>
+              <div class="scene__in pad">
+                <div class="scene__txt">
+                  <span class="scene__no">{ORDINAL[i]} 번째 장면 · {pad2(i + 1)} / {pad2(games.length)}</span>
+                  <h3>{d.title}</h3>
+                  {d.line && <p class="scene__line">{d.line}</p>}
+                  <span class="scene__meta">
+                    {d.period && <span>{d.period}</span>}
+                    {d.role && <span>{d.role}</span>}
+                  </span>
+                  <a class="scene__go" href={href}>들어가서 플레이하기 <span aria-hidden="true">→</span></a>
+                </div>
+                <figure class:list={['scene__pic', { px: isDemoThumb }]} data-href={href}>
+                  {thumb && <img src={thumb} alt={`${d.title} ${isDemoThumb ? '데모 화면' : '스크린샷'}`} loading={i === 0 ? 'eager' : 'lazy'} />}
+                  {
+                    d.video && (
+                      <Fragment>
+                        <video muted loop playsinline preload="none" data-src={d.video} aria-hidden="true" />
+                        <span class="rec">플레이 영상</span>
+                        {d.videoIsDemo && <span class="demo">데모 영상</span>}
+                      </Fragment>
+                    )
+                  }
+                  {isDemoThumb && thumb && <figcaption class="cap">데모 화면</figcaption>}
+                </figure>
+              </div>
+            </article>
+          );
+        })
+      }
+    </section>
 
-    <div class="pg-fallback mx-auto max-w-5xl border-t border-zinc-200 px-6 pb-24">
-      <div class="pt-24">
-        <h2 class="text-3xl font-black tracking-tight sm:text-4xl">작업</h2>
-        <p class="mt-2 text-sm text-zinc-500">최근 9개월간의 주요 작업</p>
+    <section class="notes pad" id="notes" aria-label="작업 노트">
+      <div class="sec-h">
+        <span class="cap">작업 노트</span>
+        <h2>게임 뒤에서 움직이는 것들.</h2>
+        <p>화면에 드러나지 않는 시스템 작업 {work.length}가지. 줄 위에 커서를 올리면 장면이 비칩니다.</p>
       </div>
-      <div class="mt-10 space-y-6">
-        {workItems.map((item) => <PortfolioRow {...item} />)}
+      <div class="rows">
+        {
+          work.map((w) => (
+            <a class="row" href={`/work/${w.data.slug}`} data-art={w.data.images[0] ? `url('${w.data.images[0]}') center / cover` : w.data.art}>
+              <span class="row__per">{w.data.period}</span>
+              <span class="row__t">{w.data.title}</span>
+              <span class="row__d">{w.data.description}</span>
+              <span class="row__go" aria-hidden="true">→</span>
+            </a>
+          ))
+        }
       </div>
-    </div>
-  </section>
+    </section>
+
+    <section class="time pad" id="time" aria-label="지나온 시간">
+      <div class="sec-h"><span class="cap">지나온 시간</span><h2>여기까지 걸어온 길.</h2></div>
+      <div class="time__grid">
+        <div class="time__stick" aria-hidden="true">
+          <div class="odo" id="odo" data-date={CHAPTERS[0]?.date}>
+            {
+              Array.from(CHAPTERS[0]?.date ?? '').map((ch) =>
+                ch === '.' ? (
+                  <span class="odo__dot">.</span>
+                ) : (
+                  <span class="odo__col">
+                    <span style={`transform: translateY(-${ch}em)`}>
+                      {Array.from({ length: 10 }, (_, n) => <span>{n}</span>)}
+                    </span>
+                  </span>
+                ),
+              )
+            }
+          </div>
+          <p class="odo-label" id="odoLabel">{CHAPTERS[0]?.title}</p>
+        </div>
+        <div class="chapters">
+          {
+            CHAPTERS.map((c) => (
+              <article class="chap" data-date={c.date}>
+                <span class="cap">{c.date}</span>
+                <h3 style="--k:0">
+                  {c.title}
+                  {c.dummy && <span class="ex">예시</span>}
+                </h3>
+                {c.lines.map((l, k) => <span class="ln" style={`--k:${k + 1}`}>{l}</span>)}
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="tools pad" id="tools" aria-label="다루는 것">
+      <div class="sec-h"><span class="cap">다루는 것</span></div>
+      <dl class="tool-rows">
+        {
+          TOOLS.map((t) => (
+            <div class="tool-row">
+              <dt>{t.label}</dt>
+              <dd class="words">{t.items.map((it) => <span class="w">{it}</span>)}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </section>
+
+    <section class="contact pad" id="contact" aria-label="연락">
+      <span class="cap">연락</span>
+      <h2>{CONTACT.heading}</h2>
+      {
+        CONTACT.email && (
+          <div class="mail">
+            <a href={`mailto:${CONTACT.email}`} id="mailText">{CONTACT.email}</a>
+            <button type="button" id="copyBtn">주소 복사</button>
+          </div>
+        )
+      }
+      <div class="others">
+        {links.map((l) => <a href={l.href} target="_blank" rel="noopener">{l.label}</a>)}
+        {pending.map((l) => <span>{l.label} · 준비 중</span>)}
+      </div>
+    </section>
+    <footer class="foot pad cap">
+      <span>© {new Date().getFullYear()} {SITE.name}</span>
+      <span>빛 효과 · WebGL Fluid Simulation (Pavel Dobryakov, MIT) 수정본</span>
+    </footer>
+  </main>
+
+  <div class="peek" id="peek" aria-hidden="true"><i></i></div>
+  <button type="button" class="skip" id="skip">인트로 건너뛰기</button>
+
+  <script>
+    import { boot } from '../scripts/home';
+    boot();
+  </script>
 </Layout>

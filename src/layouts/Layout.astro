@@ -7,10 +7,19 @@ interface Props {
   title?: string;
   /** <meta name="description"> — 생략하면 사이트 기본 설명 */
   description?: string;
+  /** 메인 페이지: 인트로가 끝날 때까지 머리글을 숨기고, 내비는 같은 페이지 앵커로 */
+  home?: boolean;
 }
 
-const { title, description = SITE.description } = Astro.props;
+const { title, description = SITE.description, home = false } = Astro.props;
 const pageTitle = title ? `${title} · ${SITE.name}` : `${SITE.name} — ${SITE.role}`;
+const base = home ? '' : '/';
+const nav = [
+  { id: 'works', label: '작품' },
+  { id: 'notes', label: '작업 노트' },
+  { id: 'time', label: '지나온 시간' },
+  { id: 'contact', label: '연락' },
+];
 
 // 방문자 통계: 프로덕션 빌드에서 code 가 설정돼 있을 때만 로드
 const goatCounterUrl =
@@ -23,54 +32,40 @@ const goatCounterUrl =
 <html lang="ko">
   <head>
     <meta charset="utf-8" />
-    <!-- JS 사용 가능 표시 — reveal 요소는 이 클래스가 있을 때만 숨겨진다 -->
     <script is:inline>
       document.documentElement.classList.add('js');
     </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#070706" />
     <meta name="generator" content={Astro.generator} />
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500&family=Noto+Sans+KR:wght@400;500&family=IBM+Plex+Mono:wght@400&family=Silkscreen:wght@400;700&display=swap"
+    />
     {
       goatCounterUrl && (
-        <script
-          is:inline
-          data-goatcounter={goatCounterUrl}
-          async
-          src="//gc.zgo.at/count.js"
-        />
+        <script is:inline data-goatcounter={goatCounterUrl} async src="//gc.zgo.at/count.js" />
       )
     }
   </head>
-  <body class="flex min-h-screen flex-col bg-white text-zinc-950 antialiased">
-    <header class="sticky top-0 z-20 border-b border-zinc-200 bg-white/80 backdrop-blur">
-      <nav
-        class="mx-auto flex max-w-5xl items-center justify-between px-6 py-4"
-        aria-label="주요 내비게이션"
-      >
-        <a href="/" class="font-black tracking-tight hover:text-zinc-500">{SITE.name}</a>
-        <ul class="flex gap-6 text-sm">
-          <li><a href="/#games" class="hover:text-zinc-500">게임</a></li>
-          <li><a href="/#work" class="hover:text-zinc-500">작업</a></li>
-        </ul>
-      </nav>
-    </header>
-
-    <main class="flex-1">
+  <body>
+    <div class="app">
+      <header class:list={['head', { pre: home }]} id="head">
+        <a class="name" href={home ? '#top' : '/'}>{SITE.name}</a>
+        <nav aria-label="섹션" id="nav">
+          {nav.map((n) => <a href={`${base}#${n.id}`} data-sec={n.id}>{n.label}</a>)}
+        </nav>
+      </header>
       <slot />
-    </main>
-
-    <footer class="border-t border-zinc-200">
-      <div class="mx-auto max-w-5xl px-6 py-6 text-sm text-zinc-500">
-        © {new Date().getFullYear()} {SITE.name}. Built with Astro.
-      </div>
-    </footer>
-
-    <script>
-      import '../scripts/reveal.ts';
-      import '../scripts/portfolio-gallery.ts';
-    </script>
+    </div>
   </body>
 </html>
