@@ -35,7 +35,7 @@ export interface TimelineEntry {
   /** 기간이 있으면 끝 (YYYY.MM) */
   end?: string;
   title: string;
-  /** 어떤 작업인지 한눈에 — GameDev · AI Service · AI Tool · AI Agent · ML · Data · Automation · DevOps · Simulation · Education · Event · Military */
+  /** 어떤 작업인지 한눈에 — GameDev · Client · AI Service · AI Tool · AI Agent · ML · Data · Automation · DevOps · Simulation · Education · Event · Military */
   tag: string;
   /** 작품·작업 노트로 연결 */
   links?: readonly TimelineLink[];
@@ -56,19 +56,19 @@ export const TIMELINE: readonly TimelineEntry[] = [
   { date: '2025.02', end: '2025.08', title: 'SK네트웍스 Family AI 캠프', tag: 'Education' },
   { date: '2025.04', title: '데이터 크롤링', tag: 'Data' },
   { date: '2025.05', title: 'ML 고객 관리', tag: 'ML' },
-  { date: '2025.05', title: "Bull's One Shot", tag: 'AI Service' },
+  { date: '2025.05', title: "Bull's One Shot", tag: 'GameDev' },
   { date: '2025.06', title: 'LLM 코드 분석 챗봇', tag: 'AI Service' },
   { date: '2025.08', title: '문서 검색 서비스', tag: 'AI Service' },
   { date: '2025.08', end: '2025.11', title: 'AI 스터디', tag: 'Education' },
   { date: '2025.12', title: 'TAB GAMES 스킬 시스템', tag: 'GameDev' },
   {
-    date: '2025.12', end: '2026.09', title: 'NC AI 아바타 클라이언트', tag: 'AI Service',
+    date: '2025.12', end: '2026.09', title: 'NC AI 아바타 클라이언트', tag: 'Client',
     links: [note('아바타 립싱크', 'avatar-lipsync'), note('털 · 카툰 셰이더', 'fur-toon-shaders'), note('테스트 자동화', 'test-automation')],
   },
   { date: '2026.02', title: '가천대 졸업', tag: 'Education' },
   { date: '2026.04', title: 'Carefor RPA 툴', tag: 'Automation' },
   { date: '2026.04', title: '업무일지 에이전트', tag: 'AI Agent' },
-  { date: '2026.05', title: 'KCC 이동 패키지', tag: 'Automation' },
+  { date: '2026.05', title: 'KCC 이동 패키지', tag: 'GameDev' },
   { date: '2026.05', title: '스팀 타워 조립 게임', tag: 'GameDev', links: [game('TinkerTower', 'tinkertower')] },
   { date: '2026.06', title: 'AWS Summit / AI League', tag: 'Event' },
   {
