@@ -9,12 +9,8 @@ role: "2인 팀 — 아웃게임 담당 (방 그래프 · 군대 배치 · 아�
 techStack: ["Unity 6", "C#", "ScriptableObject", "DOTween", "Unity Test Runner", "Claude Code"]
 repoUrl: "https://github.com/AnsirH/NHN_Project"
 playUrl: ""
-playNote: "Android 전용 게임입니다. 아래 링크의 플레이 영상이나 APK로 확인할 수 있습니다."
-links:
-  - label: "플레이 영상"
-    href: "https://youtu.be/k1a6I0x0kqA"
-  - label: "APK 다운로드"
-    href: "https://drive.google.com/file/d/1TB-QQHgXv2MgILYnDDCQKNK0Fu_H8idj/view?usp=sharing"
+playNote: ""
+links: []
 images:
   - src: "/images/games/claywars/hero.jpg"
     caption: "군단 전투"
@@ -34,7 +30,7 @@ highlights:
   - label: "맡은 일"
     text: "전투 밖의 모든 것. 방 그래프 생성과 진행, 군대 배치 화면(드래그 앤 드롭), 아이템 부여와 귀속, 증강 방, 적 편성과 난이도 커브, 전투로 넘기는 데이터 계약까지."
   - label: "결과"
-    text: "메인 메뉴부터 보스 처치까지 한 런이 끝까지 도는 Android 빌드를 제출했습니다. 인게임 파트와 합칠 때 충돌은 설정 파일 3건뿐이었습니다."
+    text: "메인 메뉴부터 보스 처치까지 한 런이 끝까지 도는 빌드를 제출했습니다. 인게임 파트와 합칠 때 충돌은 설정 파일 3건뿐이었습니다."
 order: 1
 troubleshooting:
   - problem: "전투방만 연달아 고르는 런에서는 플레이어는 그대로인데 적만 계속 강해졌습니다."
