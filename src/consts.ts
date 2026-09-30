@@ -35,47 +35,49 @@ export interface TimelineEntry {
   /** 기간이 있으면 끝 (YYYY.MM) */
   end?: string;
   title: string;
+  /** 어떤 작업인지 한눈에 — GameDev · AI Service · AI Tool · AI Agent · ML · Data · Automation · DevOps · Simulation · Education · Event · Military */
+  tag: string;
   /** 작품·작업 노트로 연결 */
   links?: readonly TimelineLink[];
 }
 const note = (label: string, slug: string): TimelineLink => ({ kind: '작업 노트', label, href: `/work/${slug}` });
 const game = (label: string, slug: string): TimelineLink => ({ kind: '작품', label, href: `/games/${slug}` });
 export const TIMELINE: readonly TimelineEntry[] = [
-  { date: '2020.08', title: 'ELEMENTALIST' },
-  { date: '2021.07', title: 'CONSTELLATION' },
-  { date: '2021.10', title: 'POKEMON 3D' },
-  { date: '2021.12', title: 'Samurai Shodown' },
-  { date: '2022.01', end: '2023.07', title: '해병대 복무' },
-  { date: '2023.12', title: 'Nebeloun' },
-  { date: '2024.01', title: 'Alice 2D' },
-  { date: '2024.04', end: '2024.12', title: 'NewSalt 2차전지 시뮬레이터' },
-  { date: '2024.07', title: 'RanTaDe' },
-  { date: '2024.11', title: 'Darkest Like' },
-  { date: '2025.02', end: '2025.08', title: 'SK네트웍스 Family AI 캠프' },
-  { date: '2025.04', title: '데이터 크롤링' },
-  { date: '2025.05', title: 'ML 고객 관리' },
-  { date: '2025.05', title: "Bull's One Shot" },
-  { date: '2025.06', title: 'LLM 코드 분석 챗봇' },
-  { date: '2025.08', title: '문서 검색 서비스' },
-  { date: '2025.08', end: '2025.11', title: 'AI 스터디' },
-  { date: '2025.12', title: 'TAB GAMES 스킬 시스템' },
+  { date: '2020.08', title: 'ELEMENTALIST', tag: 'GameDev' },
+  { date: '2021.07', title: 'CONSTELLATION', tag: 'GameDev' },
+  { date: '2021.10', title: 'POKEMON 3D', tag: 'GameDev' },
+  { date: '2021.12', title: 'Samurai Shodown', tag: 'GameDev' },
+  { date: '2022.01', end: '2023.07', title: '해병대 복무', tag: 'Military' },
+  { date: '2023.12', title: 'Nebeloun', tag: 'GameDev' },
+  { date: '2024.01', title: 'Alice 2D', tag: 'GameDev' },
+  { date: '2024.04', end: '2024.12', title: 'NewSalt 2차전지 시뮬레이터', tag: 'Simulation' },
+  { date: '2024.07', title: 'RanTaDe', tag: 'GameDev' },
+  { date: '2024.11', title: 'Darkest Like', tag: 'GameDev' },
+  { date: '2025.02', end: '2025.08', title: 'SK네트웍스 Family AI 캠프', tag: 'Education' },
+  { date: '2025.04', title: '데이터 크롤링', tag: 'Data' },
+  { date: '2025.05', title: 'ML 고객 관리', tag: 'ML' },
+  { date: '2025.05', title: "Bull's One Shot", tag: 'AI Service' },
+  { date: '2025.06', title: 'LLM 코드 분석 챗봇', tag: 'AI Service' },
+  { date: '2025.08', title: '문서 검색 서비스', tag: 'AI Service' },
+  { date: '2025.08', end: '2025.11', title: 'AI 스터디', tag: 'Education' },
+  { date: '2025.12', title: 'TAB GAMES 스킬 시스템', tag: 'GameDev' },
   {
-    date: '2025.12', end: '2026.09', title: 'NC AI 아바타 클라이언트',
+    date: '2025.12', end: '2026.09', title: 'NC AI 아바타 클라이언트', tag: 'AI Service',
     links: [note('아바타 립싱크', 'avatar-lipsync'), note('털 · 카툰 셰이더', 'fur-toon-shaders'), note('테스트 자동화', 'test-automation')],
   },
-  { date: '2026.02', title: '가천대 졸업' },
-  { date: '2026.04', title: 'Carefor RPA 툴' },
-  { date: '2026.04', title: '업무일지 에이전트' },
-  { date: '2026.05', title: 'KCC 이동 패키지' },
-  { date: '2026.05', title: '스팀 타워 조립 게임', links: [game('TinkerTower', 'tinkertower')] },
-  { date: '2026.06', title: 'AWS Summit / AI League' },
+  { date: '2026.02', title: '가천대 졸업', tag: 'Education' },
+  { date: '2026.04', title: 'Carefor RPA 툴', tag: 'Automation' },
+  { date: '2026.04', title: '업무일지 에이전트', tag: 'AI Agent' },
+  { date: '2026.05', title: 'KCC 이동 패키지', tag: 'Automation' },
+  { date: '2026.05', title: '스팀 타워 조립 게임', tag: 'GameDev', links: [game('TinkerTower', 'tinkertower')] },
+  { date: '2026.06', title: 'AWS Summit / AI League', tag: 'Event' },
   {
-    date: '2026.07', title: 'AI 캐릭터 제작 워크벤치',
+    date: '2026.07', title: 'AI 캐릭터 제작 워크벤치', tag: 'AI Tool',
     links: [note('캐릭터 자동 생성 서비스', 'character-generation-service'), note('얼굴 리깅 자동화', 'face-rigging-automation')],
   },
-  { date: '2026.07', title: 'NHN NAN 해커톤', links: [game('ClayWars', 'claywars')] },
-  { date: '2026.08', title: 'WebGL CI + SSH 배포' },
-  { date: '2026.08', title: 'OpenAI Game Builders 공모전', links: [game('GooseBomb', 'goosebomb')] },
+  { date: '2026.07', title: 'NHN NAN 해커톤', tag: 'GameDev', links: [game('ClayWars', 'claywars')] },
+  { date: '2026.08', title: 'WebGL CI + SSH 배포', tag: 'DevOps' },
+  { date: '2026.08', title: 'OpenAI Game Builders 공모전', tag: 'GameDev', links: [game('GooseBomb', 'goosebomb')] },
 ];
 
 /** 다루는 것 — 항목 끝의 " · " 까지가 한 단어로 켜진다 */

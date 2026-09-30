@@ -140,6 +140,7 @@ const pending = CONTACT.links.filter((l) => !l.href);
                       <span>
                         <span class="ev__t">{e.title}</span>
                         {e.end && <span class="ev__end">– {e.end}</span>}
+                        <span class="ev__tag">{e.tag}</span>
                         {e.links?.length ? (
                           <span class="ev__links">
                             {kindsOf(e).map((k) => (
