@@ -1,22 +1,15 @@
 /**
  * 게임 상세 — 어둠 속 오락기.
- * 화면: 어트랙트 데모 루프(public/fx/attract.js) → PRESS START → 빌드가 있으면 iframe, 없으면 준비 중 안내.
+ * 화면: 스크린샷 → PRESS START → 브라우저 빌드가 있으면 iframe, 없으면 안내(playNote).
  * 켜질 때 CRT 점등, 제목 글자 튀어오름, 버그 기록은 화면에 들어오면 타이핑.
  */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 export function bootGame() {
   const root = document.documentElement;
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (!reduce) root.classList.add('motion');
   const gd = document.querySelector<HTMLElement>('.gd');
   if (!gd) return;
-  const { slug = '', c1 = '', c2 = '', play = '' } = gd.dataset;
-
-  // 어트랙트 모드
-  const cv = document.getElementById('gdAttract') as HTMLCanvasElement;
-  const Attract = (window as any).Attract;
-  const attract = Attract ? Attract(cv, slug, c1, c2) : null;
-  attract?.start();
+  const { play = '', note = '' } = gd.dataset;
 
   // PRESS START
   const btn = document.getElementById('gdStart') as HTMLButtonElement;
@@ -32,7 +25,6 @@ export function bootGame() {
     }));
     setTimeout(() => {
       if (play) {
-        attract?.stop();
         const f = document.createElement('iframe');
         f.src = play;
         f.title = `${document.title} WebGL 빌드`;
@@ -41,8 +33,16 @@ export function bootGame() {
         screen.replaceChildren(f);
         f.focus();
       } else {
-        inner.innerHTML =
-          '<span class="screen__msg">BUILD NOT FOUND</span><span class="screen__sub">WebGL 빌드를 준비하고 있습니다. 올라오면 이 화면에서 바로 플레이할 수 있습니다.</span><span class="blink">▼ 버그 기록 먼저 보기</span>';
+        const msg = document.createElement('span');
+        msg.className = 'screen__msg';
+        msg.textContent = 'NO WEB BUILD';
+        const sub = document.createElement('span');
+        sub.className = 'screen__sub';
+        sub.textContent = note || '브라우저 빌드를 준비하고 있습니다.';
+        const hint = document.createElement('span');
+        hint.className = 'blink';
+        hint.textContent = '▼ 아래에서 더 보기';
+        inner.replaceChildren(msg, sub, hint);
       }
     }, reduce ? 50 : 1500);
   });

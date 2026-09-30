@@ -251,7 +251,7 @@ export async function boot() {
     if (hint.classList.contains('on')) hint.style.opacity = String(1 - smooth(0.01, 0.12, p));
   }
 
-  /* ---------- 오도미터: 자리마다 스프링으로 따라감 (목표가 바뀌어도 속도를 이어받아 멈추지 않음) ---------- */
+  /* ---------- 오도미터(연도): 자리마다 스프링으로 따라감 (목표가 바뀌어도 속도를 이어받아 멈추지 않음) ---------- */
   const odo = $('odo');
   const odoState = Array.from(odo.querySelectorAll<HTMLElement>('.odo__col > span')).map((el, k) => {
     const x = Number((el.style.transform.match(/-?([\d.]+)em/) || [])[1] || 0);
@@ -275,23 +275,32 @@ export async function boot() {
     odoRaf = busy ? requestAnimationFrame(odoTick) : 0;
     if (!busy) odoLast = 0;
   }
-  const chaps = Array.from(document.querySelectorAll<HTMLElement>('.chap'));
+  // 지나온 시간: 화면 가운데를 지난 마지막 줄이 "지금 보는 줄" — 그 줄만 밝히고 연도를 굴린다
+  const evs = Array.from(document.querySelectorAll<HTMLElement>('.ev'));
   const odoLabel = $('odoLabel');
-  let curChap = 0;
-  function setChap(i: number) {
-    if (i === curChap) return;
-    curChap = i;
-    const c = chaps[i];
-    const ds = Array.from(c.dataset.date || '').filter((ch) => ch !== '.');
+  let curEv = -1;
+  function setEv(i: number) {
+    if (i === curEv || !evs[i]) return;
+    const first = curEv < 0;
+    curEv = i;
+    const e = evs[i], date = e.dataset.date || '', end = e.dataset.end || '';
+    const ds = Array.from(date.slice(0, 4));
     odoState.forEach((d, k) => {
       d.to = Number(ds[k]);
-      if (reduce) {
+      if (reduce || first) {
         d.x = d.to;
         d.v = 0;
+        d.el.style.transform = 'translateY(' + -d.x + 'em)';
       }
     });
-    if (!odoRaf) odoRaf = requestAnimationFrame(odoTick);
-    odoLabel.textContent = c.querySelector('h3')?.firstChild?.textContent?.trim() || '';
+    if (!odoRaf && !first) odoRaf = requestAnimationFrame(odoTick);
+    const cap = document.createElement('span');
+    cap.className = 'cap';
+    cap.textContent = date + (end ? ' – ' + end : '');
+    const b = document.createElement('b');
+    b.textContent = e.querySelector('.ev__t')?.textContent || '';
+    odoLabel.replaceChildren(cap, b);
+    evs.forEach((el, k) => el.classList.toggle('on', k === i));
   }
 
   /* ---------- 스크롤 엔진 ---------- */
@@ -317,10 +326,10 @@ export async function boot() {
     }
     for (const list of [aboutWords, toolWords]) list.forEach((w) => w.classList.toggle('on', reduce || w.getBoundingClientRect().top < vh * 0.7));
     let act = 0;
-    chaps.forEach((c, i) => {
+    evs.forEach((c, i) => {
       if (c.getBoundingClientRect().top < vh * 0.5) act = i;
     });
-    setChap(act);
+    setEv(act);
     let cur: string | null = null;
     for (const s of sections) {
       const r = s.getBoundingClientRect();
@@ -347,7 +356,7 @@ export async function boot() {
     else if (!reduce) L.resume();
   });
 
-  // 지나온 시간: 문장 등장
+  // 지나온 시간: 연도 묶음 등장
   const rio = new IntersectionObserver(
     (es) => es.forEach((e) => {
       if (e.isIntersecting) {
@@ -357,7 +366,7 @@ export async function boot() {
     }),
     { rootMargin: '0px 0px -15% 0px' },
   );
-  chaps.forEach((c) => rio.observe(c));
+  document.querySelectorAll('.yr').forEach((c) => rio.observe(c));
 
   // 프레임이 계속 낮으면 광원 해상도를 낮춤
   (function () {
