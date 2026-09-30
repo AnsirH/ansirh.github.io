@@ -2,63 +2,54 @@
 
 Unity 게임 클라이언트 개발자 포트폴리오 사이트. GitHub Pages User Page (`https://ansirh.github.io`).
 
+디자인 테마는 **암실** — 단일 다크, 박스·라운드 없이 선과 여백만, 빛은 아껴 쓴다.
+첫 화면은 유체 광원 인트로(어둠 → 빛이 피어오름 → 스크롤로 소등), 소개~작품 구간에서 다시 켜지고,
+게임 상세만 레트로(어둠 속 오락기 화면)다.
+
 ## 스택
 
 - [Astro](https://astro.build) — 정적 사이트 생성, 파일 기반 라우팅
-- [Tailwind CSS](https://tailwindcss.com) v4 (`@tailwindcss/vite`)
 - Astro Content Collections — 게임 / 작업 데이터 관리
+- 순수 CSS (`src/styles/`) + 바닐라 TypeScript (`src/scripts/`)
+- 유체 광원: [WebGL Fluid Simulation](https://github.com/PavelDoGreat/WebGL-Fluid-Simulation) (Pavel Dobryakov, MIT) 수정본 — `public/fx/fluid-light.js`
 
 ## 구조
 
 ```text
 src/
-├── consts.ts              # 사이트 메타데이터 · 히어로 문구 · 링크 (현재 placeholder)
+├── consts.ts              # 사이트 메타 · 인트로/소개 문구 · 지나온 시간 · 다루는 것 · 연락
 ├── content.config.ts      # games / work 컬렉션 스키마
 ├── content/
-│   ├── games/*.md         # 게임 항목 (frontmatter)
-│   └── work/*.md          # 작업 항목 (frontmatter)
-├── layouts/Layout.astro   # 공통 레이아웃 (헤더/네비 + 푸터)
-├── components/
-│   ├── GameCard.astro
-│   └── WorkCard.astro
-└── pages/
-    ├── index.astro        # 메인 (히어로 + 게임 그리드 + 작업 그리드)
-    ├── games/[slug].astro # 게임 상세 (WebGL 임베드 자리)
-    └── work/[slug].astro  # 작업 상세 (이미지 자리)
+│   ├── games/*.md         # 게임 (frontmatter)
+│   └── work/*.md          # 작업 (frontmatter)
+├── layouts/Layout.astro   # 공통 레이아웃 (머리글/내비, 폰트, 통계)
+├── pages/
+│   ├── index.astro        # 메인
+│   ├── games/[slug].astro # 게임 상세 (오락기 화면 + WebGL 임베드)
+│   └── work/[slug].astro  # 작업 상세 (문제 · 접근 · 결과)
+├── scripts/
+│   ├── home.ts            # 메인 연출 (광원, 스크롤, 오도미터, 호버 영상)
+│   └── game.ts            # 게임 상세 연출 (어트랙트, PRESS START, 버그 기록 타이핑)
+└── styles/                # global.css · home.css · detail.css
+public/
+├── fx/                    # fluid-light.js, attract.js(게임별 픽셀 데모 루프), 디더링 텍스처
+├── images/                # 스크린샷 · 데모 프레임
+└── videos/                # 썸네일 호버 플레이 영상 (무음 webm 루프)
 ```
 
-## 콘텐츠 추가
+## 콘텐츠 추가 · 교체
 
-페이지 코드를 건드리지 않고 `src/content/games/` 또는 `src/content/work/` 에
-`.md` 파일을 추가하면 라우트와 카드가 자동 생성된다.
+페이지 코드를 건드리지 않고 `src/content/games/` 또는 `src/content/work/` 의 `.md` 를 추가·수정하면
+메인과 상세 페이지가 함께 바뀐다. 필드 설명은 `src/content.config.ts` 주석 참고.
 
-게임 예시 (`src/content/games/my-game.md`):
-
-```md
----
-title: "My Game"
-description: "한 줄 요약"
-slug: "my-game"
-techStack: ["Unity", "C#"]
-playUrl: ""          # WebGL 빌드 경로. 비우면 상세에서 "빌드 준비 중" 표시
-order: 4
----
-
-본문 (선택) — 상세 페이지 하단에 렌더링됨.
-```
-
-작업 예시 (`src/content/work/my-work.md`):
-
-```md
----
-title: "작업 제목"
-period: "2025.10 – 2025.11"
-description: "설명"
-slug: "my-work"
-images: []           # 스크린샷 경로 배열. 비우면 placeholder 박스 표시
-order: 6
----
-```
+- **스크린샷**: `images` 에 경로를 넣으면 첫 장이 메인 썸네일이 되고, 데모 프레임(`demoImages`)보다 먼저 쓰인다.
+- **플레이 영상**: 10~15초 무음 루프, 가로 960~1280px, webm 권장. `public/videos/` 에 두고 `video` 에 경로, `videoIsDemo: false`.
+- **WebGL 빌드**: `public/builds/<게임명>/` 에 두고 `playUrl: "/builds/<게임명>/index.html"`.
+  (`public/games/` 는 게임 상세 페이지 주소와 겹치므로 쓰지 않는다.)
+- **작업 결과 문장**: `result` 의 `**강조**` 부분이 등불색으로 표시된다.
+- **본문**: `.md` 본문을 쓰면 게임 상세의 "구현 노트", 작업 상세 하단에 표시된다.
+- 소개 문구, 지나온 시간, 다루는 것, 연락처는 `src/consts.ts` 에서 바꾼다.
+  `CONTACT.email` 을 채우면 메일 주소와 복사 버튼이 나타난다.
 
 ## 방문자 통계
 
@@ -77,9 +68,4 @@ order: 6
 | `npm run preview` | 빌드 결과 로컬 미리보기 |
 | `npm run astro check` | 타입/컨텐츠 스키마 검사 |
 
-## 다음 작업 (이번 범위 밖)
-
-- 실제 게임/작업 콘텐츠 및 이미지
-- Unity WebGL 빌드 연동 (`games` 의 `playUrl` → `<iframe>`, 빌드는 `public/games/<게임명>/`)
-- GitHub Actions 자동 배포 워크플로우
-- 디자인 디테일 (타이포/모션/컬러 시스템)
+`main` 에 push 하면 GitHub Actions(`.github/workflows/deploy.yml`)가 빌드해 GitHub Pages 에 배포한다.

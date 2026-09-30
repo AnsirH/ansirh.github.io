@@ -1,6 +1,7 @@
 ---
 title: "Neon Drift"
 description: "네온 도시를 질주하는 아케이드 레이싱 프로토타입."
+line: "네온 도시를 달리는 차 한 대, 그 뒤에 남는 빛의 궤적."
 slug: "neon-drift"
 period: "2025.03 – 2025.05"
 role: "1인 개발 — 물리·입력·트랙 툴"
@@ -8,6 +9,19 @@ techStack: ["Unity", "C#", "URP", "DOTween"]
 repoUrl: ""
 playUrl: ""
 images: ["/images/demo-neon-drift.jpg"]
+demoImages: ["/images/games/neon-drift-demo-1800.png", "/images/games/neon-drift-demo-5200.png", "/images/games/neon-drift-demo-9400.png"]
+video: "/videos/neon-drift.webm"
+videoIsDemo: true
+light: "neon"
+colors: ["#ff3fa4", "#22d3ee"]
+controls: [["←", "→", "조향"], ["SPACE", "드리프트"], ["SHIFT", "부스트"]]
+highlights:
+  - label: "기획 의도"
+    text: "짧게 여러 번 도전하는 타임어택. 드리프트를 길게 유지할수록 부스트가 차오르는 위험과 보상의 줄다리기."
+  - label: "빛과 화면"
+    text: "속도에 따라 길어지는 테일라이트 잔광과 블룸. 네온 간판은 셰이더로 깜빡임 주기를 조금씩 어긋나게."
+  - label: "결과"
+    text: "트랙 세 개와 고스트 리플레이. 플레이테스트 여덟 명 중 여섯 명이 다시 하기를 눌렀습니다."
 order: 1
 troubleshooting:
   - problem: "고속 주행 시 콜라이더가 벽을 뚫고 나가는(터널링) 현상."
@@ -20,8 +34,4 @@ troubleshooting:
     learned: "감각 관련 값은 상수 대신 커브로 빼면 코드 수정 없이 반복 튜닝이 된다. (placeholder)"
 ---
 
-더미 데이터입니다. 실제 개요·구현 노트는 다음 작업에서 채웁니다.
-
-- 드리프트 물리와 부스트 게이지
-- 3개 트랙, 타임어택 모드
-- WebGL 빌드 예정
+<!-- 더미 데이터. 이 아래에 실제 개요·구현 노트를 쓰면 게임 상세의 "구현 노트"에 표시된다. -->

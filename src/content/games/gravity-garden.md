@@ -1,6 +1,7 @@
 ---
 title: "Gravity Garden"
 description: "중력을 바꿔 씨앗을 틔우는 퍼즐 플랫포머."
+line: "아래가 바뀌는 정원. 씨앗은 빛이 오는 쪽으로 자랍니다."
 slug: "gravity-garden"
 period: "2025.06 – 2025.08"
 role: "2인 팀 — 클라이언트/시스템 담당 (아트 협업)"
@@ -8,6 +9,19 @@ techStack: ["Unity", "C#", "Cinemachine", "Shader Graph"]
 repoUrl: ""
 playUrl: ""
 images: []
+demoImages: ["/images/games/gravity-garden-demo-5200.png", "/images/games/gravity-garden-demo-1800.png", "/images/games/gravity-garden-demo-9400.png"]
+video: "/videos/gravity-garden.webm"
+videoIsDemo: true
+light: "forest"
+colors: ["#84cc16", "#0d9488"]
+controls: [["A", "D", "이동"], ["Q", "E", "중력 회전"]]
+highlights:
+  - label: "기획 의도"
+    text: "아래가 바뀌는 순간의 방향 감각을 퍼즐로. 씨앗이 떨어지는 방향까지 계산해야 풀리는 스테이지."
+  - label: "빛과 화면"
+    text: "중력이 돌 때 햇빛의 방향도 함께 돌고, 식물은 셰이더로 빛 쪽을 향해 자랍니다."
+  - label: "결과"
+    text: "스테이지 스무 개와 스테이지 에디터. 아티스트와 처음 함께한 작업입니다."
 order: 3
 troubleshooting:
   - problem: "중력 방향 전환 시 캐릭터가 벽에 끼거나 튕겨나감."
@@ -20,8 +34,4 @@ troubleshooting:
     learned: "카메라는 '정확함'보다 '예측 가능함'이 우선. (placeholder)"
 ---
 
-더미 데이터입니다. 실제 개요·구현 노트는 다음 작업에서 채웁니다.
-
-- 중력 방향 전환 메커닉
-- 20개 스테이지
-- WebGL 빌드 예정
+<!-- 더미 데이터. 이 아래에 실제 개요·구현 노트를 쓰면 게임 상세의 "구현 노트"에 표시된다. -->
