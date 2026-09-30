@@ -20,12 +20,10 @@ const ORDINAL = ['첫', '두', '세', '네', '다섯', '여섯', '일곱', '여�
 const pad2 = (n: number) => String(n).padStart(2, '0');
 const [c1, c2] = d.colors;
 
-// 장면들: 실제 스크린샷을 먼저, 모자라면 데모 프레임으로 세 장까지
-const stills = [
-  ...d.images.map((src, k) => ({ src, label: `CAPTURE ${pad2(k + 1)}` })),
-  ...d.demoImages.map((src, k) => ({ src, label: `DEMO ${pad2(k + 1)}` })),
-].slice(0, 3);
-const hasDemo = stills.some((s) => s.label.startsWith('DEMO'));
+// 오락기 화면 = 첫 스크린샷, 장면들 = 나머지 스크린샷 (최대 3장)
+const cover = d.images[0]?.src ?? '';
+const stills = d.images.slice(d.images.length > 1 ? 1 : 0, 4).map((im, k) => ({ src: im.src, label: im.caption || `CAPTURE ${pad2(k + 1)}` }));
+const extLinks = [...(d.repoUrl ? [{ label: 'GitHub', href: d.repoUrl }] : []), ...d.links];
 const bugLabels = [
   ['문제', 'k-err'],
   ['원인', 'k-cause'],
@@ -36,7 +34,7 @@ const bugLabels = [
 
 <Layout title={d.title} description={d.description}>
   <main class="stage">
-    <div class="gd pad" style={`--g1:${c1};--g2:${c2}`} data-slug={d.slug} data-c1={c1} data-c2={c2} data-play={d.playUrl}>
+    <div class="gd pad" style={`--g1:${c1};--g2:${c2}`} data-play={d.playUrl} data-note={d.playNote}>
       <div class="gd__top">
         <a class="back" href="/#works">← 작품으로</a>
         <span class="cap">{ORDINAL[index]} 번째 장면 · {pad2(index + 1)} / {pad2(total)}</span>
@@ -44,7 +42,7 @@ const bugLabels = [
 
       <div class="cab">
         <div class="screen" id="screen">
-          <canvas id="gdAttract" aria-hidden="true"></canvas>
+          {cover && <img class="screen__shot" src={cover} alt="" aria-hidden="true" />}
           <button type="button" class="screen__ui" id="gdStart" aria-label={`${d.title} 시작`}>
             <span class="inner" id="gdInner">
               <span class="screen__logo">{d.title.toUpperCase()}</span>
@@ -71,10 +69,12 @@ const bugLabels = [
         <dl class="gd__meta">
           <div><dt>ROLE</dt><dd>{d.role || '—'}</dd></div>
           <div><dt>TECH</dt><dd>{d.techStack.join(' · ') || '—'}</dd></div>
-          <div><dt>TIME</dt><dd>{d.period || '—'}</dd></div>
+          <div><dt>TIME</dt><dd>{d.period || '—'}{d.event && <Fragment><br /><span class="gd__event">{d.event}</span></Fragment>}</dd></div>
           <div>
-            <dt>REPO</dt>
-            <dd>{d.repoUrl ? <a href={d.repoUrl} target="_blank" rel="noopener">GitHub ↗</a> : <span style="color:var(--text-3)">준비 중</span>}</dd>
+            <dt>LINKS</dt>
+            <dd class="gd__links">
+              {extLinks.length ? extLinks.map((l) => <a href={l.href} target="_blank" rel="noopener">{l.label} ↗</a>) : <span style="color:var(--text-3)">준비 중</span>}
+            </dd>
           </div>
         </dl>
       </header>
@@ -109,7 +109,6 @@ const bugLabels = [
           <section class="gsec">
             <div class="gsec__h">
               <h2>장면들</h2>
-              {hasDemo && <span class="cap">데모 프레임 포함</span>}
             </div>
             <div class="stills">
               {stills.map((s) => (
@@ -162,7 +161,6 @@ const bugLabels = [
     </div>
   </main>
 
-  <script is:inline src="/fx/attract.js"></script>
   <script>
     import { bootGame } from '../../scripts/game';
     bootGame();

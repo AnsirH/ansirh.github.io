@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
-import { SITE, INTRO, ABOUT, CHAPTERS, TOOLS, CONTACT } from '../consts';
+import { SITE, INTRO, ABOUT, TIMELINE, TOOLS, CONTACT } from '../consts';
 import '../styles/home.css';
 
 const byOrder = (a: { data: { order: number } }, b: { data: { order: number } }) =>
@@ -16,6 +16,10 @@ const pad2 = (n: number) => String(n).padStart(2, '0');
 const aboutWords = ABOUT.split(/\s+/);
 const introLabel = INTRO.words.map((w) => w.text).join('').trim();
 const links = CONTACT.links.filter((l) => l.href);
+// 지나온 시간: 연도별 묶음. 오도미터는 연도(4자리)만 굴린다
+const years = [...new Set(TIMELINE.map((e) => e.date.slice(0, 4)))];
+const firstYear = TIMELINE[0]?.date.slice(0, 4) ?? '';
+const kindsOf = (e: (typeof TIMELINE)[number]) => [...new Set((e.links ?? []).map((l) => l.kind))];
 const pending = CONTACT.links.filter((l) => !l.href);
 ---
 
@@ -49,13 +53,12 @@ const pending = CONTACT.links.filter((l) => !l.href);
     <section id="works" aria-label="작품">
       <div class="works-intro pad">
         <span class="cap">작품 · {gameCount} 개의 장면</span>
-        <h2>직접 플레이할 수 있는<br />{gameCount} 개의 게임.</h2>
+        <h2>직접 만든<br />{gameCount} 개의 게임.</h2>
       </div>
       {
         games.map((g, i) => {
           const d = g.data;
-          const thumb = d.images[0] ?? d.demoImages[0] ?? '';
-          const isDemoThumb = !d.images[0];
+          const thumb = d.images[0]?.src ?? '';
           const href = `/games/${d.slug}`;
           return (
             <article class="scene" data-light={d.light}>
@@ -65,23 +68,21 @@ const pending = CONTACT.links.filter((l) => !l.href);
                   <h3>{d.title}</h3>
                   {d.line && <p class="scene__line">{d.line}</p>}
                   <span class="scene__meta">
-                    {d.period && <span>{d.period}</span>}
+                    {d.period && <span>{d.period}{d.event && ` · ${d.event}`}</span>}
                     {d.role && <span>{d.role}</span>}
                   </span>
-                  <a class="scene__go" href={href}>들어가서 플레이하기 <span aria-hidden="true">→</span></a>
+                  <a class="scene__go" href={href}>{d.playUrl ? '들어가서 플레이하기' : '들어가서 보기'} <span aria-hidden="true">→</span></a>
                 </div>
-                <figure class:list={['scene__pic', { px: isDemoThumb }]} data-href={href}>
-                  {thumb && <img src={thumb} alt={`${d.title} ${isDemoThumb ? '데모 화면' : '스크린샷'}`} loading={i === 0 ? 'eager' : 'lazy'} />}
+                <figure class="scene__pic" data-href={href}>
+                  {thumb && <img src={thumb} alt={`${d.title} 스크린샷`} loading={i === 0 ? 'eager' : 'lazy'} />}
                   {
                     d.video && (
                       <Fragment>
                         <video muted loop playsinline preload="none" data-src={d.video} aria-hidden="true" />
                         <span class="rec">플레이 영상</span>
-                        {d.videoIsDemo && <span class="demo">데모 영상</span>}
                       </Fragment>
                     )
                   }
-                  {isDemoThumb && thumb && <figcaption class="cap">데모 화면</figcaption>}
                 </figure>
               </div>
             </article>
@@ -92,9 +93,9 @@ const pending = CONTACT.links.filter((l) => !l.href);
 
     <section class="notes pad" id="notes" aria-label="작업 노트">
       <div class="sec-h">
-        <span class="cap">작업 노트</span>
-        <h2>게임 뒤에서 움직이는 것들.</h2>
-        <p>화면에 드러나지 않는 시스템 작업 {work.length}가지. 줄 위에 커서를 올리면 장면이 비칩니다.</p>
+        <span class="cap">작업 노트 · NC AI</span>
+        <h2>캐릭터 뒤에서 움직이는 것들.</h2>
+        <p>NC AI에서 만든 것 중 {work.length}가지를 골랐습니다. 줄 위에 커서를 올리면 장면이 비칩니다.</p>
       </div>
       <div class="rows">
         {
@@ -111,37 +112,54 @@ const pending = CONTACT.links.filter((l) => !l.href);
     </section>
 
     <section class="time pad" id="time" aria-label="지나온 시간">
-      <div class="sec-h"><span class="cap">지나온 시간</span><h2>여기까지 걸어온 길.</h2></div>
+      <div class="sec-h"><span class="cap">지나온 시간 · {years[0]} – {years[years.length - 1]}</span><h2>여기까지 걸어온 길.</h2></div>
       <div class="time__grid">
         <div class="time__stick" aria-hidden="true">
-          <div class="odo" id="odo" data-date={CHAPTERS[0]?.date}>
+          <div class="odo" id="odo">
             {
-              Array.from(CHAPTERS[0]?.date ?? '').map((ch) =>
-                ch === '.' ? (
-                  <span class="odo__dot">.</span>
-                ) : (
-                  <span class="odo__col">
-                    <span style={`transform: translateY(-${ch}em)`}>
-                      {Array.from({ length: 10 }, (_, n) => <span>{n}</span>)}
-                    </span>
+              Array.from(firstYear).map((ch) => (
+                <span class="odo__col">
+                  <span style={`transform: translateY(-${ch}em)`}>
+                    {Array.from({ length: 10 }, (_, n) => <span>{n}</span>)}
                   </span>
-                ),
-              )
+                </span>
+              ))
             }
           </div>
-          <p class="odo-label" id="odoLabel">{CHAPTERS[0]?.title}</p>
+          <p class="odo-label" id="odoLabel"><span class="cap">{TIMELINE[0]?.date}</span><b>{TIMELINE[0]?.title}</b></p>
         </div>
-        <div class="chapters">
+        <div class="tl">
           {
-            CHAPTERS.map((c) => (
-              <article class="chap" data-date={c.date}>
-                <span class="cap">{c.date}</span>
-                <h3 style="--k:0">
-                  {c.title}
-                  {c.dummy && <span class="ex">예시</span>}
-                </h3>
-                {c.lines.map((l, k) => <span class="ln" style={`--k:${k + 1}`}>{l}</span>)}
-              </article>
+            years.map((y) => (
+              <section class="yr" data-year={y} aria-label={`${y}년`}>
+                <h3 class="yr__y">{y}</h3>
+                <ol>
+                  {TIMELINE.filter((e) => e.date.startsWith(y)).map((e) => (
+                    <li class:list={['ev', { pick: e.links?.length }]} data-date={e.date} data-end={e.end ?? ''}>
+                      <span class="ev__m">{e.date.slice(5)}</span>
+                      <span>
+                        <span class="ev__t">{e.title}</span>
+                        {e.end && <span class="ev__end">– {e.end}</span>}
+                        {e.links?.length ? (
+                          <span class="ev__links">
+                            {kindsOf(e).map((k) => (
+                              <Fragment>
+                                <span class="ev__k">{k}</span>
+                                {(e.links ?? []).filter((l) => l.kind === k).map((l, j) => (
+                                  <Fragment>
+                                    {j > 0 && <i aria-hidden="true">·</i>}
+                                    <a href={l.href}>{l.label}</a>
+                                  </Fragment>
+                                ))}
+                              </Fragment>
+                            ))}
+                          </span>
+                        ) : null}
+                      </span>
+                    </li>
+                  ))}
+                </ol>
+              </section>
             ))
           }
         </div>

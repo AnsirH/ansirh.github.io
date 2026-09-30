@@ -16,7 +16,18 @@
 .wd__result { font-family: var(--serif); font-weight: 300; font-size: clamp(28px, 3.6vw, 48px); letter-spacing: -0.03em; max-width: 18em; line-height: 1.35; }
 .wd__result em { font-style: normal; color: var(--lamp); }
 .wd__body { color: var(--text-2); max-width: 40em; }
-.wd__body :is(h2, h3) { font-family: var(--serif); font-weight: 400; color: var(--text); margin-block: 1.4em 0.4em; }
+.wd__body { display: grid; gap: 1em; font-size: 16.5px; line-height: 1.85; border-top: 1px solid var(--line); padding-top: 6vh; }
+.wd__body :is(h2, h3) { font-family: var(--serif); font-weight: 400; font-size: clamp(22px, 2.2vw, 28px); letter-spacing: -0.02em; color: var(--text); margin: 1.6em 0 0.2em; }
+.wd__body > :first-child { margin-top: 0; }
+.wd__body p, .wd__body ul { margin: 0; }
+.wd__body ul { padding-left: 1.2em; display: grid; gap: 0.5em; }
+.wd__body strong { color: var(--text); font-weight: 500; }
+.wd__body em { font-style: normal; color: var(--text); }
+.wd__body table { width: 100%; border-collapse: collapse; font-size: 15px; }
+.wd__body th { text-align: left; font-weight: 400; font-size: 13px; color: var(--text-3); padding: 0 16px 8px 0; }
+.wd__body td { vertical-align: top; padding: 12px 16px 12px 0; border-top: 1px solid var(--line); }
+.wd__body td:first-child { color: var(--text); white-space: nowrap; }
+@media (max-width: 700px) { .wd__body table, .wd__body tbody, .wd__body tr, .wd__body td { display: block; } .wd__body thead { display: none; } .wd__body td { border-top: 0; padding: 2px 0; } .wd__body tr { border-top: 1px solid var(--line); padding-block: 10px; } .wd__body td:first-child { white-space: normal; } }
 @media (max-width: 800px) { .pac { grid-template-columns: minmax(0, 1fr); gap: 24px; } }
 
 /* ===== 게임 상세: 어둠 속 오락기 (레트로) ===== */
@@ -26,8 +37,10 @@
 .gd__top { display: flex; justify-content: space-between; gap: 16px; }
 .cab { margin: 7vh auto 0; max-width: 980px; }
 .screen { position: relative; aspect-ratio: 16 / 9; max-width: 100%; overflow: hidden; background: #000; border-radius: 3% / 5%; box-shadow: 0 0 0 10px #0f0e0c, 0 0 0 11px #1e1c19, 0 0 90px 10px color-mix(in oklab, var(--g1) 28%, transparent), 0 0 220px 40px color-mix(in oklab, var(--g2) 12%, transparent); }
-.screen canvas, .screen iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-.screen canvas { image-rendering: pixelated; }
+.screen iframe, .screen__shot { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.screen iframe { background: #000; }
+.screen__shot { object-fit: cover; filter: brightness(0.55) saturate(0.9); }
+.screen__ui { background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.55)) !important; }
 .screen::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.34) 0 1px, transparent 1px 3px), radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 0, 0.72)); }
 .screen.live::after { display: none; }
 .screen__ui { position: absolute; inset: 0; z-index: 2; display: grid; place-items: center; text-align: center; width: 100%; border: 0; background: transparent; cursor: pointer; padding: 0; color: #fff; }
@@ -54,6 +67,8 @@
 .gd__meta dt { font-family: var(--pixel); font-size: 10.5px; color: var(--g1); }
 .gd__meta dd { font-size: 14.5px; color: var(--text); }
 .gd__meta dd a { color: var(--text); }
+.gd__links { display: flex; flex-wrap: wrap; gap: 2px 14px; }
+.gd__event { color: var(--text-2); font-size: 13px; }
 .gsec { margin-top: 14vh; display: grid; gap: 30px; }
 .gsec__h { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; border-bottom: 1px solid var(--line); padding-bottom: 12px; }
 .gsec__h h2 { font-family: var(--serif); font-weight: 400; font-size: clamp(24px, 2.6vw, 34px); letter-spacing: -0.02em; }

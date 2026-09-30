@@ -30,27 +30,29 @@ const games = defineCollection({
     slug: z.string(),
     /** 진행 기간 (예: "2025.03 – 2025.05"). 빈 값 허용 */
     period: z.string().default(''),
+    /** 출품한 대회·공모전 (예: "NHN NAN 2026 게임잼"). 빈 값 허용 */
+    event: z.string().default(''),
     /** 내가 맡은 역할 한 줄. 빈 값 허용 */
     role: z.string().default(''),
     /** 사용 기술 태그 */
     techStack: z.array(z.string()).default([]),
     /** 소스 저장소 링크. 빈 값이면 "준비 중" */
     repoUrl: z.string().default(''),
-    /** WebGL 빌드 진입 경로 (예: /builds/<name>/index.html). 빈 값이면 "빌드 준비 중" */
+    /** 브라우저에서 플레이할 WebGL 빌드 주소. 있으면 오락기 화면에서 PRESS START로 바로 실행 */
     playUrl: z.string().default(''),
-    /** 실제 스크린샷 경로 배열. 첫 장이 메인 썸네일 */
-    images: z.array(z.string()).default([]),
-    /** 스크린샷이 부족할 때 채우는 데모 프레임 (public 경로) */
-    demoImages: z.array(z.string()).default([]),
-    /** 썸네일에 마우스를 올리면 재생되는 플레이 영상 (무음 webm 루프) */
+    /** playUrl 이 없을 때 오락기 화면에 띄우는 안내 (예: "Android 전용 · APK로 플레이") */
+    playNote: z.string().default(''),
+    /** 추가 링크 (플레이 영상, 다운로드 등) */
+    links: z.array(z.object({ label: z.string(), href: z.string() })).default([]),
+    /** 스크린샷 경로 배열. 첫 장이 메인 썸네일이자 오락기 화면 */
+    images: z.array(z.object({ src: z.string(), caption: z.string().default('') })).default([]),
+    /** 썸네일에 마우스를 올리면 재생되는 플레이 영상 (무음 webm 루프). 비우면 재생 없음 */
     video: z.string().default(''),
-    /** 영상이 실제 플레이 영상이 아니라 데모 루프이면 true */
-    videoIsDemo: z.boolean().default(false),
     /** 메인 작품 구간의 광원 색 프리셋 */
     light: z.enum(['candle', 'dawn', 'stage', 'neon', 'forest', 'ember']).default('candle'),
     /** 게임 상세(오락기 화면)의 대표 색 두 가지 */
     colors: z.tuple([z.string(), z.string()]).default(['#ff3fa4', '#22d3ee']),
-    /** 조작 키 — 마지막 원소가 설명, 앞은 키 이름 (예: ["←", "→", "조향"]) */
+    /** 조작 키 — 마지막 원소가 설명, 앞은 키 이름 (예: ["←", "→", "이동"]) */
     controls: z.array(z.array(z.string()).min(2)).default([]),
     /** "무엇을 만들었나" 세 칸 */
     highlights: z.array(z.object({ label: z.string(), text: z.string() })).default([]),

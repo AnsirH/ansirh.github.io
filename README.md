@@ -29,11 +29,11 @@ src/
 │   └── work/[slug].astro  # 작업 상세 (문제 · 접근 · 결과)
 ├── scripts/
 │   ├── home.ts            # 메인 연출 (광원, 스크롤, 오도미터, 호버 영상)
-│   └── game.ts            # 게임 상세 연출 (어트랙트, PRESS START, 버그 기록 타이핑)
+│   └── game.ts            # 게임 상세 연출 (PRESS START, WebGL 실행, 버그 기록 타이핑)
 └── styles/                # global.css · home.css · detail.css
 public/
-├── fx/                    # fluid-light.js, attract.js(게임별 픽셀 데모 루프), 디더링 텍스처
-├── images/                # 스크린샷 · 데모 프레임
+├── fx/                    # fluid-light.js, 디더링 텍스처
+├── images/                # 스크린샷
 └── videos/                # 썸네일 호버 플레이 영상 (무음 webm 루프)
 ```
 
@@ -42,13 +42,13 @@ public/
 페이지 코드를 건드리지 않고 `src/content/games/` 또는 `src/content/work/` 의 `.md` 를 추가·수정하면
 메인과 상세 페이지가 함께 바뀐다. 필드 설명은 `src/content.config.ts` 주석 참고.
 
-- **스크린샷**: `images` 에 경로를 넣으면 첫 장이 메인 썸네일이 되고, 데모 프레임(`demoImages`)보다 먼저 쓰인다.
-- **플레이 영상**: 10~15초 무음 루프, 가로 960~1280px, webm 권장. `public/videos/` 에 두고 `video` 에 경로, `videoIsDemo: false`.
-- **WebGL 빌드**: `public/builds/<게임명>/` 에 두고 `playUrl: "/builds/<게임명>/index.html"`.
-  (`public/games/` 는 게임 상세 페이지 주소와 겹치므로 쓰지 않는다.)
+- **스크린샷**: `images` 의 첫 장이 메인 썸네일이자 오락기 화면, 나머지가 "장면들"이 된다.
+- **플레이 영상**: 10~15초 무음 루프, 가로 960~1280px, webm 권장. `public/videos/` 에 두고 `video` 에 경로를 넣으면 썸네일에 마우스를 올릴 때 재생된다.
+- **WebGL 빌드**: 외부에 배포된 주소를 `playUrl` 에 넣거나, `public/builds/<게임명>/` 에 두고 `playUrl: "/builds/<게임명>/index.html"`.
+  (`public/games/` 는 게임 상세 페이지 주소와 겹치므로 쓰지 않는다.) 브라우저 빌드가 없으면 `playNote` 와 `links` 로 안내한다.
 - **작업 결과 문장**: `result` 의 `**강조**` 부분이 등불색으로 표시된다.
 - **본문**: `.md` 본문을 쓰면 게임 상세의 "구현 노트", 작업 상세 하단에 표시된다.
-- 소개 문구, 지나온 시간, 다루는 것, 연락처는 `src/consts.ts` 에서 바꾼다.
+- 소개 문구, 지나온 시간(`TIMELINE` — 작품·작업 노트 연결 포함), 다루는 것, 연락처는 `src/consts.ts` 에서 바꾼다.
   `CONTACT.email` 을 채우면 메일 주소와 복사 버튼이 나타난다.
 
 ## 방문자 통계
