@@ -433,7 +433,12 @@ export async function boot() {
     function play(c: HTMLElement) {
       pics.forEach((o) => o !== c && stop(o));
       const v = vid(c);
-      if (!v.src) v.src = v.dataset.src || '';
+      if (!v.src) {
+        // mp4(H.264)를 못 여는 브라우저(일부 오픈소스 Chromium 등)는 같은 이름의 webm으로
+        const src = v.dataset.src || '';
+        const mp4ok = v.canPlayType('video/mp4; codecs="avc1.4D401E"') !== '';
+        v.src = !mp4ok && /\.mp4$/.test(src) ? src.replace(/\.mp4$/, '.webm') : src;
+      }
       c.classList.add('playing');
       v.play().catch(() => c.classList.remove('playing'));
     }

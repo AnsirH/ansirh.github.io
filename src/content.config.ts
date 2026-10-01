@@ -46,7 +46,7 @@ const games = defineCollection({
     links: z.array(z.object({ label: z.string(), href: z.string() })).default([]),
     /** 스크린샷 경로 배열. 첫 장이 메인 썸네일이자 오락기 화면 */
     images: z.array(z.object({ src: z.string(), caption: z.string().default('') })).default([]),
-    /** 썸네일에 마우스를 올리면 재생되는 플레이 영상 (무음 webm 루프). 비우면 재생 없음 */
+    /** 썸네일에 마우스를 올리면 재생되는 플레이 영상 (무음 mp4 루프). 같은 이름의 .webm 을 두면 mp4 를 못 여는 브라우저에서 대신 재생. 비우면 재생 없음 */
     video: z.string().default(''),
     /** 메인 작품 구간의 광원 색 프리셋 */
     light: z.enum(['candle', 'dawn', 'stage', 'neon', 'forest', 'ember']).default('candle'),

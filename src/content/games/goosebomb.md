@@ -16,7 +16,7 @@ images:
     caption: "던전 전투"
   - src: "/images/games/goosebomb/boss.jpg"
     caption: "보스전"
-video: ""
+video: "/videos/goosebomb.mp4"
 light: "neon"
 colors: ["#f5c542", "#ff5a3c"]
 controls: [["←", "→", "↑", "↓", "이동"], ["Z", "폭탄 설치"], ["X", "폭탄 교체"], ["F", "상호작용"]]
