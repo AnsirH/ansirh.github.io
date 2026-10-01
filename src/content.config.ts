@@ -44,6 +44,8 @@ const games = defineCollection({
     playNote: z.string().default(''),
     /** 추가 링크 (플레이 영상, 다운로드 등) */
     links: z.array(z.object({ label: z.string(), href: z.string() })).default([]),
+    /** 게임 상세 오락기 화면에 깔 이미지. 비우면 images 첫 장 (키 아트처럼 로고가 든 이미지를 피할 때 지정) */
+    cover: z.string().default(''),
     /** 스크린샷 경로 배열. 첫 장이 메인 썸네일이자 오락기 화면 */
     images: z.array(z.object({ src: z.string(), caption: z.string().default('') })).default([]),
     /** 썸네일에 마우스를 올리면 재생되는 플레이 영상 (무음 mp4 루프). 같은 이름의 .webm 을 두면 mp4 를 못 여는 브라우저에서 대신 재생. 비우면 재생 없음 */

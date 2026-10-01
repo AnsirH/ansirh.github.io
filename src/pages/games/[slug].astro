@@ -21,7 +21,7 @@ const pad2 = (n: number) => String(n).padStart(2, '0');
 const [c1, c2] = d.colors;
 
 // 오락기 화면 = 첫 스크린샷, 장면들 = 나머지 스크린샷 (최대 3장)
-const cover = d.images[0]?.src ?? '';
+const cover = d.cover || (d.images[0]?.src ?? '');
 const stills = d.images.slice(d.images.length > 1 ? 1 : 0, 4).map((im, k) => ({ src: im.src, label: im.caption || `CAPTURE ${pad2(k + 1)}` }));
 const extLinks = [...(d.repoUrl ? [{ label: 'GitHub', href: d.repoUrl }] : []), ...d.links];
 const bugLabels = [

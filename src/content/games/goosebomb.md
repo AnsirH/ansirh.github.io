@@ -11,7 +11,10 @@ repoUrl: "https://github.com/lhwsam/GooseBomb-OpenAI-Project"
 playUrl: "https://lhwsam.github.io/GooseBomb-OpenAI-Project/"
 playNote: ""
 links: []
+cover: "/images/games/goosebomb/gameplay.jpg"
 images:
+  - src: "/images/games/goosebomb/key-art.jpg"
+    caption: "키 아트"
   - src: "/images/games/goosebomb/gameplay.jpg"
     caption: "던전 전투"
   - src: "/images/games/goosebomb/boss.jpg"
