@@ -40,6 +40,12 @@ const games = defineCollection({
     repoUrl: z.string().default(''),
     /** 브라우저에서 플레이할 WebGL 빌드 주소. 있으면 오락기 화면에서 PRESS START로 바로 실행 */
     playUrl: z.string().default(''),
+    /**
+     * 고정 크기로 그리는 WebGL 페이지(Unity 기본 템플릿 등)일 때: 게임 화면 크기와 페이지 전체 높이.
+     * 페이지를 원래 크기로 띄워 게임 화면(width×height)만 보이게 자르고, 오락기 화면에 맞춰 축소한다.
+     * 비우면 iframe 을 화면에 꽉 채운다 (반응형 템플릿).
+     */
+    playFrame: z.object({ width: z.number(), height: z.number(), pageHeight: z.number() }).optional(),
     /** playUrl 이 없을 때 오락기 화면에 띄우는 안내 (예: "Android 전용 · APK로 플레이") */
     playNote: z.string().default(''),
     /** 추가 링크 (플레이 영상, 다운로드 등) */

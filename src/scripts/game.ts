@@ -9,7 +9,7 @@ export function bootGame() {
   if (!reduce) root.classList.add('motion');
   const gd = document.querySelector<HTMLElement>('.gd');
   if (!gd) return;
-  const { play = '', note = '' } = gd.dataset;
+  const { play = '', note = '', frame = '' } = gd.dataset;
 
   // PRESS START
   const btn = document.getElementById('gdStart') as HTMLButtonElement;
@@ -30,7 +30,24 @@ export function bootGame() {
         f.title = `${document.title} WebGL 빌드`;
         f.allow = 'fullscreen; autoplay';
         screen.classList.add('live');
-        screen.replaceChildren(f);
+        const [fw, fh, ph] = frame.split(',').map(Number);
+        if (fw && fh && ph) {
+          // 고정 크기 페이지: 원래 크기로 띄우고 게임 화면만 남겨 오락기 화면에 맞게 축소
+          const fit = document.createElement('div');
+          fit.className = 'screen__fit';
+          fit.style.width = fw + 'px';
+          fit.style.height = fh + 'px';
+          f.style.width = fw + 'px';
+          f.style.height = ph + 'px';
+          fit.appendChild(f);
+          screen.replaceChildren(fit);
+          const resize = () => {
+            const s = Math.min(screen.clientWidth / fw, screen.clientHeight / fh);
+            fit.style.transform = `translate(-50%, -50%) scale(${s})`;
+          };
+          resize();
+          new ResizeObserver(resize).observe(screen);
+        } else screen.replaceChildren(f);
         f.focus();
       } else {
         const msg = document.createElement('span');

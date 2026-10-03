@@ -34,7 +34,7 @@ const bugLabels = [
 
 <Layout title={d.title} description={d.description}>
   <main class="stage">
-    <div class="gd pad" style={`--g1:${c1};--g2:${c2}`} data-play={d.playUrl} data-note={d.playNote}>
+    <div class="gd pad" style={`--g1:${c1};--g2:${c2}`} data-play={d.playUrl} data-note={d.playNote} data-frame={d.playFrame ? `${d.playFrame.width},${d.playFrame.height},${d.playFrame.pageHeight}` : undefined}>
       <div class="gd__top">
         <a class="back" href="/#works">← 작품으로</a>
         <span class="cap">{ORDINAL[index]} 번째 장면 · {pad2(index + 1)} / {pad2(total)}</span>
