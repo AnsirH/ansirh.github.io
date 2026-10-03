@@ -8,7 +8,7 @@ event: "NHN NAN 2026 게임잼 사전 과제"
 role: "2인 팀 — 아웃게임 담당 (방 그래프 · 군대 배치 · 아이템 · 증강 · 런 진행)"
 techStack: ["Unity 6", "C#", "ScriptableObject", "DOTween", "Unity Test Runner", "Claude Code"]
 repoUrl: "https://github.com/AnsirH/NHN_Project"
-playUrl: ""
+playUrl: "https://ansirh.github.io/NHN_Project/"
 playNote: ""
 links: []
 images:
@@ -31,7 +31,7 @@ highlights:
     text: "전투 밖의 모든 것. 방 그래프 생성과 진행, 군대 배치 화면(드래그 앤 드롭), 아이템 부여와 귀속, 증강 방, 적 편성과 난이도 커브, 전투로 넘기는 데이터 계약까지."
   - label: "결과"
     text: "메인 메뉴부터 보스 처치까지 한 런이 끝까지 도는 빌드를 제출했습니다. 인게임 파트와 합칠 때 충돌은 설정 파일 3건뿐이었습니다."
-order: 1
+order: 2
 troubleshooting:
   - problem: "전투방만 연달아 고르는 런에서는 플레이어는 그대로인데 적만 계속 강해졌습니다."
     cause: "적 생성 난이도가 맵 진행 깊이(층수)에만 반응했습니다. 플레이어가 강해지는 시점과 적이 강해지는 시점이 서로 무관했습니다."
