@@ -9,7 +9,6 @@ role: "2인 팀 — 아웃게임 담당 (방 그래프 · 군대 배치 · 아�
 techStack: ["Unity 6", "C#", "ScriptableObject", "DOTween", "Unity Test Runner", "Claude Code"]
 repoUrl: "https://github.com/AnsirH/NHN_Project"
 playUrl: "https://ansirh.github.io/NHN_Project/"
-playFrame: { width: 960, height: 600, pageHeight: 642 }
 playNote: ""
 links: []
 images:
