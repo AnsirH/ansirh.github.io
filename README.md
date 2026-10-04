@@ -1,6 +1,6 @@
 # ansirh.github.io
 
-Unity 게임 클라이언트 개발자 포트폴리오 사이트. GitHub Pages User Page (`https://ansirh.github.io`).
+게임 클라이언트 개발자 (Unity·Godot) 포트폴리오 사이트. GitHub Pages User Page (`https://ansirh.github.io`).
 
 디자인 테마는 **암실** — 단일 다크, 박스·라운드 없이 선과 여백만, 빛은 아껴 쓴다.
 첫 화면은 유체 광원 인트로(어둠 → 빛이 피어오름 → 스크롤로 소등), 소개~작품 구간에서 다시 켜지고,

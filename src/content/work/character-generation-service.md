@@ -1,7 +1,7 @@
 ---
 title: "캐릭터 자동 생성 서비스"
 period: "2026.07"
-description: "전신샷 한 장에서 파츠 이미지, 3D 에셋, 웹 편집까지 이어지는 생성형 AI 캐릭터 제작 워크벤치."
+description: "전신샷 한 장에서 파츠 이미지, 3D 에셋, 웹 편집까지 이어지는 AI 캐릭터 제작 자동화 워크벤치."
 slug: "character-generation-service"
 techStack: ["React", "TypeScript", "Three.js", "Express", "Gemini", "VARCO3D", "Docker", "Playwright"]
 images: []
@@ -12,7 +12,7 @@ result: "전신샷 한 장에서 **파츠 이미지 → 3D 에셋 → 웹 편집
 order: 3
 ---
 
-NC AI 사내 자율 연구로 혼자 만든 캐릭터 제작 워크벤치입니다. 기능마다 독립된 페이지가 있고, 각 페이지에서 그 기능을 실행합니다. 얼굴 리깅 자동화도 이 워크벤치의 한 페이지입니다.
+NC AI 사내 자율 연구로 혼자 만든 AI 캐릭터 제작 자동화 워크벤치입니다. 기능마다 독립된 페이지가 있고, 각 페이지에서 그 기능을 실행합니다. 얼굴 리깅 자동화도 이 워크벤치의 한 페이지입니다.
 
 ## 기능
 

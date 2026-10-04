@@ -7,16 +7,16 @@ export const SITE = {
   /** 이름 */
   name: '허한결',
   /** 직군 한 줄 */
-  role: 'Unity 게임 클라이언트 개발자',
+  role: '게임 클라이언트 개발자 (Unity·Godot)',
   /** <meta name="description"> 기본값 */
-  description: 'Unity 게임 클라이언트 개발자 허한결의 포트폴리오. 플레이할 수 있는 게임과 시스템 작업을 담았습니다.',
+  description: '게임 클라이언트 개발자 (Unity·Godot) 허한결의 포트폴리오. 플레이할 수 있는 게임과 시스템 작업을 담았습니다.',
 } as const;
 
 /** 인트로 — 한 단어씩 켜지는 첫 문장. hot 은 등불색으로 남는 단어 */
 export const INTRO = {
   words: [{ text: '빛이 ' }, { text: '머무는 ' }, { text: '장면을 ', hot: true }, { text: '만듭니다.' }],
   /** 첫 문장 아래 소개. <b> 로 강조 */
-  sub: '<b>Unity</b>로 게임을 만드는 허한결입니다. 화면 위에서 빛이 어떻게 번지고 사라지는지에 오래 머무는 편입니다.',
+  sub: '<b>게임 클라이언트 개발자 (Unity·Godot)</b> 허한결입니다. 화면 위에서 빛이 어떻게 번지고 사라지는지에 오래 머무는 편입니다.',
 } as const;
 
 /** 소개 — 스크롤에 따라 단어가 켜지는 문단 */
@@ -44,6 +44,7 @@ const note = (label: string, slug: string): TimelineLink => ({ kind: '작업 노
 const game = (label: string, slug: string): TimelineLink => ({ kind: '작품', label, href: `/games/${slug}` });
 export const TIMELINE: readonly TimelineEntry[] = [
   { date: '2020.08', title: 'ELEMENTALIST', tag: 'GameDev' },
+  { date: '2021.03', title: '가천대 입학', tag: 'Education' },
   { date: '2021.07', title: 'CONSTELLATION', tag: 'GameDev' },
   { date: '2021.10', title: 'POKEMON 3D', tag: 'GameDev' },
   { date: '2021.12', title: 'Samurai Shodown', tag: 'GameDev' },
@@ -62,20 +63,20 @@ export const TIMELINE: readonly TimelineEntry[] = [
   { date: '2025.08', end: '2025.11', title: 'AI 스터디', tag: 'Education' },
   { date: '2025.12', title: 'TAB GAMES 스킬 시스템', tag: 'GameDev' },
   {
-    date: '2025.12', end: '2026.09', title: 'NC AI 아바타 클라이언트', tag: 'Client',
+    date: '2025.12', end: '2026.09', title: 'AI 아바타 클라이언트 (Unity·Godot)', tag: 'Client',
     links: [note('아바타 립싱크', 'avatar-lipsync'), note('털 · 카툰 셰이더', 'fur-toon-shaders'), note('테스트 자동화', 'test-automation')],
   },
   { date: '2026.02', title: '가천대 졸업', tag: 'Education' },
   { date: '2026.04', title: 'Carefor RPA 툴', tag: 'Automation' },
   { date: '2026.04', title: '업무일지 에이전트', tag: 'AI Agent' },
   { date: '2026.05', title: 'KCC 이동 패키지', tag: 'GameDev' },
-  { date: '2026.05', title: '스팀 타워 조립 게임', tag: 'GameDev', links: [game('TinkerTower', 'tinkertower')] },
+  { date: '2026.05', end: '현재', title: '스팀 타워 조립 게임', tag: 'GameDev', links: [game('TinkerTower', 'tinkertower')] },
   { date: '2026.06', title: 'AWS Summit / AI League', tag: 'Event' },
   {
-    date: '2026.07', title: 'AI 캐릭터 제작 워크벤치', tag: 'AI Tool',
+    date: '2026.07', title: 'AI 캐릭터 제작 자동화 워크벤치', tag: 'AI Tool',
     links: [note('캐릭터 자동 생성 서비스', 'character-generation-service'), note('얼굴 리깅 자동화', 'face-rigging-automation')],
   },
-  { date: '2026.07', title: 'NHN NAN 해커톤', tag: 'GameDev', links: [game('ClayWars', 'claywars')] },
+  { date: '2026.07', title: 'NHN NAN 2026 게임잼 사전 과제', tag: 'GameDev', links: [game('ClayWars', 'claywars')] },
   { date: '2026.08', title: 'WebGL CI + SSH 배포', tag: 'DevOps' },
   { date: '2026.08', title: 'OpenAI Game Builders 공모전', tag: 'GameDev', links: [game('GooseBomb', 'goosebomb')] },
 ];
@@ -96,7 +97,6 @@ export const CONTACT = {
   email: '',
   links: [
     { label: 'GitHub', href: 'https://github.com/AnsirH' },
-    { label: '이력서 PDF', href: '' },
   ],
 } as const;
 

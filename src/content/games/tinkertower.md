@@ -3,7 +3,7 @@ title: "TinkerTower"
 description: "1인칭으로 작업실을 돌아다니며 부품을 끼워 나만의 타워를 설계하고, 그 타워로 몰려오는 적을 막는 타워 디펜스."
 line: "몸체에 서브 몸체를, 서브 몸체에 무기를. 무게중심이 틀어진 타워는 쏠 때마다 조금씩 기울어진다."
 slug: "tinkertower"
-period: "2026.03 – 2026.09"
+period: "2026.05 – 현재 진행 중"
 event: ""
 role: "1인 개발 — 기획 · 프로그래밍"
 techStack: ["Unity 6", "URP", "C#", "Input System", "NavMesh", "ScriptableObject", "UI Toolkit", "Unity Test Runner", "Claude Code"]
