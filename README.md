@@ -17,16 +17,15 @@
 
 ```text
 src/
-├── consts.ts              # 사이트 메타 · 인트로/소개 문구 · 지나온 시간 · 다루는 것 · 연락
+├── consts.ts              # 사이트 메타 · 인트로/소개 문구 · 타임라인 · 다루는 것 · 연락
 ├── content.config.ts      # games / work 컬렉션 스키마
 ├── content/
 │   ├── games/*.md         # 게임 (frontmatter)
-│   └── work/*.md          # 작업 (frontmatter)
+│   └── work/*.md          # 경력 카드 (이미지 · 제목 · 기간 · 설명, 상세 페이지 없음)
 ├── layouts/Layout.astro   # 공통 레이아웃 (머리글/내비, 폰트, 통계)
 ├── pages/
 │   ├── index.astro        # 메인
-│   ├── games/[slug].astro # 게임 상세 (오락기 화면 + WebGL 임베드)
-│   └── work/[slug].astro  # 작업 상세 (문제 · 접근 · 결과)
+│   └── games/[slug].astro # 게임 상세 (오락기 화면 + WebGL 임베드)
 ├── scripts/
 │   ├── home.ts            # 메인 연출 (광원, 스크롤, 오도미터, 호버 영상)
 │   └── game.ts            # 게임 상세 연출 (PRESS START, WebGL 실행, 버그 기록 타이핑)

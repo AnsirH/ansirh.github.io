@@ -388,38 +388,6 @@ export async function boot() {
     })(last);
   })();
 
-  /* ---------- 작업 노트: 커서를 따라 비치는 장면 ---------- */
-  (function () {
-    const peek = $('peek'), art = peek.firstElementChild as HTMLElement;
-    let x = 0, y = 0, tx = 0, ty = 0, on = false, raf = 0;
-    function loop() {
-      x += (tx - x) * 0.16;
-      y += (ty - y) * 0.16;
-      peek.style.transform = 'translate(' + (x + 24) + 'px,' + (y - 110) + 'px)';
-      if (on) raf = requestAnimationFrame(loop);
-    }
-    document.querySelectorAll<HTMLElement>('.row').forEach((r) => {
-      r.addEventListener('pointerenter', (e) => {
-        if (e.pointerType !== 'mouse') return;
-        art.style.background = r.dataset.art || '';
-        on = true;
-        peek.classList.add('on');
-        tx = x = e.clientX;
-        ty = y = e.clientY;
-        cancelAnimationFrame(raf);
-        loop();
-      });
-      r.addEventListener('pointermove', (e) => {
-        tx = e.clientX;
-        ty = e.clientY;
-      });
-      r.addEventListener('pointerleave', () => {
-        on = false;
-        peek.classList.remove('on');
-      });
-    });
-  })();
-
   /* ---------- 작품: 썸네일에 올리면 플레이 영상 ---------- */
   (function () {
     const pics = Array.from(document.querySelectorAll<HTMLElement>('.scene__pic')).filter((c) => c.querySelector('video'));

@@ -72,29 +72,22 @@ const games = defineCollection({
 });
 
 /**
- * 작업 컬렉션 — 포트폴리오에 선정한 시스템·툴 작업.
+ * 경력 컬렉션 — 메인 "경력" 구간에 이미지 한 장과 함께 나열하는 실무 작업. 상세 페이지는 없다.
  * 콘텐츠는 src/content/work/*.md 의 frontmatter 로 관리한다.
  */
 const work = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/work' }),
   schema: z.object({
     title: z.string(),
-    /** 진행 기간 (예: "2025.03 – 2025.05") */
+    /** 진행 기간 (예: "2025.12 – 2026.09") */
     period: z.string(),
+    /** 설명 1~2문장 */
     description: z.string(),
-    /** URL 세그먼트 — /work/<slug> */
+    /** 카드 앵커 — /#career-<slug> (타임라인에서 연결) */
     slug: z.string(),
-    /** 사용 기술 */
-    techStack: z.array(z.string()).default([]),
-    /** 스크린샷 경로 배열. 비어 있으면 art 그라데이션으로 대신 */
-    images: z.array(z.string()).default([]),
-    /** 이미지가 없을 때 쓰는 어두운 그라데이션 (CSS background) */
-    art: z.string().default('radial-gradient(60% 60% at 40% 40%, #2a1a0a, #000)'),
-    /** 문제 · 접근 · 결과 */
-    problem: z.string().default(''),
-    approach: z.string().default(''),
-    /** 결과 한 문장. **굵게** 표시한 부분이 등불색으로 강조된다 */
-    result: z.string().default(''),
+    /** 카드 이미지 (직접 그린 도식 등 공개 가능한 자료만) */
+    image: z.string().default(''),
+    imageAlt: z.string().default(''),
     /** 메인 페이지 정렬 순서 (작을수록 먼저) */
     order: z.number().default(0),
   }),

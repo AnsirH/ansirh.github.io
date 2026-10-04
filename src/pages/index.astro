@@ -9,18 +9,19 @@ const byOrder = (a: { data: { order: number } }, b: { data: { order: number } })
 const games = (await getCollection('games')).sort(byOrder);
 const work = (await getCollection('work')).sort(byOrder);
 
-const ORDINAL = ['첫', '두', '세', '네', '다섯', '여섯', '일곱', '여덟', '아홉'];
 const COUNT = ['한', '두', '세', '네', '다섯', '여섯', '일곱', '여덟', '아홉'];
 const gameCount = COUNT[games.length - 1] ?? String(games.length);
 const pad2 = (n: number) => String(n).padStart(2, '0');
 const aboutWords = ABOUT.split(/\s+/);
 const introLabel = INTRO.words.map((w) => w.text).join('').trim();
 const links = CONTACT.links.filter((l) => l.href);
-// 지나온 시간: 연도별 묶음. 오도미터는 연도(4자리)만 굴린다
+// 경력 구간 머리말 기간: 카드 기간들의 처음 – 끝
+const careerDates = work.flatMap((w) => w.data.period.split('–').map((t) => t.trim())).sort();
+const careerSpan = `${careerDates[0]} – ${careerDates[careerDates.length - 1]}`;
+// 타임라인: 연도별 묶음. 오도미터는 연도(4자리)만 굴린다
 const years = [...new Set(TIMELINE.map((e) => e.date.slice(0, 4)))];
 const firstYear = TIMELINE[0]?.date.slice(0, 4) ?? '';
 const kindsOf = (e: (typeof TIMELINE)[number]) => [...new Set((e.links ?? []).map((l) => l.kind))];
-const pending = CONTACT.links.filter((l) => !l.href);
 ---
 
 <Layout home>
@@ -52,8 +53,8 @@ const pending = CONTACT.links.filter((l) => !l.href);
 
     <section id="works" aria-label="작품">
       <div class="works-intro pad">
-        <span class="cap">작품 · {gameCount} 개의 장면</span>
-        <h2>직접 만든<br />{gameCount} 개의 게임.</h2>
+        <span class="cap">작품</span>
+        <h2>직접 만든<br />게임 {gameCount} 개</h2>
       </div>
       {
         games.map((g, i) => {
@@ -64,7 +65,7 @@ const pending = CONTACT.links.filter((l) => !l.href);
             <article class="scene" data-light={d.light}>
               <div class="scene__in pad">
                 <div class="scene__txt">
-                  <span class="scene__no">{ORDINAL[i]} 번째 장면 · {pad2(i + 1)} / {pad2(games.length)}</span>
+                  <span class="scene__no">{pad2(i + 1)} / {pad2(games.length)}</span>
                   <h3>{d.title}</h3>
                   {d.line && <p class="scene__line">{d.line}</p>}
                   <span class="scene__meta">
@@ -91,28 +92,30 @@ const pending = CONTACT.links.filter((l) => !l.href);
       }
     </section>
 
-    <section class="notes pad" id="notes" aria-label="작업 노트">
+    <section class="career pad" id="career" aria-label="경력">
       <div class="sec-h">
-        <span class="cap">작업 노트 · NC AI</span>
-        <h2>캐릭터 뒤에서 움직이는 것들.</h2>
-        <p>NC AI에서 만든 것 중 {work.length}가지를 골랐습니다. 줄 위에 커서를 올리면 장면이 비칩니다.</p>
+        <span class="cap">경력 · {careerSpan}</span>
+        <h2>대화형 3D 캐릭터 클라이언트를 만들며 한 일</h2>
+        <p>NC AI에서 근무하며 맡은 작업입니다.</p>
       </div>
-      <div class="rows">
+      <ol class="cards">
         {
           work.map((w) => (
-            <a class="row" href={`/work/${w.data.slug}`} data-art={w.data.images[0] ? `url('${w.data.images[0]}') center / cover` : w.data.art}>
-              <span class="row__per">{w.data.period}</span>
-              <span class="row__t">{w.data.title}</span>
-              <span class="row__d">{w.data.description}</span>
-              <span class="row__go" aria-hidden="true">→</span>
-            </a>
+            <li class="card" id={`career-${w.data.slug}`}>
+              <figure class="card__pic">{w.data.image && <img src={w.data.image} alt={w.data.imageAlt} loading="lazy" />}</figure>
+              <div class="card__txt">
+                <span class="card__per">{w.data.period}</span>
+                <h3>{w.data.title}</h3>
+                <p>{w.data.description}</p>
+              </div>
+            </li>
           ))
         }
-      </div>
+      </ol>
     </section>
 
-    <section class="time pad" id="time" aria-label="지나온 시간">
-      <div class="sec-h"><span class="cap">지나온 시간 · {years[0]} – {years[years.length - 1]}</span><h2>여기까지 걸어온 길.</h2></div>
+    <section class="time pad" id="time" aria-label="타임라인">
+      <div class="sec-h"><span class="cap">타임라인 · {years[0]} – {years[years.length - 1]}</span><h2>지금까지 만든 것들</h2></div>
       <div class="time__grid">
         <div class="time__stick" aria-hidden="true">
           <div class="odo" id="odo">
@@ -120,7 +123,7 @@ const pending = CONTACT.links.filter((l) => !l.href);
               Array.from(firstYear).map((ch) => (
                 <span class="odo__col">
                   <span style={`transform: translateY(-${ch}em)`}>
-                    {Array.from({ length: 10 }, (_, n) => <span>{n}</span>)}
+                    {Array.from({ length: 10 }, (_, n) => <span data-n={n} />)}
                   </span>
                 </span>
               ))
@@ -184,6 +187,7 @@ const pending = CONTACT.links.filter((l) => !l.href);
     <section class="contact pad" id="contact" aria-label="연락">
       <span class="cap">연락</span>
       <h2>{CONTACT.heading}</h2>
+      {CONTACT.sub && <p class="contact__sub">{CONTACT.sub}</p>}
       {
         CONTACT.email && (
           <div class="mail">
@@ -194,16 +198,14 @@ const pending = CONTACT.links.filter((l) => !l.href);
       }
       <div class="others">
         {links.map((l) => <a href={l.href} target="_blank" rel="noopener">{l.label}</a>)}
-        {pending.map((l) => <span>{l.label} · 준비 중</span>)}
       </div>
     </section>
     <footer class="foot pad cap">
       <span>© {new Date().getFullYear()} {SITE.name}</span>
-      <span>빛 효과 · WebGL Fluid Simulation (Pavel Dobryakov, MIT) 수정본</span>
+      <span>배경 효과 · WebGL Fluid Simulation (Pavel Dobryakov, MIT) 수정본</span>
     </footer>
   </main>
 
-  <div class="peek" id="peek" aria-hidden="true"><i></i></div>
   <button type="button" class="skip" id="skip">인트로 건너뛰기</button>
 
   <script>

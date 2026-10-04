@@ -9,23 +9,23 @@ export const SITE = {
   /** 직군 한 줄 */
   role: '게임 클라이언트 개발자 (Unity·Godot)',
   /** <meta name="description"> 기본값 */
-  description: '게임 클라이언트 개발자 (Unity·Godot) 허한결의 포트폴리오. 플레이할 수 있는 게임과 시스템 작업을 담았습니다.',
+  description: '게임 클라이언트 개발자 허한결의 포트폴리오. 직접 만든 게임과 NC AI에서의 작업, 지금까지의 프로젝트를 담았습니다.',
 } as const;
 
 /** 인트로 — 한 단어씩 켜지는 첫 문장. hot 은 등불색으로 남는 단어 */
 export const INTRO = {
-  words: [{ text: '빛이 ' }, { text: '머무는 ' }, { text: '장면을 ', hot: true }, { text: '만듭니다.' }],
+  words: [{ text: '조각이 ' }, { text: '모여 ' }, { text: '게임이 ', hot: true }, { text: '되는 ' }, { text: '순간을 ' }, { text: '좋아합니다.' }],
   /** 첫 문장 아래 소개. <b> 로 강조 */
-  sub: '<b>게임 클라이언트 개발자 (Unity·Godot)</b> 허한결입니다. 화면 위에서 빛이 어떻게 번지고 사라지는지에 오래 머무는 편입니다.',
+  sub: '<b>Unity</b>와 <b>Godot</b>으로 게임과 애플리케이션을 만드는 게임 클라이언트 개발자 허한결입니다.',
 } as const;
 
 /** 소개 — 스크롤에 따라 단어가 켜지는 문단 */
 export const ABOUT =
-  '캐릭터가 말하고 표정을 짓는 순간을 코드로 만듭니다. 음성으로 얼굴을 움직이고, 모바일에서도 털을 60fps로 그렸습니다. 사람이 매번 손으로 하던 리깅과 테스트는 도구와 에이전트에게 넘기고, 저는 구조를 봅니다.';
+  '기능 하나를 만드는 것보다, 그 기능이 게임의 한 조각으로 들어가 전체가 완성되어 가는 과정에서 더 큰 보람을 느낍니다. 캐릭터 립싱크와 모바일 렌더링 같은 클라이언트 기능을 만들고, 빌드와 테스트처럼 반복되는 일은 자동화해 왔습니다. 팀의 일정과 태스크가 잘 보이도록 정리하는 일도 함께 해 왔습니다.';
 
-/** 지나온 시간 — 연도별로 묶어 보여 주고, 연도를 오도미터로 굴린다 */
+/** 타임라인 — 연도별로 묶어 보여 주고, 연도를 오도미터로 굴린다 */
 export interface TimelineLink {
-  kind: '작품' | '작업 노트';
+  kind: '작품' | '경력';
   label: string;
   href: string;
 }
@@ -37,10 +37,10 @@ export interface TimelineEntry {
   title: string;
   /** 어떤 작업인지 한눈에 — GameDev · Client · AI Service · AI Tool · AI Agent · ML · Data · Automation · DevOps · Simulation · Education · Event · Military */
   tag: string;
-  /** 작품·작업 노트로 연결 */
+  /** 작품·경력 카드로 연결 */
   links?: readonly TimelineLink[];
 }
-const note = (label: string, slug: string): TimelineLink => ({ kind: '작업 노트', label, href: `/work/${slug}` });
+const career = (label: string, slug: string): TimelineLink => ({ kind: '경력', label, href: `/#career-${slug}` });
 const game = (label: string, slug: string): TimelineLink => ({ kind: '작품', label, href: `/games/${slug}` });
 export const TIMELINE: readonly TimelineEntry[] = [
   { date: '2020.08', title: 'ELEMENTALIST', tag: 'GameDev' },
@@ -64,7 +64,7 @@ export const TIMELINE: readonly TimelineEntry[] = [
   { date: '2025.12', title: 'TAB GAMES 스킬 시스템', tag: 'GameDev' },
   {
     date: '2025.12', end: '2026.09', title: 'AI 아바타 클라이언트 (Unity·Godot)', tag: 'Client',
-    links: [note('아바타 립싱크', 'avatar-lipsync'), note('털 · 카툰 셰이더', 'fur-toon-shaders'), note('테스트 자동화', 'test-automation')],
+    links: [career('아바타 립싱크', 'avatar-lipsync'), career('털 · 카툰 셰이더', 'fur-toon-shaders'), career('테스트 자동화', 'test-automation')],
   },
   { date: '2026.02', title: '가천대 졸업', tag: 'Education' },
   { date: '2026.04', title: 'Carefor RPA 툴', tag: 'Automation' },
@@ -74,7 +74,7 @@ export const TIMELINE: readonly TimelineEntry[] = [
   { date: '2026.06', title: 'AWS Summit / AI League', tag: 'Event' },
   {
     date: '2026.07', title: 'AI 캐릭터 제작 자동화 워크벤치', tag: 'AI Tool',
-    links: [note('캐릭터 자동 생성 서비스', 'character-generation-service'), note('얼굴 리깅 자동화', 'face-rigging-automation')],
+    links: [career('워크벤치', 'character-workbench')],
   },
   { date: '2026.07', title: 'NHN NAN 2026 게임잼 사전 과제', tag: 'GameDev', links: [game('ClayWars', 'claywars')] },
   { date: '2026.08', title: 'WebGL CI + SSH 배포', tag: 'DevOps' },
@@ -92,7 +92,8 @@ export const TOOLS: ReadonlyArray<{ label: string; items: readonly string[] }> =
 
 /** 연락 — 값이 빈 항목은 렌더링하지 않는다 */
 export const CONTACT = {
-  heading: '다음 장면을 함께 만들 팀을 찾고 있습니다.',
+  heading: '끝까지 봐 주셔서 감사합니다.',
+  sub: '궁금한 점이나 함께 이야기하고 싶은 것이 있다면 언제든 편하게 연락 주세요.',
   /** 공개할 이메일 주소. 비어 있으면 메일 줄을 숨긴다 */
   email: '',
   links: [

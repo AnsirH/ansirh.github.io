@@ -16,11 +16,10 @@ const d = game.data;
 const { Content } = await render(game);
 const hasBody = (game.body ?? '').replace(/<!--[\s\S]*?-->/g, '').trim().length > 0;
 
-const ORDINAL = ['첫', '두', '세', '네', '다섯', '여섯', '일곱', '여덟', '아홉'];
 const pad2 = (n: number) => String(n).padStart(2, '0');
 const [c1, c2] = d.colors;
 
-// 오락기 화면 = 첫 스크린샷, 장면들 = 나머지 스크린샷 (최대 3장)
+// 오락기 화면 = 첫 스크린샷, 스크린샷 구간 = 나머지 스크린샷 (최대 3장)
 const cover = d.cover || (d.images[0]?.src ?? '');
 const stills = d.images.slice(d.images.length > 1 ? 1 : 0, 4).map((im, k) => ({ src: im.src, label: im.caption || `CAPTURE ${pad2(k + 1)}` }));
 const extLinks = [...(d.repoUrl ? [{ label: 'GitHub', href: d.repoUrl }] : []), ...d.links];
@@ -37,7 +36,7 @@ const bugLabels = [
     <div class="gd pad" style={`--g1:${c1};--g2:${c2}`} data-play={d.playUrl} data-note={d.playNote} data-frame={d.playFrame ? `${d.playFrame.width},${d.playFrame.height},${d.playFrame.pageHeight}` : undefined}>
       <div class="gd__top">
         <a class="back" href="/#works">← 작품으로</a>
-        <span class="cap">{ORDINAL[index]} 번째 장면 · {pad2(index + 1)} / {pad2(total)}</span>
+        <span class="cap">{pad2(index + 1)} / {pad2(total)}</span>
       </div>
 
       <div class="cab">
@@ -108,7 +107,7 @@ const bugLabels = [
         stills.length > 0 && (
           <section class="gsec">
             <div class="gsec__h">
-              <h2>장면들</h2>
+              <h2>스크린샷</h2>
             </div>
             <div class="stills">
               {stills.map((s) => (
@@ -155,7 +154,7 @@ const bugLabels = [
       }
 
       <a class="next gd__next" href={`/games/${next.data.slug}`}>
-        <span><span class="cap">다음 장면</span><br /><b>{next.data.title}</b></span>
+        <span><span class="cap">다음 작품</span><br /><b>{next.data.title}</b></span>
         <span class="blink" aria-hidden="true">▶</span>
       </a>
     </div>
