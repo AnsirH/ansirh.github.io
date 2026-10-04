@@ -98,7 +98,7 @@ export const TIMELINE: readonly TimelineEntry[] = [
 export const TOOLS: ReadonlyArray<{ label: string; items: readonly string[] }> = [
   { label: '엔진', items: ['Unity (URP · UI Toolkit · Timeline · Cinemachine · Addressable · Animator) · ', 'Godot · ', 'Unreal (경험)'] },
   { label: '언어', items: ['C++ · ', 'C# · ', 'Python · ', 'TypeScript · ', 'HLSL'] },
-  { label: '캐릭터 · 렌더링', items: ['ARKit 블렌드셰이프 · ', 'viseme 립싱크 · ', '셸 털 렌더링 · ', '셀 셰이더 · ', 'SSS · ', 'GPU 인스턴싱 · ', '헤어 렌더링 · ', 'Character Creator 5 · ', 'Deformation Transfer · ', 'ICT-FaceKit'] },
+  { label: '캐릭터 · 렌더링', items: ['ARKit 블렌드셰이프 · ', 'viseme 립싱크 · ', '셸 털 렌더링 · ', '셀 셰이더 · ', 'SSS · ', 'GPU 인스턴싱 · ', '헤어 렌더링 · ', 'Character Creator 5 · ', 'Deformation Transfer · ', 'ICT-\u2060FaceKit'] },
   { label: '웹 · 툴', items: ['React · ', 'Three.js · ', 'Express · ', 'Docker · ', '커스텀 에디터 · ', 'Figma'] },
   { label: '자동화 · 협업', items: ['GitHub Actions · ', 'Claude Code · ', 'Codex · ', 'MCP · ', 'Playwright · ', 'Jira · ', 'Confluence · ', 'Unity Test Runner · ', 'Git · ', 'Notion'] },
   { label: 'AI · 생성', items: ['Gemini · ', 'VARCO3D · ', 'OpenAI Realtime API · ', 'Unity WebRTC'] },
