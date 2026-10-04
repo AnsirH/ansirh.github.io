@@ -12,6 +12,9 @@ const work = (await getCollection('work')).sort(byOrder);
 const pad2 = (n: number) => String(n).padStart(2, '0');
 const introLabel = INTRO.words.map((w) => w.text).join('').trim();
 const links = CONTACT.links.filter((l) => l.href);
+// 플레이 영상: public 에 실제 파일이 있을 때만 붙인다
+const videoFiles = Object.keys(import.meta.glob('/public/videos/*'));
+const hasVideo = (src: string) => !!src && videoFiles.includes(`/public${src}`);
 // 경력 구간 머리말 기간: 카드 기간들의 처음 – 끝
 const careerDates = work.flatMap((w) => w.data.period.split('–').map((t) => t.trim())).sort();
 const careerSpan = `${careerDates[0]} – ${careerDates[careerDates.length - 1]}`;
@@ -78,10 +81,11 @@ const kindsOf = (e: (typeof TIMELINE)[number]) => [...new Set((e.links ?? []).ma
                   </span>
                   <a class="scene__go" href={href}>{d.playUrl ? '들어가서 플레이하기' : '들어가서 보기'} <span aria-hidden="true">→</span></a>
                 </div>
-                <figure class:list={['scene__pic', { empty: !thumb }]} data-href={href}>
-                  {thumb ? <img src={thumb} alt={`${d.title} 스크린샷`} loading={i === 0 ? 'eager' : 'lazy'} /> : <figcaption class="cap">스크린샷 준비 중</figcaption>}
+                {thumb && (
+                <figure class="scene__pic" data-href={href}>
+                  <img src={thumb} alt={`${d.title} 스크린샷`} loading={i === 0 ? 'eager' : 'lazy'} />
                   {
-                    d.video && (
+                    hasVideo(d.video) && (
                       <Fragment>
                         <video muted loop playsinline preload="none" data-src={d.video} aria-hidden="true" />
                         <span class="rec">플레이 영상</span>
@@ -89,6 +93,7 @@ const kindsOf = (e: (typeof TIMELINE)[number]) => [...new Set((e.links ?? []).ma
                     )
                   }
                 </figure>
+                )}
               </div>
             </article>
           );
@@ -106,7 +111,19 @@ const kindsOf = (e: (typeof TIMELINE)[number]) => [...new Set((e.links ?? []).ma
         {
           work.map((w) => (
             <li class="card" id={`career-${w.data.slug}`}>
-              <figure class="card__pic">{w.data.image && <img src={w.data.image} alt={w.data.imageAlt} loading="lazy" />}</figure>
+              {w.data.photo && (
+                <figure class="card__photo">
+                  <img src={w.data.photo.src} width={w.data.photo.width} height={w.data.photo.height} alt={w.data.photo.alt} loading="lazy" />
+                  <figcaption>{w.data.photo.credit}</figcaption>
+                </figure>
+              )}
+              <figure class="card__pic">{w.data.image && <img src={w.data.image} width="800" height="500" alt={w.data.imageAlt} loading="lazy" />}</figure>
+              {w.data.extra && (
+                <figure class="card__photo card__photo--strip">
+                  <img src={w.data.extra.src} width={w.data.extra.width} height={w.data.extra.height} alt={w.data.extra.alt} loading="lazy" />
+                  <figcaption>{w.data.extra.credit}</figcaption>
+                </figure>
+              )}
               <div class="card__txt">
                 <span class="card__per">{w.data.period}</span>
                 <h3>{w.data.title}</h3>

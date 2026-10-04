@@ -106,7 +106,7 @@ export async function boot() {
   }
 
   /* ---------- 인트로 ---------- */
-  const T = { ignite: 0.6, riseEnd: 2.4, ambIn: [1.4, 4.2], words: 2.2, head: 3.0, sub: 3.6, hint: 4.4 };
+  const T = { ignite: 0.4, riseEnd: 2.2, ambIn: [1.0, 3.6], words: 0.9, head: 1.4, sub: 1.5, hint: 2.2 };
   let t0 = 0, introDone = false, lastEmit = 0;
   let fired: Record<string, boolean> = {};
   const prog = (el: HTMLElement) => clamp(-el.getBoundingClientRect().top / (el.offsetHeight - innerHeight), 0, 1);
@@ -156,7 +156,7 @@ export async function boot() {
     }
     setTimeout(() => {
       if (!introDone) skip.classList.add('on');
-    }, 1200);
+    }, 300);
   }
   skip.addEventListener('click', () => {
     finishIntro(true);

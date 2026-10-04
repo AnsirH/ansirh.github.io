@@ -7,7 +7,7 @@ period: "2026.07 – 2026.08"
 event: "NHN NAN 2026 해커톤 작품"
 role: "2인 팀 — 아웃게임 담당 (방 그래프 · 군대 배치 · 아이템 · 증강 · 런 진행)"
 techStack: ["Unity 6", "C#", "ScriptableObject", "DOTween", "Unity Test Runner", "Claude Code"]
-repoUrl: "https://github.com/AnsirH/NHN_Project"
+repoUrl: "https://github.com/ansirh/NHN_Project"
 playUrl: "https://ansirh.github.io/NHN_Project/"
 playNote: ""
 links: []

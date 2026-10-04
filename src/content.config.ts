@@ -36,7 +36,7 @@ const games = defineCollection({
     role: z.string().default(''),
     /** 사용 기술 태그 */
     techStack: z.array(z.string()).default([]),
-    /** 소스 저장소 링크. 빈 값이면 "준비 중" */
+    /** 소스 저장소 링크. 비우면 LINKS 칸에서 빠진다 */
     repoUrl: z.string().default(''),
     /** 브라우저에서 플레이할 WebGL 빌드 주소. 있으면 오락기 화면에서 PRESS START로 바로 실행 */
     playUrl: z.string().default(''),
@@ -71,6 +71,9 @@ const games = defineCollection({
   }),
 });
 
+/** 경력 카드 사진 — 원본 크기와 출처 */
+const careerPhoto = z.object({ src: z.string(), width: z.number(), height: z.number(), alt: z.string(), credit: z.string() });
+
 /**
  * 경력 컬렉션 — 메인 "경력" 구간에 이미지 한 장과 함께 나열하는 실무 작업. 상세 페이지는 없다.
  * 콘텐츠는 src/content/work/*.md 의 frontmatter 로 관리한다.
@@ -88,6 +91,9 @@ const work = defineCollection({
     /** 카드 이미지 (직접 그린 도식 등 공개 가능한 자료만) */
     image: z.string().default(''),
     imageAlt: z.string().default(''),
+    /** 대표 사진 (카드 맨 위)과 보조 사진 (도식 아래 가로 띠). credit 은 이미지 아래 출처 문구 */
+    photo: careerPhoto.optional(),
+    extra: careerPhoto.optional(),
     /** 메인 페이지 정렬 순서 (작을수록 먼저) */
     order: z.number().default(0),
   }),

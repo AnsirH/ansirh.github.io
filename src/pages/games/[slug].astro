@@ -69,12 +69,14 @@ const bugLabels = [
           <div><dt>ROLE</dt><dd>{d.role || '—'}</dd></div>
           <div><dt>TECH</dt><dd>{d.techStack.join(' · ') || '—'}</dd></div>
           <div><dt>TIME</dt><dd>{d.period || '—'}{d.event && <Fragment><br /><span class="gd__event">{d.event}</span></Fragment>}</dd></div>
-          <div>
-            <dt>LINKS</dt>
-            <dd class="gd__links">
-              {extLinks.length ? extLinks.map((l) => <a href={l.href} target="_blank" rel="noopener">{l.label} ↗</a>) : <span style="color:var(--text-3)">준비 중</span>}
-            </dd>
-          </div>
+          {extLinks.length > 0 && (
+            <div>
+              <dt>LINKS</dt>
+              <dd class="gd__links">
+                {extLinks.map((l) => <a href={l.href} target="_blank" rel="noopener">{l.label} ↗</a>)}
+              </dd>
+            </div>
+          )}
         </dl>
       </header>
 
@@ -141,7 +143,7 @@ const bugLabels = [
                       t ? (
                         <div class="bug__row">
                           <span class:list={['k', bugLabels[j][1]]}>{bugLabels[j][0]}</span>
-                          <p data-text={t}>{t}</p>
+                          <p>{t}</p>
                         </div>
                       ) : null,
                     )}

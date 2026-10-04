@@ -50,7 +50,9 @@ img { display: block; max-width: 100%; }
 }
 
 /* 머리글 */
-.head { position: fixed; top: 0; left: 0; right: 0; z-index: 20; display: flex; justify-content: space-between; align-items: baseline; gap: 20px; padding: 22px var(--pad); transition: transform 0.8s var(--ease), opacity 0.6s; }
+.head { position: fixed; top: 0; left: 0; right: 0; z-index: 20; display: flex; justify-content: space-between; align-items: baseline; gap: 20px; padding: 22px var(--pad); transition: transform 0.8s var(--ease), opacity 0.6s, background-color 0.4s; }
+/* 본문 위로 올라오면 반투명 어두운 바탕 (인트로 첫 화면에서는 투명) */
+.head.solid { background: rgba(7, 7, 6, 0.72); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
 .head.hide { transform: translateY(-120%); opacity: 0; }
 .head.pre { opacity: 0; transform: translateY(-8px); pointer-events: none; transition: opacity 1s ease-in-out, transform 0.9s var(--ease); }
 .head .name { font-family: var(--serif); font-size: 17px; text-decoration: none; }

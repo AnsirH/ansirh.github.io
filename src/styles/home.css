@@ -1,8 +1,8 @@
-/* 메인 페이지 — 인트로 → 소개 → 작품 → 작업 노트 → 지나온 시간 → 다루는 것 → 연락 */
+/* 메인 페이지 — 인트로 → 소개 → 작품 → 경력 → 타임라인 → 다루는 것 → 연락 */
 
 /* 광원 캔버스와 그늘 */
 #light { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; opacity: 0; }
-.veil { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0; background: radial-gradient(70% 60% at 20% 72%, rgba(4, 4, 3, 0.7), transparent 72%), linear-gradient(0deg, rgba(4, 4, 3, 0.55), transparent 40%); }
+.veil { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0; background: radial-gradient(75% 55% at 25% 80%, rgba(4, 4, 3, 0.85), transparent 75%), linear-gradient(0deg, rgba(4, 4, 3, 0.75), transparent 50%); }
 /* 소개~작품 구간 그늘: 빛은 남기되 글자 쪽(왼쪽)을 더 눌러 가독성 확보 */
 .veil-g { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0; background: linear-gradient(90deg, rgba(7, 7, 6, 0.62) 0, rgba(7, 7, 6, 0.45) 36%, rgba(7, 7, 6, 0.12) 62%, rgba(7, 7, 6, 0.2) 100%), linear-gradient(0deg, rgba(7, 7, 6, 0.4), transparent 30%); }
 @media (max-width: 800px) { .veil-g { background: linear-gradient(0deg, rgba(7, 7, 6, 0.8) 0, rgba(7, 7, 6, 0.55) 45%, rgba(7, 7, 6, 0.35) 100%); } }
@@ -11,23 +11,23 @@
 .nogl .glow-fallback { display: block; position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: var(--f, 0); background: radial-gradient(50% 45% at 62% 70%, #5a3412, transparent 70%); }
 
 /* 첫 화면: 인트로 (어둠 → 빛이 피어오름 → 스크롤로 소등) */
-.intro { height: 230vh; }
+.intro { height: 140vh; }
 .intro__stage { position: sticky; top: 0; height: 100svh; min-height: 560px; display: grid; grid-template-rows: 1fr auto; padding: 90px var(--pad) 34px; }
-.line { align-self: end; font-family: var(--serif); font-weight: 300; font-size: clamp(42px, 7.6vw, 112px); line-height: 1.14; letter-spacing: -0.04em; max-width: 10.5em; text-shadow: 0 2px 34px rgba(0, 0, 0, 0.55); }
-.line .w { display: inline-block; white-space: pre; color: var(--unlit); opacity: 0; filter: blur(10px); transform: translateY(0.18em); transition: opacity 1.6s var(--out), filter 1.6s var(--out), transform 1.6s var(--out), color 1.8s ease; }
+.line { align-self: end; font-family: var(--serif); font-weight: 300; font-size: clamp(42px, 7.6vw, 112px); line-height: 1.14; letter-spacing: -0.04em; max-width: 10.5em; text-shadow: 0 0 4px rgba(0, 0, 0, 0.9), 0 2px 34px rgba(0, 0, 0, 0.85); }
+.line .w { display: inline-block; white-space: pre; color: var(--unlit); opacity: 0; filter: blur(10px); transform: translateY(0.18em); transition: opacity 1s var(--out), filter 1s var(--out), transform 1s var(--out), color 1.1s ease; }
 .line .w.in { opacity: 1; filter: blur(0); transform: none; }
 .line .w.lit { color: var(--text); }
 .line .w.lit.hot { color: var(--lamp); }
 .line .w.out, .line .w.lit.out, .line .w.lit.hot.out { color: var(--unlit); }
 .intro__foot { display: flex; justify-content: space-between; align-items: end; gap: 20px; flex-wrap: wrap; margin-top: 18px; }
-.sub { font-family: var(--serif); font-weight: 300; font-size: clamp(22px, 3.2vw, 46px); line-height: 1.3; letter-spacing: -0.03em; color: var(--text); max-width: 20em; text-shadow: 0 1px 16px rgba(0, 0, 0, 0.7); opacity: 0; transform: translateY(10px); transition: opacity 1.2s ease, transform 1.2s var(--out); }
+.sub { font-family: var(--serif); font-weight: 300; font-size: clamp(22px, 3.2vw, 46px); line-height: 1.3; letter-spacing: -0.03em; color: var(--text); max-width: 20em; text-shadow: 0 0 3px rgba(0, 0, 0, 0.9), 0 1px 18px rgba(0, 0, 0, 0.9); opacity: 0; transform: translateY(10px); transition: opacity 1.2s ease, transform 1.2s var(--out); }
 .sub b { color: var(--text); font-weight: 500; }
 .sub.on { opacity: 1; transform: none; }
 .hint { display: grid; justify-items: end; gap: 10px; font-family: var(--mono); font-size: 12px; color: var(--text-3); opacity: 0; transition: opacity 1.2s ease; }
 .hint.on { opacity: 1; }
 .hint i { width: 1px; height: 46px; background: linear-gradient(var(--text-2), transparent); transform-origin: top; animation: drip 2.4s var(--ease) infinite; }
 @keyframes drip { 0% { transform: scaleY(0); opacity: 1; } 50% { transform: scaleY(1); opacity: 1; } 100% { transform: scaleY(1); opacity: 0; } }
-.skip { position: fixed; right: var(--pad); bottom: 34px; z-index: 35; background: none; border: 0; padding: 0; cursor: pointer; font-family: var(--mono); font-size: 12px; color: var(--text-3); border-bottom: 1px solid var(--text-3); opacity: 0; transition: opacity 0.6s; pointer-events: none; }
+.skip { position: fixed; right: var(--pad); bottom: 34px; z-index: 35; background: rgba(7, 7, 6, 0.72); border: 1px solid var(--text-2); border-radius: 999px; padding: 10px 18px; cursor: pointer; font-family: var(--mono); font-size: 14px; color: var(--text); opacity: 0; transition: opacity 0.6s; pointer-events: none; }
 .skip.on { opacity: 1; pointer-events: auto; }
 /* JS가 없으면 인트로 문장을 그대로 보여 줌 */
 html:not(.js) .line .w { opacity: 1; filter: none; transform: none; color: var(--text); }
@@ -65,8 +65,6 @@ html:not(.js) .scene__pic img { filter: none; transform: none; }
 .scene__pic.px img { image-rendering: pixelated; }
 .scene__pic::after { content: ''; position: absolute; inset: 0; box-shadow: inset 0 0 140px 40px #000; pointer-events: none; }
 .scene__pic figcaption { position: absolute; left: 14px; bottom: 12px; z-index: 1; }
-.scene__pic.empty { background: radial-gradient(60% 60% at 50% 50%, #1a1712, #000); }
-.scene__pic.empty figcaption { left: 50%; top: 50%; bottom: auto; transform: translate(-50%, -50%); }
 .scene__pic video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; image-rendering: pixelated; opacity: 0; transition: opacity 0.6s ease; }
 .scene__pic.playing video { opacity: 1; }
 .scene__pic.playing img { opacity: 0; }
@@ -84,6 +82,10 @@ html:not(.js) .scene__pic img { filter: none; transform: none; }
 .card { display: grid; gap: 22px; align-content: start; scroll-margin-top: 90px; }
 .card__pic { margin: 0; aspect-ratio: 16 / 10; border: 1px solid var(--line); background: #0d0c0a; overflow: hidden; }
 .card__pic img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.card__photo { margin: 0; display: grid; gap: 8px; }
+.card__photo img { display: block; width: 100%; height: auto; }
+.card__photo figcaption { font-size: 12.5px; line-height: 1.5; color: var(--text-3); }
+.card__photo--strip { margin-top: -8px; }
 .card__txt { display: grid; gap: 8px; }
 .card__per { font-family: var(--mono); font-size: 12px; color: var(--text-3); }
 .card h3 { margin: 0; font-family: var(--serif); font-weight: 400; font-size: clamp(20px, 2vw, 26px); letter-spacing: -0.02em; }

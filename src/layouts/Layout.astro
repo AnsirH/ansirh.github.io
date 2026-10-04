@@ -67,5 +67,17 @@ const goatCounterUrl =
       </header>
       <slot />
     </div>
+    <script is:inline define:vars={{ home }}>
+      // 머리글 바탕: 메인은 인트로 첫 화면을 지나면, 다른 페이지는 조금만 내려도 켠다
+      (function () {
+        var head = document.getElementById('head');
+        function sync() {
+          head.classList.toggle('solid', scrollY > (home ? innerHeight * 0.6 : 8));
+        }
+        addEventListener('scroll', sync, { passive: true });
+        addEventListener('resize', sync);
+        sync();
+      })();
+    </script>
   </body>
 </html>

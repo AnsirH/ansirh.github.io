@@ -88,13 +88,14 @@
 .bugs { display: grid; gap: 7vh; }
 .bug__h { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; padding-bottom: 10px; }
 .bug__h b { font-family: var(--pixel); font-size: 12px; font-weight: 400; color: #ff6b6b; }
-.bug__h span { font-family: var(--pixel); font-size: 10.5px; color: var(--text-3); }
-.bug.done .bug__h span { color: #6ee787; }
+.bug__h span { font-family: var(--pixel); font-size: 10.5px; }
+.bug__h span { color: #6ee787; }
 .bug__row { display: grid; grid-template-columns: 90px minmax(0, 1fr); gap: 18px; padding-block: 14px; border-top: 1px solid var(--line); }
 .bug__row .k { font-size: 13px; padding-top: 3px; }
 .bug__row p { font-size: 16.5px; line-height: 1.75; min-height: 1.75em; }
 .bug__row:first-of-type p { font-family: var(--serif); font-size: 20px; }
-.bug__row p.typing::after { content: '▌'; color: var(--g1); animation: blink 0.8s steps(2, start) infinite; }
+.bug.rise { opacity: 0; transform: translateY(8px); transition: opacity 0.25s ease, transform 0.25s ease; }
+.bug.rise.in { opacity: 1; transform: none; }
 .k-err { color: #ff6b6b; }
 .k-cause { color: #ffd23f; }
 .k-fix { color: #6ee787; }

@@ -32,7 +32,7 @@ export const ABOUT: ReadonlyArray<{ label: string; text: string | readonly strin
   },
   {
     label: '해 온 일',
-    text: 'NC AI에서는 립싱크, 모바일 털 렌더링 같은 클라이언트 기능을 만들고 빌드와 테스트를 자동화했습니다. NewSalt에서는 기획자가 시나리오를 직접 고칠 수 있는 편집 도구를 만들고, 개발 2인 팀에서 일정·진척도 관리와 테스트·빌드 관리를 맡았습니다. 게임잼과 공모전에도 직접 만든 게임을 출품해 왔습니다.',
+    text: 'NC AI에서는 립싱크, 모바일 털 렌더링 같은 클라이언트 기능을 만들고 빌드와 테스트를 자동화했습니다. NewSalt에서는 기획자가 시나리오를 직접 고칠 수 있는 편집 도구를 만들어 하루 걸리던 수정을 2~3시간으로 줄였고, 개발 2인 팀에서 일정·진척도 관리와 테스트·빌드 관리를 맡아 시뮬레이터 2종을 납기 내 납품했습니다. 게임잼과 공모전에도 직접 만든 게임을 출품해 왔습니다.',
   },
 ];
 
@@ -83,7 +83,7 @@ export const TIMELINE: readonly TimelineEntry[] = [
   { date: '2026.04', title: 'Carefor RPA 툴', tag: 'Automation' },
   { date: '2026.04', title: '업무일지 에이전트', tag: 'AI Agent' },
   { date: '2026.05', title: 'KCC 이동 패키지', tag: 'GameDev' },
-  { date: '2026.05', end: '현재', title: '스팀 타워 조립 게임', tag: 'GameDev', links: [game('TinkerTower', 'tinkertower')] },
+  { date: '2026.05', end: '현재', title: 'TinkerTower', tag: 'GameDev', links: [game('보기', 'tinkertower')] },
   { date: '2026.06', title: 'AWS Summit / AI League', tag: 'Event' },
   {
     date: '2026.07', title: 'AI 캐릭터 제작 자동화 워크벤치', tag: 'AI Tool',
@@ -111,7 +111,7 @@ export const CONTACT = {
   /** 공개할 이메일 주소. 비어 있으면 메일 줄을 숨긴다 */
   email: 'ansir0211@gmail.com',
   links: [
-    { label: 'GitHub', href: 'https://github.com/AnsirH' },
+    { label: 'GitHub', href: 'https://github.com/ansirh' },
   ],
 } as const;
 

@@ -1,7 +1,7 @@
 /**
  * 게임 상세 — 어둠 속 오락기.
  * 화면: 스크린샷 → PRESS START → 브라우저 빌드가 있으면 iframe, 없으면 안내(playNote).
- * 켜질 때 CRT 점등, 제목 글자 튀어오름, 버그 기록은 화면에 들어오면 타이핑.
+ * 켜질 때 CRT 점등, 제목 글자 튀어오름, 버그 기록은 화면에 들어오면 짧게 페이드인.
  */
 export function bootGame() {
   const root = document.documentElement;
@@ -90,46 +90,20 @@ export function bootGame() {
     });
   }
 
-  // 버그 기록: 화면에 들어오면 타이핑
-  function typeBug(bug: HTMLElement) {
-    const ps = Array.from(bug.querySelectorAll<HTMLElement>('p[data-text]'));
-    const state = bug.querySelector('.bug__h span') as HTMLElement;
-    const finish = () => {
-      bug.classList.add('done');
-      state.textContent = '해결';
-    };
-    let i = 0;
-    (function next() {
-      if (i >= ps.length) return finish();
-      const p = ps[i++], t = p.dataset.text || '';
-      let n = 0;
-      p.classList.add('typing');
-      const iv = setInterval(() => {
-        n += 2;
-        p.textContent = t.slice(0, n);
-        if (n >= t.length) {
-          clearInterval(iv);
-          p.classList.remove('typing');
-          setTimeout(next, 180);
-        }
-      }, 18);
-    })();
-  }
+  // 버그 기록: 글은 처음부터 모두 보이고, 화면에 들어올 때 짧게 떠오르기만 한다
   const bugs = document.querySelectorAll<HTMLElement>('[data-bug]');
-  if (reduce) bugs.forEach((b) => b.classList.add('done'));
-  else {
+  if (!reduce) {
     const bio = new IntersectionObserver(
       (es) => es.forEach((e) => {
         if (e.isIntersecting) {
           bio.unobserve(e.target);
-          typeBug(e.target as HTMLElement);
+          e.target.classList.add('in');
         }
       }),
-      { rootMargin: '0px 0px -20% 0px' },
+      { rootMargin: '0px' },
     );
     bugs.forEach((b) => {
-      (b.querySelector('.bug__h span') as HTMLElement).textContent = '추적 중';
-      b.querySelectorAll<HTMLElement>('p[data-text]').forEach((p) => (p.textContent = ''));
+      b.classList.add('rise');
       bio.observe(b);
     });
   }
