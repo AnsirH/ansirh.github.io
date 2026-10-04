@@ -14,16 +14,26 @@ export const SITE = {
 
 /** 인트로 — 한 단어씩 켜지는 첫 문장. hot 은 등불색으로 남는 단어 */
 export const INTRO = {
-  words: [{ text: '조각이 ' }, { text: '모여 ' }, { text: '게임이 ', hot: true }, { text: '되는 ' }, { text: '순간을 ' }, { text: '좋아합니다.' }],
-  /** 첫 문장 아래 소개. <b> 로 강조 */
-  sub: '<b>Unity</b>와 <b>Godot</b>으로 게임과 애플리케이션을 만드는 게임 클라이언트 개발자 허한결입니다.',
+  words: [{ text: 'AnsirH:' }, { text: '허한결', hot: true }],
+  /** 첫 줄 아래 둘째 줄 (한 단계 작게). <b> 로 강조 */
+  sub: '게임이 완성되어 가는 과정을 좋아하는 개발자',
 } as const;
 
 /** 소개 — 어떤 개발자인지 · 경력 · 해 온 일, 세 줄 */
-export const ABOUT: ReadonlyArray<{ label: string; text: string }> = [
+/** text 가 배열이면 한 줄씩 나눠 보여 준다 */
+export const ABOUT: ReadonlyArray<{ label: string; text: string | readonly string[] }> = [
   { label: '어떤 개발자', text: 'Unity와 Godot으로 게임 클라이언트를 만듭니다. 만든 기능이 게임의 한 조각으로 맞물려 완성되어 가는 과정을 좋아합니다.' },
-  { label: '경력', text: 'NC AI에서 대화형 3D 캐릭터 클라이언트를 Unity와 Godot으로 개발했습니다. (2025.12 – 2026.09)' },
-  { label: '해 온 일', text: '립싱크, 모바일 털 렌더링 같은 클라이언트 기능을 만들고 빌드와 테스트를 자동화했습니다. 게임잼과 공모전에 직접 만든 게임을 출품해 왔습니다.' },
+  {
+    label: '경력',
+    text: [
+      'NC AI에서 대화형 3D 캐릭터 클라이언트를 Unity와 Godot으로 개발했습니다. (2025.12 – 2026.09)',
+      'NewSalt에서 2차전지 제조 공정 훈련 시뮬레이터 2종을 Unity로 개발해 납품했습니다. (2024.04 – 2024.12)',
+    ],
+  },
+  {
+    label: '해 온 일',
+    text: 'NC AI에서는 립싱크, 모바일 털 렌더링 같은 클라이언트 기능을 만들고 빌드와 테스트를 자동화했습니다. NewSalt에서는 기획자가 시나리오를 직접 고칠 수 있는 편집 도구를 만들고, 개발 2인 팀에서 일정·진척도 관리와 테스트·빌드 관리를 맡았습니다. 게임잼과 공모전에도 직접 만든 게임을 출품해 왔습니다.',
+  },
 ];
 
 /** 타임라인 — 연도별로 묶어 보여 주고, 연도를 오도미터로 굴린다 */
@@ -79,18 +89,19 @@ export const TIMELINE: readonly TimelineEntry[] = [
     date: '2026.07', title: 'AI 캐릭터 제작 자동화 워크벤치', tag: 'AI Tool',
     links: [career('워크벤치', 'character-workbench')],
   },
-  { date: '2026.07', title: 'NHN NAN 2026 게임잼 사전 과제', tag: 'GameDev', links: [game('ClayWars', 'claywars')] },
+  { date: '2026.07', title: 'NHN NAN 해커톤', tag: 'GameDev', links: [game('ClayWars', 'claywars')] },
   { date: '2026.08', title: 'WebGL CI + SSH 배포', tag: 'DevOps' },
   { date: '2026.08', title: 'OpenAI Game Builders 공모전', tag: 'GameDev', links: [game('GooseBomb', 'goosebomb')] },
 ];
 
 /** 다루는 것 — 항목 끝의 " · " 까지가 한 단어로 켜진다 */
 export const TOOLS: ReadonlyArray<{ label: string; items: readonly string[] }> = [
-  { label: '엔진', items: ['Unity (URP · UI Toolkit · Timeline · Cinemachine · Addressable) · ', 'Godot · ', 'Unreal (경험)'] },
-  { label: '언어', items: ['C# · ', 'TypeScript · ', 'Python'] },
-  { label: '캐릭터 · 렌더링', items: ['ARKit 블렌드셰이프 · ', 'viseme 립싱크 · ', '셸 털 렌더링 · ', '셀 셰이더 · ', 'SSS'] },
-  { label: '웹 · 툴', items: ['React · ', 'Three.js · ', 'Express · ', 'Docker · ', '커스텀 에디터'] },
-  { label: '자동화 · 협업', items: ['GitHub Actions · ', 'Claude Code · ', 'Codex · ', 'MCP · ', 'Playwright · ', 'Jira · ', 'Confluence'] },
+  { label: '엔진', items: ['Unity (URP · UI Toolkit · Timeline · Cinemachine · Addressable · Animator) · ', 'Godot · ', 'Unreal (경험)'] },
+  { label: '언어', items: ['C# · ', 'TypeScript · ', 'Python · ', 'HLSL'] },
+  { label: '캐릭터 · 렌더링', items: ['ARKit 블렌드셰이프 · ', 'viseme 립싱크 · ', '셸 털 렌더링 · ', '셀 셰이더 · ', 'SSS · ', 'GPU 인스턴싱 · ', '헤어 렌더링 · ', 'Adaptive Probe Volumes · ', 'Character Creator 5 · ', 'Deformation Transfer · ', 'ICT-FaceKit'] },
+  { label: '웹 · 툴', items: ['React · ', 'Three.js · ', 'Express · ', 'Docker · ', '커스텀 에디터 · ', 'Figma'] },
+  { label: '자동화 · 협업', items: ['GitHub Actions · ', 'Claude Code · ', 'Codex · ', 'MCP · ', 'Playwright · ', 'Jira · ', 'Confluence · ', 'Unity Test Runner · ', 'Git · ', 'Notion'] },
+  { label: 'AI · 생성', items: ['Gemini · ', 'VARCO3D · ', 'OpenAI Realtime API · ', 'Unity WebRTC'] },
 ];
 
 /** 연락 — 값이 빈 항목은 렌더링하지 않는다 */

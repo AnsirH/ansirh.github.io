@@ -9,8 +9,6 @@ const byOrder = (a: { data: { order: number } }, b: { data: { order: number } })
 const games = (await getCollection('games')).sort(byOrder);
 const work = (await getCollection('work')).sort(byOrder);
 
-const COUNT = ['한', '두', '세', '네', '다섯', '여섯', '일곱', '여덟', '아홉'];
-const gameCount = COUNT[games.length - 1] ?? String(games.length);
 const pad2 = (n: number) => String(n).padStart(2, '0');
 const introLabel = INTRO.words.map((w) => w.text).join('').trim();
 const links = CONTACT.links.filter((l) => l.href);
@@ -50,7 +48,7 @@ const kindsOf = (e: (typeof TIMELINE)[number]) => [...new Set((e.links ?? []).ma
           ABOUT.map((a) => (
             <div class="about__row">
               <dt>{a.label}</dt>
-              <dd>{a.text}</dd>
+              <dd>{typeof a.text === 'string' ? a.text : a.text.map((t) => <span class="about__line">{t}</span>)}</dd>
             </div>
           ))
         }
@@ -60,7 +58,7 @@ const kindsOf = (e: (typeof TIMELINE)[number]) => [...new Set((e.links ?? []).ma
     <section id="works" aria-label="작품">
       <div class="works-intro pad">
         <span class="cap">작품</span>
-        <h2>직접 만든<br />게임 {gameCount} 개</h2>
+        <h2>최근 작업물</h2>
       </div>
       {
         games.map((g, i) => {

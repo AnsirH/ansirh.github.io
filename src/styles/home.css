@@ -19,8 +19,8 @@
 .line .w.lit { color: var(--text); }
 .line .w.lit.hot { color: var(--lamp); }
 .line .w.out, .line .w.lit.out, .line .w.lit.hot.out { color: var(--unlit); }
-.intro__foot { display: flex; justify-content: space-between; align-items: end; gap: 20px; flex-wrap: wrap; margin-top: 38px; }
-.sub { font-size: 15.5px; color: var(--text-2); max-width: 28em; text-shadow: 0 1px 16px rgba(0, 0, 0, 0.7); opacity: 0; transform: translateY(10px); transition: opacity 1.2s ease, transform 1.2s var(--out); }
+.intro__foot { display: flex; justify-content: space-between; align-items: end; gap: 20px; flex-wrap: wrap; margin-top: 18px; }
+.sub { font-family: var(--serif); font-weight: 300; font-size: clamp(22px, 3.2vw, 46px); line-height: 1.3; letter-spacing: -0.03em; color: var(--text); max-width: 20em; text-shadow: 0 1px 16px rgba(0, 0, 0, 0.7); opacity: 0; transform: translateY(10px); transition: opacity 1.2s ease, transform 1.2s var(--out); }
 .sub b { color: var(--text); font-weight: 500; }
 .sub.on { opacity: 1; transform: none; }
 .hint { display: grid; justify-items: end; gap: 10px; font-family: var(--mono); font-size: 12px; color: var(--text-3); opacity: 0; transition: opacity 1.2s ease; }
@@ -39,6 +39,8 @@ html:not(.js) .intro__stage { position: relative; }
 .about { padding-block: 26vh 22vh; }
 .about__rows { margin: 0; border-top: 1px solid var(--line); }
 .about__row { display: grid; grid-template-columns: 160px minmax(0, 1fr); gap: 8px 28px; padding-block: 28px; border-bottom: 1px solid var(--line); }
+.about__line { display: block; }
+.about__line + .about__line { margin-top: 0.5em; }
 .about__row dt { font-family: var(--mono); font-size: 12px; color: var(--text-3); padding-top: 0.5em; }
 .about__row dd { margin: 0; font-family: var(--serif); font-weight: 300; font-size: clamp(20px, 2.1vw, 28px); line-height: 1.6; letter-spacing: -0.02em; color: var(--text); max-width: 30em; text-wrap: pretty; word-break: keep-all; }
 @media (max-width: 700px) { .about__row { grid-template-columns: minmax(0, 1fr); } }

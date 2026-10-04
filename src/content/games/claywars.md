@@ -4,7 +4,7 @@ description: "점토 병사에게 아이템으로 역할을 주고, 로그라이
 line: "활을 쥐여 주면 궁수가 되는 점토 병사들. 수백 명이 부딪히는 순간, 내가 누를 수 있는 건 스킬 한 번."
 slug: "claywars"
 period: "2026.07 – 2026.08"
-event: "NHN NAN 2026 게임잼 사전 과제"
+event: "NHN NAN 2026 해커톤 작품"
 role: "2인 팀 — 아웃게임 담당 (방 그래프 · 군대 배치 · 아이템 · 증강 · 런 진행)"
 techStack: ["Unity 6", "C#", "ScriptableObject", "DOTween", "Unity Test Runner", "Claude Code"]
 repoUrl: "https://github.com/AnsirH/NHN_Project"
