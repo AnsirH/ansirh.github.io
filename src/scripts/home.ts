@@ -304,7 +304,6 @@ export async function boot() {
   }
 
   /* ---------- 스크롤 엔진 ---------- */
-  const aboutWords = document.querySelectorAll<HTMLElement>('#aboutText .w');
   const toolWords = document.querySelectorAll<HTMLElement>('#tools .w');
   const sections = Array.from(document.querySelectorAll<HTMLElement>('main > section[id]'));
   const navlinks = document.querySelectorAll<HTMLElement>('#nav a');
@@ -324,7 +323,7 @@ export async function boot() {
       const exp = clamp((vh * 0.95 - pr.top) / (vh * 0.7), 0, 1) * clamp(pr.bottom / (vh * 0.5), 0, 1);
       pic.style.setProperty('--exp', (0.08 + exp * 0.92).toFixed(3));
     }
-    for (const list of [aboutWords, toolWords]) list.forEach((w) => w.classList.toggle('on', reduce || w.getBoundingClientRect().top < vh * 0.7));
+    toolWords.forEach((w) => w.classList.toggle('on', reduce || w.getBoundingClientRect().top < vh * 0.7));
     let act = 0;
     evs.forEach((c, i) => {
       if (c.getBoundingClientRect().top < vh * 0.5) act = i;

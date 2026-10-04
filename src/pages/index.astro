@@ -12,7 +12,6 @@ const work = (await getCollection('work')).sort(byOrder);
 const COUNT = ['한', '두', '세', '네', '다섯', '여섯', '일곱', '여덟', '아홉'];
 const gameCount = COUNT[games.length - 1] ?? String(games.length);
 const pad2 = (n: number) => String(n).padStart(2, '0');
-const aboutWords = ABOUT.split(/\s+/);
 const introLabel = INTRO.words.map((w) => w.text).join('').trim();
 const links = CONTACT.links.filter((l) => l.href);
 // 경력 구간 머리말 기간: 카드 기간들의 처음 – 끝
@@ -46,9 +45,16 @@ const kindsOf = (e: (typeof TIMELINE)[number]) => [...new Set((e.links ?? []).ma
 
     <section class="about pad" id="about" aria-label="소개">
       <span class="cap">소개</span>
-      <p class="big words" id="aboutText">
-        {aboutWords.map((w, i) => <Fragment><span class="w">{w}</span>{i < aboutWords.length - 1 ? ' ' : ''}</Fragment>)}
-      </p>
+      <dl class="about__rows">
+        {
+          ABOUT.map((a) => (
+            <div class="about__row">
+              <dt>{a.label}</dt>
+              <dd>{a.text}</dd>
+            </div>
+          ))
+        }
+      </dl>
     </section>
 
     <section id="works" aria-label="작품">

@@ -19,9 +19,12 @@ export const INTRO = {
   sub: '<b>Unity</b>와 <b>Godot</b>으로 게임과 애플리케이션을 만드는 게임 클라이언트 개발자 허한결입니다.',
 } as const;
 
-/** 소개 — 스크롤에 따라 단어가 켜지는 문단 */
-export const ABOUT =
-  '기능 하나를 만드는 것보다, 그 기능이 게임의 한 조각으로 들어가 전체가 완성되어 가는 과정에서 더 큰 보람을 느낍니다. 캐릭터 립싱크와 모바일 렌더링 같은 클라이언트 기능을 만들고, 빌드와 테스트처럼 반복되는 일은 자동화해 왔습니다. 팀의 일정과 태스크가 잘 보이도록 정리하는 일도 함께 해 왔습니다.';
+/** 소개 — 어떤 개발자인지 · 경력 · 해 온 일, 세 줄 */
+export const ABOUT: ReadonlyArray<{ label: string; text: string }> = [
+  { label: '어떤 개발자', text: 'Unity와 Godot으로 게임 클라이언트를 만듭니다. 만든 기능이 게임의 한 조각으로 맞물려 완성되어 가는 과정을 좋아합니다.' },
+  { label: '경력', text: 'NC AI에서 대화형 3D 캐릭터 클라이언트를 Unity와 Godot으로 개발했습니다. (2025.12 – 2026.09)' },
+  { label: '해 온 일', text: '립싱크, 모바일 털 렌더링 같은 클라이언트 기능을 만들고 빌드와 테스트를 자동화했습니다. 게임잼과 공모전에 직접 만든 게임을 출품해 왔습니다.' },
+];
 
 /** 타임라인 — 연도별로 묶어 보여 주고, 연도를 오도미터로 굴린다 */
 export interface TimelineLink {
@@ -95,7 +98,7 @@ export const CONTACT = {
   heading: '끝까지 봐 주셔서 감사합니다.',
   sub: '궁금한 점이나 함께 이야기하고 싶은 것이 있다면 언제든 편하게 연락 주세요.',
   /** 공개할 이메일 주소. 비어 있으면 메일 줄을 숨긴다 */
-  email: '',
+  email: 'ansir0211@gmail.com',
   links: [
     { label: 'GitHub', href: 'https://github.com/AnsirH' },
   ],
