@@ -12,15 +12,15 @@ playUrl: "https://ansirh.github.io/NHN_Project/"
 playNote: ""
 links: []
 images:
-  - src: "/images/games/claywars/hero.jpg"
+  - src: "/images/games/claywars/battle.jpg"
     caption: "군단 전투"
-  - src: "/images/games/claywars/deployment.jpg"
-    caption: "군대 배치"
-  - src: "/images/games/claywars/room-graph.jpg"
-    caption: "방 그래프"
-  - src: "/images/games/claywars/augment.jpg"
-    caption: "증강 선택"
-video: ""
+  - src: "/images/games/claywars/lightning.jpg"
+    caption: "번개 스킬"
+  - src: "/images/games/claywars/poison-cloud.jpg"
+    caption: "독구름 스킬"
+  - src: "/images/games/claywars/formation.jpg"
+    caption: "점토 병사 군단"
+video: "/videos/claywars.mp4"
 light: "ember"
 colors: ["#e8894a", "#7fb2d9"]
 controls: [["TAP", "방 선택 · 배치 · 스킬"], ["DRAG", "카메라 이동"], ["PINCH", "줌"]]
