@@ -89,7 +89,7 @@ export const TIMELINE: readonly TimelineEntry[] = [
     date: '2026.07', title: 'AI 캐릭터 제작 자동화 워크벤치', tag: 'AI Tool',
     links: [career('워크벤치', 'character-workbench')],
   },
-  { date: '2026.07', title: 'NHN NAN 해커톤', tag: 'GameDev', links: [game('ClayWars', 'claywars')] },
+  { date: '2026.07', title: 'NHN NAN 2026 게임잼 사전 과제', tag: 'GameDev', links: [game('ClayWars', 'claywars')] },
   { date: '2026.08', title: 'WebGL CI + SSH 배포', tag: 'DevOps' },
   { date: '2026.08', title: 'OpenAI Game Builders 공모전', tag: 'GameDev', links: [game('GooseBomb', 'goosebomb')] },
 ];
