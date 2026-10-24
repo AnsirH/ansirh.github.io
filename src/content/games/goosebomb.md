@@ -1,7 +1,6 @@
 ---
 title: "GooseBomb"
 description: "폭탄을 놓고 바꾸며 적을 유도해 던전을 돌파하는 탑다운 룸 액션 로그라이트."
-line: "몇 초 뒤 터질 자리를 설계하고, 내가 만든 위험에서 빠져나오는 거위 한 마리."
 slug: "goosebomb"
 period: "2026.08 – 2026.09"
 event: "2026 OpenAI Game Builders 공모전 출품작"

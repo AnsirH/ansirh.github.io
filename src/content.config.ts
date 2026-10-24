@@ -24,7 +24,7 @@ const games = defineCollection({
     title: z.string(),
     /** 상세 상단에 쓰는 한 줄 요약 */
     description: z.string(),
-    /** 메인 작품 구간에 쓰는 장면 묘사 한 줄 */
+    /** (쓰지 않음) 예전 메인 카드 한 줄 소개. 메인 카드는 description 을 쓴다 */
     line: z.string().default(''),
     /** URL 세그먼트 — /games/<slug> */
     slug: z.string(),

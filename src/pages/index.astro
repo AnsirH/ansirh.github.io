@@ -73,7 +73,7 @@ const kindsOf = (e: (typeof TIMELINE)[number]) => [...new Set((e.links ?? []).ma
                 <div class="scene__txt">
                   <span class="scene__no">{pad2(i + 1)} / {pad2(games.length)}</span>
                   <h3>{d.title}</h3>
-                  {d.line && <p class="scene__line">{d.line}</p>}
+                  {d.description && <p class="scene__line">{d.description}</p>}
                   <span class="scene__meta">
                     {d.period && <span>{d.period}{d.event && `, ${d.event}`}</span>}
                     {d.role && <span>{d.role}</span>}
