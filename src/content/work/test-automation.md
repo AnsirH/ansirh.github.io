@@ -1,7 +1,7 @@
 ---
 title: "테스트 자동화"
 period: "2025.12 – 2026.09"
-description: "Unity Test Runner와 Godot MCP로 클릭이 필요한 테스트까지 자동화해 Unity·Godot 각각 약 200개의 테스트를 만들고, AI 에이전트가 테스트를 실행해 결과와 스크린샷을 확인하고 원인까지 찾아 보고하는 개발 루프를 만들었습니다."
+description: "Unity Test Runner와 Godot MCP로 클릭이 필요한 테스트까지 AI 에이전트가 작성, 실행, 수정하는 개발 루프를 만들었습니다. Unity는 프로젝트 폴더의 신호 파일로 열린 에디터 안의 Test Runner를 실행해, 에디터를 끄지 않고 테스트를 반복합니다. 구현 검증은 AI 에이전트가 맡고, 저는 구조와 원리를 검토해 의미 없는 테스트와 잘못 짚은 원인을 걸러냈습니다."
 slug: "test-automation"
 image: "/images/career/test-automation.svg"
 imageAlt: "AI 에이전트가 Test Runner와 Godot MCP로 테스트를 실행하고 결과와 스크린샷을 확인해 오류를 보고하는 루프 도식"

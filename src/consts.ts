@@ -7,7 +7,7 @@ export const SITE = {
   /** 이름 */
   name: '허한결',
   /** 직군 한 줄 */
-  role: '게임 클라이언트 개발자 (Unity·Godot)',
+  role: '게임 클라이언트 개발자 (Unity, Godot)',
   /** <meta name="description"> 기본값 */
   description: '게임 클라이언트 개발자 허한결의 포트폴리오. 직접 만든 게임과 NC AI에서의 작업, 지금까지의 프로젝트를 담았습니다.',
 } as const;
@@ -22,17 +22,17 @@ export const INTRO = {
 /** 소개 — 어떤 개발자인지 · 경력 · 해 온 일, 세 줄 */
 /** text 가 배열이면 한 줄씩 나눠 보여 준다 */
 export const ABOUT: ReadonlyArray<{ label: string; text: string | readonly string[] }> = [
-  { label: '어떤 개발자', text: 'Unity와 Godot으로 게임 클라이언트를 만듭니다. 만든 기능이 게임의 한 조각으로 맞물려 완성되어 가는 과정을 좋아합니다.' },
+  { label: '어떤 개발자', text: 'Unity와 Godot으로 게임 클라이언트를 만듭니다. 만든 기능이 게임의 한 조각으로 맞물려 완성되어 가는 과정을 좋아하고, 함께 일하는 사람이 서로 기다리지 않고 각자 작업할 수 있는 구조를 만드는 데 중점을 둡니다.' },
   {
     label: '경력',
     text: [
       'NC AI에서 대화형 3D 캐릭터 클라이언트를 Unity와 Godot으로 개발했습니다. (2025.12 – 2026.09)',
-      'NewSalt에서 2차전지 제조 공정 훈련 시뮬레이터 2종을 Unity로 개발해 납품했습니다. (2024.04 – 2024.12)',
+      'NewSalt에서 2차전지 제조 공정 훈련 시뮬레이터 2종(시나리오 27종)을 Unity로 개발해 납품했습니다. (2024.04 – 2024.12)',
     ],
   },
   {
     label: '해 온 일',
-    text: 'NC AI에서는 립싱크, 모바일 털 렌더링 같은 클라이언트 기능을 만들고 빌드와 테스트를 자동화했습니다. NewSalt에서는 기획자가 시나리오를 직접 고칠 수 있는 편집 도구를 만들어 하루 걸리던 수정을 2~3시간으로 줄였고, 개발 2인 팀에서 일정·진척도 관리와 테스트·빌드 관리를 맡아 시뮬레이터 2종을 납기 내 납품했습니다. 게임잼과 공모전에도 직접 만든 게임을 출품해 왔습니다.',
+    text: 'NC AI에서는 립싱크, 모바일 털 렌더링 같은 클라이언트 기능을 만들고 빌드와 테스트를 자동화했습니다. NewSalt에서는 기획자가 시나리오를 직접 고칠 수 있는 편집 도구를 만들어 하루 걸리던 수정을 2~3시간으로 줄였고, 개발 2인 팀에서 일정과 진척도 관리, 테스트와 빌드 관리를 맡아 시뮬레이터 2종을 납기 내 납품했습니다. 게임잼과 공모전에도 직접 만든 게임을 출품해 왔습니다.',
   },
 ];
 
@@ -76,14 +76,14 @@ export const TIMELINE: readonly TimelineEntry[] = [
   { date: '2025.08', end: '2025.11', title: 'AI 스터디', tag: 'Education' },
   { date: '2025.12', title: 'TAB GAMES 스킬 시스템', tag: 'GameDev' },
   {
-    date: '2025.12', end: '2026.09', title: 'AI 아바타 클라이언트 (Unity·Godot)', tag: 'Client',
-    links: [career('아바타 립싱크', 'avatar-lipsync'), career('털 · 카툰 셰이더', 'fur-toon-shaders'), career('테스트 자동화', 'test-automation')],
+    date: '2025.12', end: '2026.09', title: 'AI 아바타 클라이언트 (Unity, Godot)', tag: 'Client',
+    links: [career('아바타 립싱크', 'avatar-lipsync'), career('털, 카툰 셰이더', 'fur-toon-shaders'), career('테스트 자동화', 'test-automation')],
   },
   { date: '2026.02', title: '가천대 졸업', tag: 'Education' },
   { date: '2026.04', title: 'Carefor RPA 툴', tag: 'Automation' },
   { date: '2026.04', title: '업무일지 에이전트', tag: 'AI Agent' },
   { date: '2026.05', title: 'KCC 이동 패키지', tag: 'GameDev' },
-  { date: '2026.05', end: '현재', title: 'TinkerTower', tag: 'GameDev', links: [game('보기', 'tinkertower')] },
+  { date: '2026.05', end: '현재', title: 'TinkerTower', tag: 'GameDev' },
   { date: '2026.06', title: 'AWS Summit / AI League', tag: 'Event' },
   {
     date: '2026.07', title: 'AI 캐릭터 제작 자동화 워크벤치', tag: 'AI Tool',
@@ -94,14 +94,12 @@ export const TIMELINE: readonly TimelineEntry[] = [
   { date: '2026.08', title: 'OpenAI Game Builders 공모전', tag: 'GameDev', links: [game('GooseBomb', 'goosebomb')] },
 ];
 
-/** 다루는 것 — 항목 끝의 " · " 까지가 한 단어로 켜진다 */
+/** 다루는 것 (이력서 기술 스택과 같게). 항목 끝의 ", " 까지가 한 단어로 켜진다 */
 export const TOOLS: ReadonlyArray<{ label: string; items: readonly string[] }> = [
-  { label: '엔진', items: ['Unity (URP · UI Toolkit · Timeline · Cinemachine · Addressable · Animator) · ', 'Godot · ', 'Unreal (경험)'] },
-  { label: '언어', items: ['C++ · ', 'C# · ', 'Python · ', 'TypeScript · ', 'HLSL'] },
-  { label: '캐릭터 · 렌더링', items: ['ARKit 블렌드셰이프 · ', 'viseme 립싱크 · ', '셸 털 렌더링 · ', '셀 셰이더 · ', 'SSS · ', 'GPU 인스턴싱 · ', '헤어 렌더링 · ', 'Character Creator 5 · ', 'Deformation Transfer · ', 'ICT-\u2060FaceKit'] },
-  { label: '웹 · 툴', items: ['React · ', 'Three.js · ', 'Express · ', 'Docker · ', '커스텀 에디터 · ', 'Figma'] },
-  { label: '자동화 · 협업', items: ['GitHub Actions · ', 'Claude Code · ', 'Codex · ', 'MCP · ', 'Playwright · ', 'Jira · ', 'Confluence · ', 'Unity Test Runner · ', 'Git · ', 'Notion'] },
-  { label: 'AI · 생성', items: ['Gemini · ', 'VARCO3D · ', 'OpenAI Realtime API · ', 'Unity WebRTC'] },
+  { label: '엔진', items: ['Unity, ', 'Godot, ', 'Unreal'] },
+  { label: '언어', items: ['C#, ', 'Python'] },
+  { label: '협업', items: ['Git, ', 'GitHub, ', 'Jira, ', 'Confluence, ', 'Notion'] },
+  { label: 'AI 도구', items: ['Claude Code, ', 'Codex'] },
 ];
 
 /** 연락 — 값이 빈 항목은 렌더링하지 않는다 */

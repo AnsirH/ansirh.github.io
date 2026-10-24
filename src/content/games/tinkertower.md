@@ -5,8 +5,8 @@ line: "몸체에 서브 몸체를, 서브 몸체에 무기를. 무게중심이 �
 slug: "tinkertower"
 period: "2026.05 – 현재 진행 중"
 event: ""
-role: "1인 개발 — 기획 · 프로그래밍"
-techStack: ["Unity 6", "URP", "C#", "Input System", "NavMesh", "ScriptableObject", "UI Toolkit", "Unity Test Runner", "Claude Code"]
+role: "1인 개발, 기획과 프로그래밍"
+techStack: ["Unity 6", "C#", "Claude Code"]
 repoUrl: ""
 playUrl: ""
 playNote: ""
@@ -24,6 +24,7 @@ highlights:
   - label: "결과"
     text: "작업실에서 설계한 타워가 인게임에서 그대로 조립되어 싸우는 핵심 루프까지 이어졌습니다. 지금도 개발 중입니다."
 order: 3
+hidden: true
 troubleshooting:
   - problem: "부품이 트리 구조(메인 몸체 → 서브 몸체 → 무기)로 늘어나자, 설계도를 저장할 방법이 막혔습니다."
     cause: "저장에 쓰는 Unity JsonUtility는 자기 자신을 참조하는 재귀 클래스, 다형성, 딕셔너리를 직렬화하지 못합니다."

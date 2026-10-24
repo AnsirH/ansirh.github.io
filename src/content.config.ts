@@ -68,6 +68,8 @@ const games = defineCollection({
     troubleshooting: z.array(troubleshootingEntry).default([]),
     /** 메인 페이지 정렬 순서 (작을수록 먼저) */
     order: z.number().default(0),
+    /** true 면 메인 목록과 상세 페이지에서 뺀다 (개발 중인 작품 등) */
+    hidden: z.boolean().default(false),
   }),
 });
 

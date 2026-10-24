@@ -6,7 +6,7 @@ import '../styles/home.css';
 
 const byOrder = (a: { data: { order: number } }, b: { data: { order: number } }) =>
   a.data.order - b.data.order;
-const games = (await getCollection('games')).sort(byOrder);
+const games = (await getCollection('games', (g) => !g.data.hidden)).sort(byOrder);
 const work = (await getCollection('work')).sort(byOrder);
 
 const pad2 = (n: number) => String(n).padStart(2, '0');
@@ -223,7 +223,7 @@ const kindsOf = (e: (typeof TIMELINE)[number]) => [...new Set((e.links ?? []).ma
     </section>
     <footer class="foot pad cap">
       <span>© {new Date().getFullYear()} {SITE.name}</span>
-      <span>배경 효과 · WebGL Fluid Simulation (Pavel Dobryakov, MIT) 수정본</span>
+      <span>배경 효과: WebGL Fluid Simulation (Pavel Dobryakov, MIT) 수정본</span>
     </footer>
   </main>
 

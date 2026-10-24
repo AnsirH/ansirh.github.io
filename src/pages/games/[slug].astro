@@ -4,7 +4,7 @@ import Layout from '../../layouts/Layout.astro';
 import '../../styles/detail.css';
 
 export async function getStaticPaths() {
-  const games = (await getCollection('games')).sort((a, b) => a.data.order - b.data.order);
+  const games = (await getCollection('games', (g) => !g.data.hidden)).sort((a, b) => a.data.order - b.data.order);
   return games.map((game, i) => ({
     params: { slug: game.data.slug },
     props: { game, index: i, total: games.length, next: games[(i + 1) % games.length] },
@@ -67,7 +67,7 @@ const bugLabels = [
         <p>{d.description}</p>
         <dl class="gd__meta">
           <div><dt>ROLE</dt><dd>{d.role || '—'}</dd></div>
-          <div><dt>TECH</dt><dd>{d.techStack.join(' · ') || '—'}</dd></div>
+          <div><dt>TECH</dt><dd>{d.techStack.join(', ') || '—'}</dd></div>
           <div><dt>TIME</dt><dd>{d.period || '—'}{d.event && <Fragment><br /><span class="gd__event">{d.event}</span></Fragment>}</dd></div>
           {extLinks.length > 0 && (
             <div>
