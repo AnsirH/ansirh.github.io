@@ -45,7 +45,6 @@ const kindsOf = (e: (typeof TIMELINE)[number]) => [...new Set((e.links ?? []).ma
     </section>
 
     <section class="about pad" id="about" aria-label="소개">
-      <span class="cap">소개</span>
       <dl class="about__rows">
         {
           ABOUT.map((a) => (
@@ -76,7 +75,7 @@ const kindsOf = (e: (typeof TIMELINE)[number]) => [...new Set((e.links ?? []).ma
                   <h3>{d.title}</h3>
                   {d.line && <p class="scene__line">{d.line}</p>}
                   <span class="scene__meta">
-                    {d.period && <span>{d.period}{d.event && ` · ${d.event}`}</span>}
+                    {d.period && <span>{d.period}{d.event && `, ${d.event}`}</span>}
                     {d.role && <span>{d.role}</span>}
                   </span>
                   <a class="scene__go" href={href}>{d.playUrl ? '들어가서 플레이하기' : '들어가서 보기'} <span aria-hidden="true">→</span></a>
@@ -103,7 +102,7 @@ const kindsOf = (e: (typeof TIMELINE)[number]) => [...new Set((e.links ?? []).ma
 
     <section class="career pad" id="career" aria-label="경력">
       <div class="sec-h">
-        <span class="cap">경력 · {careerSpan}</span>
+        <span class="cap">경력, {careerSpan}</span>
         <h2>대화형 3D 캐릭터 클라이언트를 만들며 한 일</h2>
         <p>NC AI에서 근무하며 맡은 작업입니다.</p>
       </div>
@@ -136,7 +135,7 @@ const kindsOf = (e: (typeof TIMELINE)[number]) => [...new Set((e.links ?? []).ma
     </section>
 
     <section class="time pad" id="time" aria-label="타임라인">
-      <div class="sec-h"><span class="cap">타임라인 · {years[0]} – {years[years.length - 1]}</span><h2>지금까지 만든 것들</h2></div>
+      <div class="sec-h"><span class="cap">타임라인, {years[0]} – {years[years.length - 1]}</span><h2>지금까지 만든 것들</h2></div>
       <div class="time__grid">
         <div class="time__stick" aria-hidden="true">
           <div class="odo" id="odo">
@@ -172,7 +171,7 @@ const kindsOf = (e: (typeof TIMELINE)[number]) => [...new Set((e.links ?? []).ma
                                 <span class="ev__k">{k}</span>
                                 {(e.links ?? []).filter((l) => l.kind === k).map((l, j) => (
                                   <Fragment>
-                                    {j > 0 && <i aria-hidden="true">·</i>}
+                                    {j > 0 && <i aria-hidden="true">/</i>}
                                     <a href={l.href}>{l.label}</a>
                                   </Fragment>
                                 ))}

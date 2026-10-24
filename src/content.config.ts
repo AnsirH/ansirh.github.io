@@ -6,11 +6,11 @@ import { z } from 'astro/zod';
 const troubleshootingEntry = z.object({
   /** 증상 / 문제 */
   problem: z.string(),
-  /** 원인 · 접근 (선택) */
+  /** 원인, 접근 (선택) */
   cause: z.string().default(''),
   /** 해결 방법 */
   solution: z.string(),
-  /** 배운 점 · 트레이드오프 (선택) */
+  /** 배운 점, 트레이드오프 (선택) */
   learned: z.string().default(''),
 });
 
@@ -30,7 +30,7 @@ const games = defineCollection({
     slug: z.string(),
     /** 진행 기간 (예: "2025.03 – 2025.05"). 빈 값 허용 */
     period: z.string().default(''),
-    /** 출품한 대회·공모전 (예: "NHN NAN 2026 게임잼"). 빈 값 허용 */
+    /** 출품한 대회와 공모전 (예: "NHN NAN 2026 게임잼"). 빈 값 허용 */
     event: z.string().default(''),
     /** 내가 맡은 역할 한 줄. 빈 값 허용 */
     role: z.string().default(''),
@@ -46,7 +46,7 @@ const games = defineCollection({
      * 비우면 iframe 을 화면에 꽉 채운다 (반응형 템플릿).
      */
     playFrame: z.object({ width: z.number(), height: z.number(), pageHeight: z.number() }).optional(),
-    /** playUrl 이 없을 때 오락기 화면에 띄우는 안내 (예: "Android 전용 · APK로 플레이") */
+    /** playUrl 이 없을 때 오락기 화면에 띄우는 안내 (예: "Android 전용, APK로 플레이") */
     playNote: z.string().default(''),
     /** 추가 링크 (플레이 영상, 다운로드 등) */
     links: z.array(z.object({ label: z.string(), href: z.string() })).default([]),

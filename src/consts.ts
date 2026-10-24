@@ -1,6 +1,6 @@
 /**
  * 사이트 전역 메타데이터와 메인 페이지 문구.
- * 게임·작업은 src/content 컬렉션에서, 나머지 문구는 이 파일에서 관리한다.
+ * 게임과 작업은 src/content 컬렉션에서, 나머지 문구는 이 파일에서 관리한다.
  * `dummy: true` 로 표시한 항목은 실제 내용으로 교체해야 하는 예시다.
  */
 export const SITE = {
@@ -19,10 +19,10 @@ export const INTRO = {
   sub: '게임이 완성되어 가는 과정을 좋아하는 개발자',
 } as const;
 
-/** 소개 — 어떤 개발자인지 · 경력 · 해 온 일, 세 줄 */
+/** 소개 — 소개, 경력, 해 온 일 세 줄 */
 /** text 가 배열이면 한 줄씩 나눠 보여 준다 */
 export const ABOUT: ReadonlyArray<{ label: string; text: string | readonly string[] }> = [
-  { label: '어떤 개발자', text: 'Unity와 Godot으로 게임 클라이언트를 만듭니다. 만든 기능이 게임의 한 조각으로 맞물려 완성되어 가는 과정을 좋아하고, 함께 일하는 사람이 서로 기다리지 않고 각자 작업할 수 있는 구조를 만드는 데 중점을 둡니다.' },
+  { label: '소개', text: 'Unity와 Godot으로 게임 클라이언트를 만듭니다. 함께 일하는 사람이 서로 기다리지 않고 각자 작업할 수 있는 구조를 만드는 데 중점을 둡니다.' },
   {
     label: '경력',
     text: [
@@ -48,9 +48,9 @@ export interface TimelineEntry {
   /** 기간이 있으면 끝 (YYYY.MM) */
   end?: string;
   title: string;
-  /** 어떤 작업인지 한눈에 — GameDev · Client · AI Service · AI Tool · AI Agent · ML · Data · Automation · DevOps · Simulation · Education · Event · Military */
+  /** 어떤 작업인지 한눈에 — GameDev, Client, AI Service, AI Tool, AI Agent, ML, Data, Automation, DevOps, Simulation, Education, Event, Military */
   tag: string;
-  /** 작품·경력 카드로 연결 */
+  /** 작품과 경력 카드로 연결 */
   links?: readonly TimelineLink[];
 }
 const career = (label: string, slug: string): TimelineLink => ({ kind: '경력', label, href: `/#career-${slug}` });
@@ -77,7 +77,7 @@ export const TIMELINE: readonly TimelineEntry[] = [
   { date: '2025.12', title: 'TAB GAMES 스킬 시스템', tag: 'GameDev' },
   {
     date: '2025.12', end: '2026.09', title: 'AI 아바타 클라이언트 (Unity, Godot)', tag: 'Client',
-    links: [career('아바타 립싱크', 'avatar-lipsync'), career('털, 카툰 셰이더', 'fur-toon-shaders'), career('테스트 자동화', 'test-automation')],
+    links: [career('아바타 립싱크', 'avatar-lipsync'), career('털과 카툰 셰이더', 'fur-toon-shaders'), career('테스트 자동화', 'test-automation')],
   },
   { date: '2026.02', title: '가천대 졸업', tag: 'Education' },
   { date: '2026.04', title: 'Carefor RPA 툴', tag: 'Automation' },

@@ -1,8 +1,8 @@
 # ansirh.github.io
 
-게임 클라이언트 개발자 (Unity·Godot) 포트폴리오 사이트. GitHub Pages User Page (`https://ansirh.github.io`).
+게임 클라이언트 개발자 (Unity, Godot) 포트폴리오 사이트. GitHub Pages User Page (`https://ansirh.github.io`).
 
-디자인 테마는 **암실** — 단일 다크, 박스·라운드 없이 선과 여백만, 빛은 아껴 쓴다.
+디자인 테마는 **암실** — 단일 다크, 박스와 라운드 없이 선과 여백만, 빛은 아껴 쓴다.
 첫 화면은 유체 광원 인트로(어둠 → 빛이 피어오름 → 스크롤로 소등), 소개~작품 구간에서 다시 켜지고,
 게임 상세만 레트로(어둠 속 오락기 화면)다.
 
@@ -17,11 +17,11 @@
 
 ```text
 src/
-├── consts.ts              # 사이트 메타 · 인트로/소개 문구 · 타임라인 · 다루는 것 · 연락
+├── consts.ts              # 사이트 메타, 인트로/소개 문구, 타임라인, 다루는 것, 연락
 ├── content.config.ts      # games / work 컬렉션 스키마
 ├── content/
 │   ├── games/*.md         # 게임 (frontmatter)
-│   └── work/*.md          # 경력 카드 (이미지 · 제목 · 기간 · 설명, 상세 페이지 없음)
+│   └── work/*.md          # 경력 카드 (이미지, 제목, 기간, 설명, 상세 페이지 없음)
 ├── layouts/Layout.astro   # 공통 레이아웃 (머리글/내비, 폰트, 통계)
 ├── pages/
 │   ├── index.astro        # 메인
@@ -29,16 +29,16 @@ src/
 ├── scripts/
 │   ├── home.ts            # 메인 연출 (광원, 스크롤, 오도미터, 호버 영상)
 │   └── game.ts            # 게임 상세 연출 (PRESS START, WebGL 실행, 버그 기록 타이핑)
-└── styles/                # global.css · home.css · detail.css
+└── styles/                # global.css, home.css, detail.css
 public/
 ├── fx/                    # fluid-light.js, 디더링 텍스처
 ├── images/                # 스크린샷
 └── videos/                # 썸네일 호버 플레이 영상 (무음 mp4 루프)
 ```
 
-## 콘텐츠 추가 · 교체
+## 콘텐츠 추가, 교체
 
-페이지 코드를 건드리지 않고 `src/content/games/` 또는 `src/content/work/` 의 `.md` 를 추가·수정하면
+페이지 코드를 건드리지 않고 `src/content/games/` 또는 `src/content/work/` 의 `.md` 를 추가, 수정하면
 메인과 상세 페이지가 함께 바뀐다. 필드 설명은 `src/content.config.ts` 주석 참고.
 
 - **스크린샷**: `images` 의 첫 장이 메인 썸네일이자 오락기 화면, 나머지가 "장면들"이 된다.
@@ -48,7 +48,7 @@ public/
   (`public/games/` 는 게임 상세 페이지 주소와 겹치므로 쓰지 않는다.) 브라우저 빌드가 없으면 `playNote` 와 `links` 로 안내한다.
 - **작업 결과 문장**: `result` 의 `**강조**` 부분이 등불색으로 표시된다.
 - **본문**: `.md` 본문을 쓰면 게임 상세의 "구현 노트", 작업 상세 하단에 표시된다.
-- 소개 문구, 지나온 시간(`TIMELINE` — 작품·작업 노트 연결 포함), 다루는 것, 연락처는 `src/consts.ts` 에서 바꾼다.
+- 소개 문구, 지나온 시간(`TIMELINE` — 작품, 작업 노트 연결 포함), 다루는 것, 연락처는 `src/consts.ts` 에서 바꾼다.
   `CONTACT.email` 을 채우면 메일 주소와 복사 버튼이 나타난다.
 
 ## 방문자 통계
