@@ -147,6 +147,16 @@ const bugLabels = [
                         </div>
                       ) : null,
                     )}
+                    {b.images.length > 0 && (
+                      <div class="bug__figs">
+                        {b.images.map((im) => (
+                          <figure class="bug__fig">
+                            <img src={im.src} width={im.width} height={im.height} alt={im.alt} loading="lazy" />
+                            {im.caption && <figcaption>{im.caption}</figcaption>}
+                          </figure>
+                        ))}
+                      </div>
+                    )}
                   </article>
                 );
               })}

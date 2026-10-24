@@ -94,6 +94,10 @@
 .bug__row .k { font-size: 13px; padding-top: 3px; }
 .bug__row p { font-size: 16.5px; line-height: 1.75; min-height: 1.75em; }
 .bug__row:first-of-type p { font-family: var(--serif); font-size: 20px; }
+.bug__figs { display: grid; gap: 28px; margin-left: 108px; padding-top: 22px; border-top: 1px solid var(--line); }
+.bug__fig { margin: 0; display: grid; gap: 10px; justify-items: start; }
+.bug__fig img { display: block; max-width: 100%; width: auto; height: auto; max-height: 80vh; border: 1px solid var(--line); }
+.bug__fig figcaption { font-size: 13px; line-height: 1.6; color: var(--text-3); max-width: 60em; }
 .bug.rise { opacity: 0; transform: translateY(8px); transition: opacity 0.25s ease, transform 0.25s ease; }
 .bug.rise.in { opacity: 1; transform: none; }
 .k-err { color: #ff6b6b; }
@@ -106,6 +110,7 @@
 @keyframes crtOn { 0% { transform: scaleX(0); } 45% { transform: scaleX(1); height: 2px; } 100% { transform: scaleX(1); height: 100%; opacity: 0; } }
 @keyframes crtFade { to { opacity: 0; } }
 @media (max-width: 800px) {
+  .bug__figs { margin-left: 0; }
   .three, .gd__meta { grid-template-columns: minmax(0, 1fr); gap: 20px; }
   .stills { grid-template-columns: minmax(0, 1fr); }
   .stills > :first-child { grid-row: auto; }

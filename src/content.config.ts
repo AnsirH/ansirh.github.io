@@ -12,6 +12,10 @@ const troubleshootingEntry = z.object({
   solution: z.string(),
   /** 배운 점, 트레이드오프 (선택) */
   learned: z.string().default(''),
+  /** 버그 기록 아래에 붙이는 이미지 (도식, 인게임 캡처). caption 은 이미지 아래 한 줄 */
+  images: z
+    .array(z.object({ src: z.string(), width: z.number(), height: z.number(), alt: z.string(), caption: z.string().default('') }))
+    .default([]),
 });
 
 /**
