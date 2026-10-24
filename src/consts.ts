@@ -16,7 +16,7 @@ export const SITE = {
 export const INTRO = {
   words: [{ text: 'AnsirH:' }, { text: '허한결', hot: true }],
   /** 첫 줄 아래 둘째 줄 (한 단계 작게). <b> 로 강조 */
-  sub: '게임이 완성되어 가는 과정을 좋아하는 개발자',
+  sub: '게임 클라이언트 개발자 (Unity, Godot)',
 } as const;
 
 /** 소개 — 소개, 경력, 해 온 일 세 줄 */
