@@ -42,7 +42,7 @@ html:not(.js) .intro__stage { position: relative; }
 .about__line { display: block; }
 .about__line + .about__line { margin-top: 0.5em; }
 .about__row dt { font-family: var(--mono); font-size: 12px; color: var(--text-3); padding-top: 0.5em; }
-.about__row dd { margin: 0; font-family: var(--serif); font-weight: 300; font-size: clamp(20px, 2.1vw, 28px); line-height: 1.6; letter-spacing: -0.02em; color: var(--text); max-width: 30em; text-wrap: pretty; word-break: keep-all; }
+.about__row dd { margin: 0; font-family: var(--serif); font-weight: 300; font-size: clamp(20px, 2.1vw, 28px); line-height: 1.6; letter-spacing: -0.02em; color: var(--text); max-width: 40em; text-wrap: pretty; word-break: keep-all; }
 @media (max-width: 700px) { .about__row { grid-template-columns: minmax(0, 1fr); } }
 .about .cap { display: block; margin-bottom: 36px; }
 html:not(.js) .words .w { color: var(--text); }
